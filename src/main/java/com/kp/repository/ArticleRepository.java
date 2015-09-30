@@ -2,7 +2,8 @@ package com.kp.repository;
 
 import com.kp.domain.Article;
 import com.kp.domain.ArticleType;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -22,5 +23,5 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
     List<Article> findRecentArticles();
 
 
-    List<Article> findArticlesByArticleType(ArticleType articleType, PageRequest pageRequest);
+    Page<Article> findByArticleType(ArticleType articleType, Pageable page);
 }

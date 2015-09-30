@@ -29,7 +29,7 @@
                         </h4>
 
                         <p>
-                            <a href="<c:url value="${fn:toLowerCase(each.articleType.name)}" />">${each.articleType.name}</a> &bull; ${each.createdate}
+                            <a href="<c:url value="/kategori/${fn:toLowerCase(each.articleType.name)}" />">${each.articleType.name}</a> &bull; ${each.createdate}
                         </p>
                     </div>
                 </c:forEach>

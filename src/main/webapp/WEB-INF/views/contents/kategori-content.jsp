@@ -1,3 +1,5 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: turgaycan
@@ -17,435 +19,68 @@
 
             <div class="col-md-8 col-lg-8">
 
-                <article class="post vt-post">
+                <c:forEach items="${pageArticles}" var="article">
 
-                    <div class="row">
+                    <article class="post vt-post">
 
-                        <div class="col-xs-12 col-sm-5 col-md-5 col-lg-4">
+                        <div class="row">
 
-                            <div class="post-type post-img">
+                            <div class="col-xs-12 col-sm-5 col-md-5 col-lg-4">
 
-                                <a href="#"><img src="assets/images/post/m1.jpg" class="img-responsive"
-                                                 alt="image post"/></a>
+                                <div class="post-type post-img">
 
+                                    <a href="#"><img
+                                            src="http://www.mirchu.net/themes/BlogDesk/assets/images/post/m2.jpg"
+                                            class="img-responsive"
+                                            alt="image post"/></a>
+                                </div>
+
+                                <div class="author-info author-info-2">
+
+                                    <ul class="list-inline">
+
+                                        <li>
+                                            <div class="info">
+
+                                                <p>Posted on:</p>
+
+                                                <strong>
+                                                    <fmt:formatDate value="${article.createdate}" type="both"
+                                                                    pattern="dd MMM, yyyy"/>
+                                                </strong></div>
+                                        </li>
+                                        <li>
+                                            <div class="info">
+                                                <p>Comments:</p>
+
+                                                <strong>127</strong></div>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
 
-                            <div class="author-info author-info-2">
+                            <div class="col-xs-12 col-sm-7 col-md-7 col-lg-8">
 
-                                <ul class="list-inline">
+                                <div class="caption">
 
+                                    <h3 class="md-heading"><a
+                                            href="<c:url value="/${article.url}-${article.id}" />">${article.title}</a>
+                                    </h3>
 
-                                    <li>
+                                    <p> ${fn:substring(article.content, 0, 100).contains("<code>") ? '' : fn:substring(article.content, 0, 100)}</p>
 
-                                        <div class="info">
+                                    <a class="btn btn-default" href="<c:url value="/${article.url}-${article.id}" />"
+                                       role="button">Daha Fazlası..</a>
 
-                                            <p>Posted on:</p>
-
-                                            <strong>Mar 21, 2015</strong></div>
-
-                                    </li>
-
-
-                                    <li>
-
-                                        <div class="info">
-
-                                            <p>Comments:</p>
-
-                                            <strong>127</strong></div>
-
-                                    </li>
-
-                                </ul>
+                                </div>
 
                             </div>
-
                         </div>
+                    </article>
+                </c:forEach>
 
-                        <div class="col-xs-12 col-sm-7 col-md-7 col-lg-8">
 
-                            <div class="caption">
-
-                                <h3 class="md-heading"><a href="#">The Heading Text Size Should Match</a></h3>
-
-                                <p> Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus
-                                    mus. Donec ullamcorper nulla non metus auctor fringilla.</p>
-
-                                <a class="btn btn-default" href="#" role="button">Read More</a>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
-                </article>
-
-                <article class="post vt-post">
-
-                    <div class="row">
-
-                        <div class="col-xs-12 col-sm-5 col-md-5 col-lg-4">
-
-                            <div class="post-type post-img">
-
-                                <a href="#"><img src="assets/images/post/m2.jpg" class="img-responsive"
-                                                 alt="image post"/></a>
-
-                            </div>
-
-                            <div class="author-info author-info-2">
-
-                                <ul class="list-inline">
-
-
-                                    <li>
-
-                                        <div class="info">
-
-                                            <p>Posted on:</p>
-
-                                            <strong>Mar 21, 2015</strong></div>
-
-                                    </li>
-
-
-                                    <li>
-
-                                        <div class="info">
-
-                                            <p>Comments:</p>
-
-                                            <strong>127</strong></div>
-
-                                    </li>
-
-                                </ul>
-
-                            </div>
-
-                        </div>
-
-                        <div class="col-xs-12 col-sm-7 col-md-7 col-lg-8">
-
-                            <div class="caption">
-
-                                <h3 class="md-heading"><a href="#">The Heading Text Size Should Match</a></h3>
-
-                                <p> Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus
-                                    mus. Donec ullamcorper nulla non metus auctor fringilla.</p>
-
-                                <a class="btn btn-default" href="#" role="button">Read More</a>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
-                </article>
-
-                <article class="post vt-post">
-
-                    <div class="row">
-
-                        <div class="col-xs-12 col-sm-5 col-md-5 col-lg-4">
-
-                            <div class="post-type post-img">
-
-                                <a href="#"><img src="assets/images/post/m1.jpg" class="img-responsive"
-                                                 alt="image post"/></a>
-
-                            </div>
-
-                            <div class="author-info author-info-2">
-
-                                <ul class="list-inline">
-
-
-                                    <li>
-
-                                        <div class="info">
-
-                                            <p>Posted on:</p>
-
-                                            <strong>Mar 21, 2015</strong></div>
-
-                                    </li>
-
-
-                                    <li>
-
-                                        <div class="info">
-
-                                            <p>Comments:</p>
-
-                                            <strong>127</strong></div>
-
-                                    </li>
-
-                                </ul>
-
-                            </div>
-
-                        </div>
-
-                        <div class="col-xs-12 col-sm-7 col-md-7 col-lg-8">
-
-                            <div class="caption">
-
-                                <h3 class="md-heading"><a href="#">The Heading Text Size Should Match</a></h3>
-
-                                <p> Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus
-                                    mus. Donec ullamcorper nulla non metus auctor fringilla.</p>
-
-                                <a class="btn btn-default" href="#" role="button">Read More</a>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
-                </article>
-
-                <article class="post vt-post">
-
-                    <div class="row">
-
-                        <div class="col-xs-12 col-sm-5 col-md-5 col-lg-4">
-
-                            <div class="post-type post-img">
-
-                                <a href="#"><img src="assets/images/post/m2.jpg" class="img-responsive"
-                                                 alt="image post"/></a>
-
-                            </div>
-
-                            <div class="author-info author-info-2">
-
-                                <ul class="list-inline">
-
-
-                                    <li>
-
-                                        <div class="info">
-
-                                            <p>Posted on:</p>
-
-                                            <strong>Mar 21, 2015</strong></div>
-
-                                    </li>
-
-
-                                    <li>
-
-                                        <div class="info">
-
-                                            <p>Comments:</p>
-
-                                            <strong>127</strong></div>
-
-                                    </li>
-
-                                </ul>
-
-                            </div>
-
-                        </div>
-
-                        <div class="col-xs-12 col-sm-7 col-md-7 col-lg-8">
-
-                            <div class="caption">
-
-                                <h3 class="md-heading"><a href="#">The Heading Text Size Should Match</a></h3>
-
-                                <p> Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus
-                                    mus. Donec ullamcorper nulla non metus auctor fringilla.</p>
-
-                                <a class="btn btn-default" href="#" role="button">Read More</a>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
-                </article>
-
-                <article class="post vt-post">
-
-                    <div class="row">
-
-                        <div class="col-xs-12 col-sm-5 col-md-5 col-lg-4">
-
-                            <div class="post-type post-img">
-
-                                <a href="#"><img src="assets/images/post/m1.jpg" class="img-responsive"
-                                                 alt="image post"/></a>
-
-                            </div>
-
-                            <div class="author-info author-info-2">
-
-                                <ul class="list-inline">
-
-
-                                    <li>
-
-                                        <div class="info">
-
-                                            <p>Posted on:</p>
-
-                                            <strong>Mar 21, 2015</strong></div>
-
-                                    </li>
-
-
-                                    <li>
-
-                                        <div class="info">
-
-                                            <p>Comments:</p>
-
-                                            <strong>127</strong></div>
-
-                                    </li>
-
-                                </ul>
-
-                            </div>
-
-                        </div>
-
-                        <div class="col-xs-12 col-sm-7 col-md-7 col-lg-8">
-
-                            <div class="caption">
-
-                                <h3 class="md-heading"><a href="#">The Heading Text Size Should Match</a></h3>
-
-                                <p> Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus
-                                    mus. Donec ullamcorper nulla non metus auctor fringilla.</p>
-
-                                <a class="btn btn-default" href="#" role="button">Read More</a>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
-                </article>
-
-                <article class="post vt-post">
-
-                    <div class="row">
-
-                        <div class="col-xs-12 col-sm-5 col-md-5 col-lg-4">
-
-                            <div class="post-type post-img">
-
-                                <a href="#"><img src="assets/images/post/m2.jpg" class="img-responsive"
-                                                 alt="image post"/></a>
-
-                            </div>
-
-                            <div class="author-info author-info-2">
-
-                                <ul class="list-inline">
-
-
-                                    <li>
-
-                                        <div class="info">
-
-                                            <p>Posted on:</p>
-
-                                            <strong>Mar 21, 2015</strong></div>
-
-                                    </li>
-
-
-                                    <li>
-
-                                        <div class="info">
-
-                                            <p>Comments:</p>
-
-                                            <strong>127</strong></div>
-
-                                    </li>
-
-                                </ul>
-
-                            </div>
-
-                        </div>
-
-                        <div class="col-xs-12 col-sm-7 col-md-7 col-lg-8">
-
-                            <div class="caption">
-
-                                <h3 class="md-heading"><a href="#">The Heading Text Size Should Match</a></h3>
-
-                                <p> Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus
-                                    mus. Donec ullamcorper nulla non metus auctor fringilla.</p>
-
-                                <a class="btn btn-default" href="#" role="button">Read More</a>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
-                </article>
-
-                <div class="pagination-wrap">
-
-                    <ul class="pagination">
-
-                        <li>
-
-                            <a href="#" aria-label="Previous">
-
-                                <span aria-hidden="true">Previous</span>
-
-                            </a>
-
-                        </li>
-
-                        <li><a href="#">1</a></li>
-
-                        <li><a href="#">2</a></li>
-
-                        <li><a href="#">3</a></li>
-
-                        <li><a href="#">4</a></li>
-
-                        <li><a href="#">...</a></li>
-
-                        <li><a href="#">17</a></li>
-
-                        <li class="active">
-
-                            <a href="#" aria-label="Next">
-
-                                <span aria-hidden="true">Next</span>
-
-                            </a>
-
-                        </li>
-
-                    </ul>
-
-                </div>
+                <%@include file="commons/paging.jsp" %>
 
                 <div class="clearfix"></div>
 
