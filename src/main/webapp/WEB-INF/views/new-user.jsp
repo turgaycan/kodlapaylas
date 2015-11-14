@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: turgaycan
-  Date: 9/26/15
-  Time: 12:08 AM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 
@@ -20,7 +13,7 @@
 </header>
 
 <section class="innercontent">
-    <%@include file="contents/yaz-detay-content.jsp" %>
+    <%@include file="contents/new-user-content.jsp" %>
 </section>
 
 <footer>

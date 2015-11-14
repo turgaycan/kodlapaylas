@@ -184,7 +184,7 @@ section { padding:0px 0px; }
     clear: left;
 
     text-overflow: ellipsis;
-    white-space: nowrap; display: block; font-size:24px; font-weight: 500; color:#fff; }
+    white-space: nowrap; display: block; font-size:16px; font-weight: 500; color:#fff; }
 .feature-posts-grid .feature-text a:hover { color:#e74c3c; }
 .owl-theme .owl-controls{ margin: 0px;}
 .owl-theme .owl-controls .owl-buttons div{ border-radius: 0px; padding: 0px 40px;
@@ -296,7 +296,7 @@ blockquote { background: #f2f6f8; border: 1px solid #e5e5e5; line-height: 28px; 
 .share-this li a.twitter { background: #62bfef; }
 .related-post { padding: 40px 45px; border-bottom: 1px solid #eef3f6; float: left; width: 100%; }
 .related-post .thumbnail { padding: 0px; border: none; }
-.related-post .thumbnail .caption { padding: 30px 0px 0px 0px; }
+.related-post .thumbnail .caption { padding: 30px 0px 0px 0px; overflow-wrap: break-word;}
 .related-post .thumbnail .caption a { font-size: 18px; line-height: 28px; font-weight: 300; color:#49545b; }
 .related-post .thumbnail .caption a:hover { color:#36a0e7; }
 .related-post .thumbnail:hover a img { opacity: 0.7; }
@@ -337,7 +337,7 @@ blockquote { background: #f2f6f8; border: 1px solid #e5e5e5; line-height: 28px; 
 .vt-post.post .caption{padding: 25px 0px;}
 /***********************pagination*********************/
 .pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover { background-color: #3b4952; border-color: #3b4952; }
-.pagination>li>a, .pagination>li>span { color: #2c3840; margin: 0px 5px; border-radius: 3px; -webkit-box-shadow: 0px 1px 3px 0px rgba(44,56,64,0.2); -moz-box-shadow: 0px 1px 3px 0px rgba(44,56,64,0.2); box-shadow: 0px 1px 3px 0px rgba(44,56,64,0.2); border: none; font-size: 16px; }
+.pagination>li>a, .pagination>li>span { color: #2c3840; margin: 0px 3px; border-radius: 3px; -webkit-box-shadow: 0px 1px 3px 0px rgba(44,56,64,0.2); -moz-box-shadow: 0px 1px 3px 0px rgba(44,56,64,0.2); box-shadow: 0px 1px 3px 0px rgba(44,56,64,0.2); border: none; font-size: 15px; }
 .pagination>li>a:focus, .pagination>li>a:hover, .pagination>li>span:focus, .pagination>li>span:hover { background-color: #e74c3c; border-color: #e74c3c; color: #fff; }
 .pagination-wrap { width: 100%; float: left;   margin-bottom: 35px;}
 .pagination { margin: 0px; }
@@ -356,7 +356,7 @@ blockquote { background: #f2f6f8; border: 1px solid #e5e5e5; line-height: 28px; 
 .panel-default .panel-body .media { padding: 20px 25px; margin: 0px; border-top: 1px solid #eef3f6; }
 .panel-default .panel-body .media .media-left { margin: 0px; }
 .panel-default .panel-body .media .media-heading { font-size: 16px; font-weight: 500; }
-.panel-default .panel-body .media .media-heading a{}
+.panel-default .panel-body .media .media-heading a{word-break: break-word;}
 .panel-default .panel-body .media p a{color: #3b4952;}
 .panel-default .panel-body .list-group-item:first-child{ border-radius: 0px;}
 .list-group { width: 100%; float: left; box-shadow:none; background: #fff; margin-bottom: 0px; text-align: left; border-radius: 0px 0px 3px 3px; border: none; }
@@ -578,7 +578,7 @@ a.blogger { color: #f39d38; }
     .navbar-default .navbar-nav .mega-dropdown .container { padding: 0px; width: 100%;}
     .navbar-default .navbar-nav .mega-dropdown-menu{ border-radius: 4px; float: left;}
     .navbar-default .navbar-nav .mega-dropdown-menu .tabs-left > .nav-tabs{ width: 100%; }
-    .navbar-default .navbar-nav .mega-dropdown-menu .tab-content{width: 100%;}
+    .navbar-default .navbar-nav .mega-dropdown-menu .tab-content{width: 100%;height: 100%;}
     .navbar-default .navbar-nav .mega-dropdown-menu .tab-content > .tab-pane .thumbnail{ margin: 0px 0px 15px 0px; }
     .navbar-default .navbar-nav .mega-dropdown-menu .tab-content > .tab-pane .thumbnail .caption h3{ font-size: 14px;}
     .navbar-header {
@@ -754,5 +754,11 @@ a.blogger { color: #f39d38; }
     .navbar-right .dropdown-menu {
         right: 0;
         left: -79px;
+    }
+}
+
+@media{
+    .col-md-2 {
+        width: 13.2% !important;
     }
 }

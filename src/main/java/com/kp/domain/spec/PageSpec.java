@@ -13,11 +13,11 @@ public class PageSpec {
     }
 
     public static Pageable buildPageSpecificationByFieldDesc(int pageIndex, int pageSize, String field) {
-        Sort sortSpec = sortByLastNameAndFirstNameDesc(field);
+        Sort sortSpec = buildSortAndOrderDesc(field);
         return new PageRequest(pageIndex, pageSize, sortSpec);
     }
 
-    public static Sort sortByLastNameAndFirstNameDesc(String field) {
+    public static Sort buildSortAndOrderDesc(String field) {
         return new Sort(new Sort.Order(Sort.Direction.DESC, field));
     }
 }

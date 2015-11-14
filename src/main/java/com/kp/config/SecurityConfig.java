@@ -1,32 +1,48 @@
 package com.kp.config;
 
 import com.kp.domain.model.Role;
+import com.kp.service.auth.KpAuthenticationProvider;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.security.access.expression.SecurityExpressionOperations;
+import org.springframework.security.access.expression.SecurityExpressionRoot;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.expression.WebSecurityExpressionRoot;
 
 /**
  * Created by turgaycan on 9/20/15.
  */
-@EnableAutoConfiguration
+@Configuration
+@EnableWebMvcSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 @Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(SecurityConfig.class);
+
     @Autowired
-    private UserDetailsService userDetailsService;
+    private KpAuthenticationProvider kpAuthenticationProvider;
 
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/resources/static/**", "/WEB-INF/static/**");
+    }
+
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth.authenticationProvider(kpAuthenticationProvider);
     }
 
     @Override
@@ -37,11 +53,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/**").permitAll()
                 .antMatchers("/user/**").hasAuthority(Role.USER.name())
                 .antMatchers("/admin/**").hasAuthority(Role.ADMIN.name())
+                .antMatchers("/resources/**").permitAll()
                 .anyRequest().fullyAuthenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")
                 .failureUrl("/login?error")
+                .defaultSuccessUrl("/user/")
                 .usernameParameter("email")
                 .permitAll()
                 .and()
@@ -54,10 +72,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .rememberMe();
     }
 
-    @Override
-    public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .userDetailsService(userDetailsService)
-                .passwordEncoder(new BCryptPasswordEncoder());
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }

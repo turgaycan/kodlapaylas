@@ -9,10 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.NoSuchElementException;
@@ -53,31 +55,33 @@ public class UserController {
 
     @RequestMapping(value = "/yeni-uye", method = RequestMethod.GET)
     public ModelAndView newUser() {
-        return new ModelAndView("yeni-uye");
+        return new ModelAndView("/new-user");
     }
 
     @RequestMapping(value = "/uye/kayit-ol", method = RequestMethod.POST)
-    public ModelAndView newUser(@Valid @ModelAttribute("form") UserModel form, BindingResult bindingResult) {
-        LOGGER.debug("Processing user create form={}, bindingResult={}", form, bindingResult);
+    public String newUser(@Valid @ModelAttribute("userModel") UserModel userModel, BindingResult bindingResult,
+                          Model model,
+                          RedirectAttributes redirectAttributes) {
+        LOGGER.debug("Processing user create form={}, bindingResult={}", userModel, bindingResult);
 
-        ModelAndView mav = new ModelAndView("/yeni-uye");
+        ModelAndView mav = new ModelAndView("/new-user");
         if (bindingResult.hasErrors()) {
-            // failed validation
-            mav.addAllObjects(bindingResult.getModel());
-            return mav;
+            model.addAttribute("userModel", userModel);
+            return "/uye/kayit-ol";
         }
         try {
-            userService.create(form);
+            userService.create(userModel);
         } catch (DataIntegrityViolationException e) {
             // probably email already exists - very rare case when multiple admins are adding same user
             // at the same time and form validation has passed for more than one of them.
             LOGGER.warn("Exception occurred when trying to save the user, assuming duplicate email", e);
             bindingResult.reject("email.exists", "Email already exists");
-            return mav;
+            return "/uye/kayit-ol";
         }
         LOGGER.info("Successfully registered");
         // ok, redirect
-        return new ModelAndView("/profil");
+        redirectAttributes.addFlashAttribute("success", "Account successfully created");
+        return "redirect:/login";
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")

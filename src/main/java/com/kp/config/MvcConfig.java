@@ -1,5 +1,7 @@
 package com.kp.config;
 
+import com.kp.handler.base.CustomBaseHandlerMapping;
+import com.kp.handler.base.CustomHandlerAdapter;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.web.WebMvcAutoConfiguration;
 import org.springframework.context.MessageSource;
@@ -7,27 +9,25 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.core.Ordered;
 import org.springframework.web.servlet.DispatcherServlet;
-import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
-import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
+import org.springframework.web.servlet.config.annotation.*;
+import org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping;
+import org.springframework.web.servlet.handler.SimpleUrlHandlerMapping;
+import org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter;
+import org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import java.util.Properties;
 
 /**
  * Created by turgaycan on 9/20/15.
  */
+
+@EnableWebMvc
 @Configuration
 @EnableAutoConfiguration
-@ComponentScan(basePackages = {"com.kp.controller"})
+@ComponentScan(basePackages = {"com.kp.controller", "com.kp.handler"})
 public class MvcConfig extends WebMvcAutoConfiguration.WebMvcAutoConfigurationAdapter {
 
     private static final int CACHE_PERIOD = 24 * 60 * 60 * 1000;
@@ -39,22 +39,35 @@ public class MvcConfig extends WebMvcAutoConfiguration.WebMvcAutoConfigurationAd
         return ds;
     }
 
-    /**
-     * Register dispatcherServlet programmatically
-     *
-     * @return ServletRegistrationBean
-     */
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/login").setViewName("login");
+        registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
+    }
+
 //    @Bean
-//    public ServletRegistrationBean dispatcherServletRegistration() {
-//
-//        ServletRegistrationBean registration = new ServletRegistrationBean(
-//                dispatcherServlet(), "/**");
-//
-//        registration
-//                .setName(DispatcherServletAutoConfiguration.DEFAULT_DISPATCHER_SERVLET_REGISTRATION_BEAN_NAME);
-//
-//        return registration;
+//    public CustomHandlerAdapter customHandlerAdapter() {
+//        return new CustomHandlerAdapter();
 //    }
+
+//    @Bean
+//    public CustomBaseHandlerMapping customBaseHandlerMapping() {
+//        return new CustomBaseHandlerMapping();
+//    }
+
+//    @Bean
+//    public ControllerClassNameHandlerMapping controllerClassNameHandlerMapping(){
+//        ControllerClassNameHandlerMapping controllerClassNameHandlerMapping = new ControllerClassNameHandlerMapping();
+//        controllerClassNameHandlerMapping.setBasePackage("com.kp.handler");
+//        controllerClassNameHandlerMapping.setOrder(-1);
+//        return controllerClassNameHandlerMapping;
+//    }
+
+//    @Bean
+//    public BeanNameUrlHandlerMapping beanNameUrlHandlerMapping(){
+//        return new BeanNameUrlHandlerMapping();
+//    }
+
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/webjars/**", "/resources/static/**",
@@ -79,53 +92,25 @@ public class MvcConfig extends WebMvcAutoConfiguration.WebMvcAutoConfigurationAd
     }
 
     @Bean
-    public RequestMappingHandlerMapping requestMappingHandlerMapping() {
-        return new RequestMappingHandlerMapping();
-    }
+    public SimpleUrlHandlerMapping simpleServletMapping() {
+        SimpleUrlHandlerMapping mapping = new SimpleUrlHandlerMapping();
+        mapping.setOrder(Integer.MAX_VALUE - 2);
 
-    @Bean
-    public RequestMappingHandlerAdapter requestMappingHandlerAdapter() {
-        return new RequestMappingHandlerAdapter();
+        Properties urlProperties = new Properties();
+        urlProperties.put("/index", "indexController");
+        urlProperties.put("/", "indexController");
+        mapping.setMappings(urlProperties);
+
+        return mapping;
     }
 
     @Bean
     public MessageSource messageSource() {
         ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-        messageSource.setBasenames("essages/messages.properties", "messages/validation.properties", "messages/labels.properties");
+        messageSource.setBasenames("messages/messages.properties", "messages/validation.properties", "messages/labels.properties");
         messageSource.setUseCodeAsDefaultMessage(true);
         messageSource.setDefaultEncoding("UTF-8");
         return messageSource;
-    }
-
-    @Override
-    public void addInterceptors(final InterceptorRegistry registry) {
-        registry.addInterceptor(userDetailInterceptor());
-        super.addInterceptors(registry);
-    }
-
-    public UserDetailInterceptor userDetailInterceptor() {
-        return new UserDetailInterceptor();
-    }
-
-    /**
-     * An intereptor that pushes the current user UserDetails object into the request as an attribute
-     * named 'currentUser'.
-     *
-     * @author Mark Meany
-     */
-    protected class UserDetailInterceptor extends HandlerInterceptorAdapter {
-        @Override
-        public boolean preHandle(final HttpServletRequest request, final HttpServletResponse response, final Object handler) throws Exception {
-            final Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-            if (auth != null) {
-                if (!(auth instanceof AnonymousAuthenticationToken)) {
-                    if (auth.getPrincipal() != null) {
-                        request.setAttribute("currentUser", auth.getPrincipal());
-                    }
-                }
-            }
-            return super.preHandle(request, response, handler);
-        }
     }
 
 }

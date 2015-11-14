@@ -16,4 +16,10 @@ public class KpUtil {
         modelAndView.setViewName("redirect:" + url);
         return modelAndView;
     }
+
+    public static ModelAndView redirectToMAV(ModelAndView modelAndView, String redirectUrl) {
+        modelAndView.setViewName("redirect:" + redirectUrl);
+        return modelAndView;
+    }
+
 }

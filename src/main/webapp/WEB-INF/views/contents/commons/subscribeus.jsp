@@ -13,13 +13,16 @@
         <div class="panel-body">
             <form id="subscribe-form" name="subscriberModel">
                 <div class="form-group">
-                    <input type="text" class="form-control" id="subscriberEmail" name="subscriberEmail" placeholder="@ Email">
+                    <input type="text" class="form-control" id="subscriberEmail" name="subscriberEmail"
+                           placeholder="@ Email">
                 </div>
             </form>
             <div class="form-group">
-                <button class="btn btn-default btn-lg pull-right" id="subscribe" type="button">Abone Ol</button>
+                <button class="btn btn-default btn-lg pull-right" id="subscribe" name="subscribe" type="button">Abone
+                    Ol
+                </button>
             </div>
-            <div id='message'></div>
+            <div id='subscriberMessage'></div>
         </div>
 
     </div>

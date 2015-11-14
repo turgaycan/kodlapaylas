@@ -1,3 +1,83 @@
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
+<%--<script type="text/javascript">--%>
+    <%--$(document).ready(function(){--%>
+        <%--//Bilgi kısmına ilk değerimizi gönderiyoruz--%>
+        <%--$("#img_info span").html("Buraya img bilgisi gelecek...");--%>
+        <%--//Listemizin genişlik değerini buluyoruz--%>
+        <%--//(64px icon width+10px padding değeri=74px*6 (6 adet li etiketi var))--%>
+        <%--var width=($(".img_list li").length)*74;--%>
+        <%--//3 adet icon kalınca duracağımız göre--%>
+        <%--//son 3 icon soldan uzaklık değeri (left)--%>
+        <%--var last_trio=222-width;--%>
+        <%--//li etketi içindeki  a link üzerine olay tetikleyicimiz--%>
+        <%--$(".img_list li a").on({--%>
+            <%--mouseenter:function(){ //Alana girince--%>
+                <%--//Gölge sınıfımız ekleniyor(CSS3 özellik içerir: IE9 öncesi gölge eklenmez)--%>
+                <%--$(this).find("img").addClass("shadow_box");--%>
+                <%--//Resimlerin üzerine gelince 1.1 katı büyütüyoruz--%>
+                <%--var img_width=parseInt(($(this).find("img").attr("width"))*1.1);--%>
+                <%--var img_height=parseInt(($(this).find("img").attr("height"))*1.1);--%>
+                <%--//Resimlerin büyütülmüş boyutlarını giriyoruz--%>
+                <%--$(this).find("img").attr({--%>
+                    <%--'width':img_width,--%>
+                    <%--'height':img_height--%>
+                <%--});--%>
+                <%--//Bilgi alanına, resimlerin içindeki--%>
+                <%--//data-info etiketindeki bilgiyi gönderiyoruz--%>
+                <%--$("#img_info span").html($(this).find("img").data("info"));--%>
+            <%--},--%>
+            <%--mouseleave:function(){ //Alandan çıkınca--%>
+                <%--//Gölge sınıfını (CSS3 özellik içerir) kaldırıyoruz--%>
+                <%--$(this).find("img").removeClass("shadow_box");--%>
+                <%--//Resimleri orjinal boyutlarına getiriyoruz--%>
+                <%--$(this).find("img").attr({--%>
+                    <%--'width':64,--%>
+                    <%--'height':64--%>
+                <%--});--%>
+                <%--//Bilgi kısmına ilk değerimizi gönderiyoruz--%>
+                <%--$("#img_info span").html("Buraya img bilgisi gelecek...");--%>
+            <%--}--%>
+        <%--});--%>
+        <%--//Sonraki butonuna tıklanınca--%>
+        <%--$("#next_but").click(function(){--%>
+            <%--//Önceki butonunun resmini aktif resim ile değiştiriyoruz--%>
+            <%--$("#prev_but").children("img").attr('src','left_active.png');--%>
+            <%--//Listenin soldan uzaklığını belirliyoruz--%>
+            <%--var list_pos=($(".img_list")).position();--%>
+            <%--var list_left=list_pos.left;--%>
+            <%--//Eğer liste son 3 resme gelmediyse sola doğru kaydırıyoruz--%>
+            <%--if(list_left>last_trio){--%>
+                <%--$(".img_list").animate({--%>
+                    <%--left:"-=75"--%>
+                <%--});--%>
+            <%--}else{--%>
+                <%--//Son 3 resim görüntüleniyorsa, yani sona gelindiyse--%>
+                <%--//Pasif buton resmiyle değiştiriyoruz--%>
+                <%--$(this).children("img").attr("src","right_passive.png");--%>
+            <%--}--%>
+        <%--});--%>
+        <%--//Önceki butonuna tıklanınca--%>
+        <%--$("#prev_but").click(function(){--%>
+            <%--//Sonraki butonunun resmini aktif resim ile değiştiriyoruz--%>
+            <%--$("#next_but").children("img").attr("src","right_active.png");--%>
+            <%--//Listenin soldan uzaklığını belirliyoruz--%>
+            <%--var list_pos=($(".img_list")).position();--%>
+            <%--var list_left=list_pos.left;--%>
+            <%--//Eğer liste ilk 3 resme gelmediyse sağa doğru kaydırıyoruz--%>
+            <%--if(list_left<0){--%>
+                <%--$(".img_list").animate({--%>
+                    <%--left:"+=75"--%>
+                <%--});--%>
+            <%--}else{--%>
+                <%--//Son 3 resim görüntüleniyorsa, yani başa gelindiyse--%>
+                <%--//Pasif buton resmiyle değiştiriyoruz--%>
+                <%--$(this).children("img").attr("src","left_passive.png");--%>
+            <%--}--%>
+        <%--});--%>
+    <%--});--%>
+<%--</script>--%>
+
 <nav class="navbar main-menu navbar-default navbar-fixed-top" role="navigation">
 
     <div class="container">
@@ -17,393 +97,31 @@
             </button>
 
             <a class="navbar-brand" href="#" title="logo">
-                <%--<img src="assets/images/logo.png" alt="logo"/>--%>
+                <img src="http://www.mirchu.net/themes/BlogDesk/assets/images/logo.png" alt="logo"/>
             </a></div>
 
         <div class="navbar-collapse collapse pull-left">
 
             <ul class="nav navbar-nav menu" id="menu">
 
-                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                                        aria-expanded="false">Home <span class="caret"></span></a>
-
-                    <ul class="dropdown-menu" role="menu">
-
-                        <li><a href="index.php">Home 1</a></li>
-
-                        <li><a href="index-2.php">Home 2</a></li>
-
-                    </ul>
-
+                <li class="dropdown"><a href="<c:url value="/" /> " class="dropdown-toggle" data-toggle="dropdown"
+                                        role="button"
+                                        aria-expanded="false">Anasayfa <span class="caret"></span></a>
                 </li>
 
                 <li class="dropdown mega-dropdown">
-
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Mega Menu <span class="caret"></span></a>
-
-                    <div class="dropdown-menu">
-
-                        <div class="container">
-
-                            <div class="mega-dropdown-menu">
-
-                                <div class="tabbable tabs-left">
-
-                                    <ul class="nav nav-tabs">
-
-                                        <li class="active"><a href="#Photography" data-toggle="tab">Photography <i
-                                                class="arrow_carrot-right"></i></a></li>
-
-                                        <li><a href="#Travel" data-toggle="tab">Travel <i
-                                                class="arrow_carrot-right"></i></a></li>
-
-                                        <li><a href="#Music" data-toggle="tab">Music <i
-                                                class="arrow_carrot-right"></i></a></li>
-
-                                        <li><a href="#Apps" data-toggle="tab">Apps <i
-                                                class="arrow_carrot-right"></i></a></li>
-
-                                    </ul>
-
-                                    <div class="tab-content">
-
-                                        <div class="tab-pane active" id="Photography">
-
-                                            <div class="col-sm-6 col-xs-12 col-md-3">
-
-                                                <div class="thumbnail">
-
-                                                    <a href="single.php">
-                                                        <%--<img--%>
-                                                            <%--src="assets/images/feature-posts/feature-post1.png"--%>
-                                                            <%--alt="Generic placeholder thumbnail">--%>
-                                                    </a>
-
-                                                    <div class="caption">
-
-                                                        <h3>Travel The World</h3>
-
-                                                    </div>
-
-                                                </div>
-
-                                            </div>
-
-                                            <div class="col-sm-6 col-xs-12 col-md-3">
-
-                                                <div class="thumbnail">
-
-                                                    <a href="single.php">
-                                                        <%--<img--%>
-                                                            <%--src="assets/images/feature-posts/feature-post6.png"--%>
-                                                            <%--alt="Generic placeholder thumbnail">--%>
-                                                    </a>
-
-                                                    <div class="caption">
-
-                                                        <h3>Google Play Music</h3>
-
-                                                    </div>
-
-                                                </div>
-
-                                            </div>
-
-                                            <div class="col-sm-6 col-xs-12 col-md-3">
-
-                                                <div class="thumbnail">
-
-                                                    <a href="single.php">
-                                                        <%--<img--%>
-                                                            <%--src="assets/images/feature-posts/feature-post4.png"--%>
-                                                            <%--alt="Generic placeholder thumbnail">--%>
-                                                    </a>
-
-                                                    <div class="caption">
-
-                                                        <h3>Business Plan</h3>
-
-                                                    </div>
-
-                                                </div>
-
-                                            </div>
-
-                                            <div class="col-sm-6 col-xs-12 col-md-3">
-
-                                                <div class="thumbnail">
-
-                                                    <a href="single.php">
-                                                        <%--<img--%>
-                                                            <%--src="assets/images/feature-posts/feature-post8.png"--%>
-                                                            <%--alt="Generic placeholder thumbnail">--%>
-                                                    </a>
-
-                                                    <div class="caption">
-
-                                                        <h3>Best Mobile Apps</h3>
-
-                                                    </div>
-
-                                                </div>
-
-                                            </div>
-
-                                        </div>
-
-                                        <div class="tab-pane" id="Travel">
-
-                                            <div class="col-sm-6 col-xs-12 col-md-3">
-
-                                                <div class="thumbnail">
-
-                                                    <a href="single.php">
-                                                        <%--<img--%>
-                                                            <%--src="assets/images/feature-posts/feature-post5.png"--%>
-                                                            <%--alt="Generic placeholder thumbnail">--%>
-                                                    </a>
-
-                                                    <div class="caption">
-
-                                                        <h3>LifeStyle</h3>
-
-                                                    </div>
-
-                                                </div>
-
-                                            </div>
-
-                                            <div class="col-sm-6 col-xs-12 col-md-3">
-
-                                                <div class="thumbnail">
-
-                                                    <a href="single.php">
-                                                        <%--<img--%>
-                                                            <%--src="assets/images/feature-posts/feature-post2.png"--%>
-                                                            <%--alt="Generic placeholder thumbnail">--%>
-                                                    </a>
-
-                                                    <div class="caption">
-
-                                                        <h3>Mobile reviews</h3>
-
-                                                    </div>
-
-                                                </div>
-
-                                            </div>
-
-                                            <div class="col-sm-6 col-xs-12 col-md-3">
-
-                                                <div class="thumbnail">
-
-                                                    <a href="single.php">
-                                                        <%--<img--%>
-                                                            <%--src="assets/images/feature-posts/feature-post7.png"--%>
-                                                            <%--alt="Generic placeholder thumbnail">--%>
-                                                    </a>
-
-                                                    <div class="caption">
-
-                                                        <h3>Apple Probook</h3>
-
-                                                    </div>
-
-                                                </div>
-
-                                            </div>
-
-                                            <div class="col-sm-6 col-xs-12 col-md-3">
-
-                                                <div class="thumbnail">
-
-                                                    <a href="single.php">
-                                                        <%--<img--%>
-                                                            <%--src="assets/images/feature-posts/feature-post4.png"--%>
-                                                            <%--alt="Generic placeholder thumbnail">--%>
-                                                    </a>
-
-                                                    <div class="caption">
-
-                                                        <h3>Business Call</h3>
-
-                                                    </div>
-
-                                                </div>
-
-                                            </div>
-
-                                        </div>
-
-                                        <div class="tab-pane" id="Music">
-
-                                            <div class="col-sm-6 col-xs-12 col-md-3">
-
-                                                <div class="thumbnail">
-
-                                                    <a href="single.php">
-                                                        <%--<img--%>
-                                                            <%--src="assets/images/feature-posts/feature-post6.png"--%>
-                                                            <%--alt="Generic placeholder thumbnail">--%>
-                                                    </a>
-
-                                                    <div class="caption">
-
-                                                        <h3>Android Music</h3>
-
-                                                    </div>
-
-                                                </div>
-
-                                            </div>
-
-                                            <div class="col-sm-6 col-xs-12 col-md-3">
-
-                                                <div class="thumbnail">
-
-                                                    <a href="single.php">
-                                                        <%--<img--%>
-                                                            <%--src="assets/images/feature-posts/feature-post1.png"--%>
-                                                            <%--alt="Generic placeholder thumbnail">--%>
-                                                    </a>
-
-                                                    <div class="caption">
-
-                                                        <h3>Canan Digital Cam</h3>
-
-                                                    </div>
-
-                                                </div>
-
-                                            </div>
-
-                                            <div class="col-sm-6 col-xs-12 col-md-3">
-
-                                                <div class="thumbnail">
-
-                                                    <a href="single.php">
-                                                        <%--<img--%>
-                                                            <%--src="assets/images/feature-posts/feature-post3.png"--%>
-                                                            <%--alt="Generic placeholder thumbnail">--%>
-                                                    </a>
-
-                                                    <div class="caption">
-
-                                                        <h3>Classical Music</h3>
-
-                                                    </div>
-
-                                                </div>
-
-                                            </div>
-
-                                            <div class="col-sm-6 col-xs-12 col-md-3">
-
-                                                <div class="thumbnail">
-
-                                                    <a href="single.php">
-                                                        <%--<img--%>
-                                                            <%--src="assets/images/feature-posts/feature-post8.png"--%>
-                                                            <%--alt="Generic placeholder thumbnail">--%>
-                                                    </a>
-
-                                                    <div class="caption">
-
-                                                        <h3>IPhone Tunes</h3>
-
-                                                    </div>
-
-                                                </div>
-
-                                            </div>
-
-                                        </div>
-
-                                        <div class="tab-pane" id="Apps">
-
-                                            <div class="col-sm-6 col-xs-12 col-md-3">
-
-                                                <div class="thumbnail">
-
-                                                    <%--<a href="single.php"><img--%>
-                                                            <%--src="assets/images/feature-posts/feature-post1.png"--%>
-                                                            <%--alt="Generic placeholder thumbnail"></a>--%>
-
-                                                    <div class="caption">
-
-                                                        <h3>Android Music</h3>
-
-                                                    </div>
-
-                                                </div>
-
-                                            </div>
-
-                                            <div class="col-sm-6 col-xs-12 col-md-3">
-
-                                                <div class="thumbnail">
-
-                                                    <%--<a href="single.php"><img--%>
-                                                            <%--src="assets/images/feature-posts/feature-post6.png"--%>
-                                                            <%--alt="Generic placeholder thumbnail"></a>--%>
-
-                                                    <div class="caption">
-
-                                                        <h3>Canan Digital Cam</h3>
-
-                                                    </div>
-
-                                                </div>
-
-                                            </div>
-
-                                            <div class="col-sm-6 col-xs-12 col-md-3">
-
-                                                <div class="thumbnail">
-
-                                                    <%--<a href="single.php"><img--%>
-                                                            <%--src="assets/images/feature-posts/feature-post8.png"--%>
-                                                            <%--alt="Generic placeholder thumbnail"></a>--%>
-
-                                                    <div class="caption">
-
-                                                        <h3>Classical Music</h3>
-
-                                                    </div>
-
-                                                </div>
-
-                                            </div>
-
-                                            <div class="col-sm-6 col-xs-12 col-md-3">
-
-                                                <div class="thumbnail">
-
-                                                    <%--<a href="single.php"><img--%>
-                                                            <%--src="assets/images/feature-posts/feature-post3.png"--%>
-                                                            <%--alt="Generic placeholder thumbnail"></a>--%>
-
-                                                    <div class="caption">
-
-                                                        <h3>IPhone Tunes</h3>
-
-                                                    </div>
-
-                                                </div>
-
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </div>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Kategoriler<span
+                            class="caret"></span></a>
+
+                    <script type="text/javascript">
+                        $.get("/all-categories",
+                                async = true,
+                                function (data, status) {
+                                    $('#all-categories').append("" + data);
+                                });
+
+                    </script>
+                    <div id="all-categories"></div>
 
                 </li>
 

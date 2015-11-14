@@ -27,4 +27,9 @@ public class ArticleTypeService {
     public Optional<ArticleType> findByName(String name){
         return articleTypeRepository.findByName(name);
     }
+
+    @Transactional(readOnly = true)
+    public List<ArticleType> findAll(){
+        return articleTypeRepository.findAll();
+    }
 }

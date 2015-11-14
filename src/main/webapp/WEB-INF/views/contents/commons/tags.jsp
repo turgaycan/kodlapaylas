@@ -10,40 +10,24 @@
 
     <div class="panel panel-default theme-panel">
 
-        <div class="panel-heading">Tags</div>
+        <div class="panel-heading">Etiketler</div>
 
         <div class="panel-body">
 
             <ul class="list-inline tags">
-
-
-                <li><a href="#">LifeStyle</a></li>
-
-                <li class="big"><a href="#">Music</a></li>
-
-                <li><a href="#">SmartPhones</a></li>
-
-                <li><a href="#">Business</a></li>
-
-
-                <li><a href="#">Travel</a></li>
-
-
-                <li class="big"><a href="#">Business</a></li>
-
-                <li class="small"><a href="#">LifeStyle</a></li>
-
-                <li><a href="#">SmartPhones</a></li>
-
-
-                <li><a href="#">Fireworks</a></li>
-
-                <li class="big"><a href="#">Travel</a></li>
-
-                <li><a href="#">Fireworks</a></li>
-
-                <li class="small"><a href="#">Music</a></li>
-
+                <c:forEach items="${tags}" var="tag">
+                    <c:choose>
+                        <c:when test="${tag.count >= 10}">
+                            <li class="big"><a href="<c:url value="/${fn:toLowerCase(tag.name)}" />">${tag.name}</a></li>
+                        </c:when>
+                        <c:when test="${tag.count > 5 && tag.count <10}">
+                            <li><a href="<c:url value="/${fn:toLowerCase(tag.name)}" />">${tag.name}</a></li>
+                        </c:when>
+                        <c:otherwise>
+                            <li class="small"><a href="<c:url value="/${fn:toLowerCase(tag.name)}" />">${tag.name}</a></li>
+                        </c:otherwise>
+                    </c:choose>
+                </c:forEach>
             </ul>
 
         </div>

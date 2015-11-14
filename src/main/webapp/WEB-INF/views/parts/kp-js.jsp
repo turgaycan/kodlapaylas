@@ -5,11 +5,8 @@
 ================================================== -->
 
 <!-- Placed at the end of the document so the pages load faster -->
-<spring:url value="/webjars/jquery/1.11.2/jquery.min.js" var="jQuery"/>
-<script src="${jQuery}"></script>
-
 <!-- bootstrap -->
-<spring:url value="/webjars/bootstrap/3.1.1/js/bootstrap.min.js" var="bootStrapJs"/>
+<spring:url value="/webjars/bootstrap/3.3.4/js/bootstrap.min.js" var="bootStrapJs"/>
 <script src="${bootStrapJs}"></script>
 
 <spring:url value="/webjars/modernizr/2.8.3/modernizr.min.js" var="modernizrJs"/>

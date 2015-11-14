@@ -12,7 +12,7 @@
 </header>
 
 <section class="innercontent">
-    Error has occured...!
+    <%@include file="error/error-content.jsp" %>
 </section>
 
 <footer>

@@ -11,11 +11,7 @@
 <header>
     <%@include file="parts/header.jsp" %>
 </header>
-
-<section class="innercontent">
-    <%@include file="contents/yeni-uye-content.jsp" %>
-</section>
-
+<%@include file="contents/index-content.jsp" %>
 <footer>
     <%@include file="parts/footer.jsp" %>
 </footer>

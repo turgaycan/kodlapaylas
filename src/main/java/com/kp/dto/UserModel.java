@@ -1,27 +1,37 @@
 package com.kp.dto;
 
-import org.hibernate.validator.constraints.NotEmpty;
+import com.kp.repository.UserRepository;
+import com.kp.validator.validate.KpInfoValidator;
+import com.kp.validator.validate.Validateable;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.Errors;
 
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 
 /**
  * Created by turgaycan on 9/20/15.
  */
-public class UserModel implements Serializable {
+public class UserModel implements Validateable<UserModel>, Serializable {
 
     private static final long serialVersionUID = -7683933371854136134L;
-    @NotEmpty
-    private String email = "";
 
-    @NotEmpty
-    private String password = "";
+    @Email(message = "Email formatı hatalı!")
+    @NotBlank(message = "Email adresini boş bırakmayınız..")
+    private String email;
 
-    @NotEmpty
-    private String passwordRepeated = "";
+    @Size(min = 6, max = 50, message = "Şifrenin en az 6, en çok 50 karakterden oluşmalıdır.")
+    @NotBlank(message = "Şifre alanını boş bırakmayınız..")
+    private String password;
 
-    @NotEmpty
-    private String username;
+    @NotBlank(message = "Şifre Yenile alanını boş bırakmayınız..")
+    private String passwordRepeated;
+
+    @NotBlank(message = "Ad Soyad alanını boş bırakmayınız..")
+    private String fullname;
 
     public String getEmail() {
         return email;
@@ -47,21 +57,41 @@ public class UserModel implements Serializable {
         this.passwordRepeated = passwordRepeated;
     }
 
-    public String getUsername() {
-        return username;
+    public String getFullname() {
+        return fullname;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
     }
 
     @Override
     public String toString() {
         return "UserModel{" +
-                "username='" + username + "'\n'" +
+                "username='" + fullname + "'\n'" +
                 "email='" + email.replaceFirst("@.+", "@***") + '\'' +
                 ", password=***" + '\'' +
                 ", passwordRepeated=***" + '\'' +
                 '}';
+    }
+
+    @Override
+    public KpInfoValidator<UserModel> validator() {
+        return new KpInfoValidator<UserModel>() {
+            @Autowired
+            UserRepository userRepository;
+
+            @Override
+            public void validate(UserModel target, Errors errors) {
+                if (!target.getPassword().equals(target.getPasswordRepeated())) {
+                    errors.rejectValue("password", "", "Password must match password confirmation");
+                }
+
+                if (userRepository.findOneByEmail(target.getEmail()) != null) {
+                    errors.rejectValue("email", "", "Email address is already taken");
+                }
+            }
+
+        };
     }
 }

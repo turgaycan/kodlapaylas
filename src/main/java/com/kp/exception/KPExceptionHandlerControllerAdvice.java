@@ -1,6 +1,8 @@
 package com.kp.exception;
 
+import com.google.common.base.Throwables;
 import com.kp.exception.model.ErrorResponse;
+import com.kp.exception.model.KpErrorResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
@@ -32,14 +35,19 @@ public class KPExceptionHandlerControllerAdvice extends ResponseEntityExceptionH
     @ExceptionHandler(NoSuchElementException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public String handleNoSuchElementException(NoSuchElementException e) {
-        return e.getMessage();
+        e.printStackTrace();
+//        ModelAndView mav = new ModelAndView("/error");
+//        mav.addObject("error", Throwables.getRootCause(e));
+        return "redirect:/error";
     }
 
     @ExceptionHandler(Throwable.class)
     @ResponseBody
     ResponseEntity<Object> handleControllerException(HttpServletRequest req, Throwable ex) {
+        LOGGER.error("error stack trace {}, ", ex.fillInStackTrace().toString());
         ex.printStackTrace();
         ErrorResponse errorResponse = new ErrorResponse();
+//        errorResponse.setStackTrace();
 //        if (ex instanceof ServiceException) {
 //            errorResponse.setDetails(((ServiceException) ex).getDetails());
 //        }

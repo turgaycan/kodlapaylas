@@ -1,5 +1,3 @@
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: turgaycan
@@ -7,6 +5,8 @@
   Time: 2:41 PM
   To change this template use File | Settings | File Templates.
 --%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <section class="innercontent">
 
@@ -64,12 +64,12 @@
                                 <div class="caption">
 
                                     <h3 class="md-heading"><a
-                                            href="<c:url value="/${article.url}-${article.id}" />">${article.title}</a>
+                                            href="<c:url value="/${article.buildUrl()}" />">${article.title}</a>
                                     </h3>
 
                                     <p> ${fn:substring(article.content, 0, 100).contains("<code>") ? '' : fn:substring(article.content, 0, 100)}</p>
 
-                                    <a class="btn btn-default" href="<c:url value="/${article.url}-${article.id}" />"
+                                    <a class="btn btn-default" href="<c:url value="/${article.buildUrl()}" />"
                                        role="button">Daha Fazlası..</a>
 
                                 </div>
@@ -94,9 +94,26 @@
 
                     <%@include file="commons/subscribeus.jsp" %>
 
-                    <%@include file="commons/recent-articles.jsp" %>
+                    <script type="text/javascript">
+                        $.get("/recent-articles-${pageArticles[0].id}",
+                                async = true,
+                                function (data, status) {
+                                    $('#recent-articles').append("" + data);
+                                });
 
-                    <%@include file="commons/categories.jsp" %>
+                    </script>
+                    <div id="recent-articles"></div>
+
+                    <script type="text/javascript">
+                        $.get("/root-categories",
+                                async = true,
+                                function (data, status) {
+                                    $('#root-categories').append("" + data);
+                                });
+
+                    </script>
+                    <div id="root-categories"></div>
+                    <%--<%@include file="commons/root-categories.jsp" %>--%>
 
                     <%@include file="commons/tags.jsp" %>
 

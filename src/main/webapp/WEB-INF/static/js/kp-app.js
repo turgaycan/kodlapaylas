@@ -99,19 +99,19 @@ jQuery(function ($) {
     $("#comment-form").validate({
         ignore: ":hidden",
         rules: {
-            name: {
+            fullname: {
                 minlength: 2,
                 maxlength: 30,
                 required: true
             },
             email: {
                 minlength: 2,
+                maxlength: 50,
                 required: true
             },
-
             message: {
-                minlength: 3,
-                maxlength: 300,
+                minlength: 2,
+                maxlength: 1000,
                 required: true
             }
         }
@@ -139,13 +139,13 @@ jQuery(function ($) {
         submitHandler: function (form) {
             $.ajax({
                 type: "POST",
-                url: "sendemail.php",
+                url: "/iletisim/yeni",
                 data: $("#contact-form").serialize(),
                 error: function () {
                     console.log('Some thing went wrong! :D');
                 },
                 success: function (data) {
-                    //alert(data);
+                    alert(data);
                     if (data == 'fail') {
                         $('#errormessage').html("<label for='captcha_code' class='error'>Security Code was incorrect.</label>");
                     } else {
@@ -162,31 +162,32 @@ jQuery(function ($) {
         }
     });
 
-    $('#subscribe').click(function () {
-        $("#subscribe-form").validate({
-            ignore: ":hidden",
-            rules: {
-                email: {
-                    minlength: 2,
-                    maxlength: 50,
-                    required: true
-                }
+    $("#subscribe-form").validate({
+        ignore: ":hidden",
+        rules: {
+            email: {
+                minlength: 2,
+                maxlength: 50,
+                required: true
             }
-        });
+        }
+    });
+
+    $('#subscribe').click(function () {
         var subscriberEmail = $('#subscriberEmail').val();
         if (_.isEmpty(subscriberEmail)) {
-            $('#message').html("Email alanını boş bırakmayınız..")
+            $('#subscriberMessage').html("Email alanını boş bırakmayınız..")
                 .hide()
                 .fadeIn(2000, function () {
-                    $('#message').append("");
+                    $('#subscriberMessage').append("");
                 });
             return;
         }
         if (isNotValidEmail(subscriberEmail)) {
-            $('#message').html("Email formatı hatalı..")
+            $('#subscriberMessage').html("Email formatı hatalı..")
                 .hide()
                 .fadeIn(2000, function () {
-                    $('#message').append("");
+                    $('#subscriberMessage').append("");
                 });
             return;
         }
@@ -204,25 +205,131 @@ jQuery(function ($) {
                 if (data.status == 500) {
                     console.log('Server Error');
                 }
-                $('#message').addClass("").html("Bir yerde hata var gibi duruyor..?")
+                $('#subscriberMessage').addClass("").html("Bir yerde hata var gibi duruyor..?")
                     .hide()
                     .fadeIn(5000, function () {
-                        $('#message').html("");
+                        $('#subscriberMessage').html("");
                     });
             },
             success: function (data) {
                 if (_.isEqual(data, true)) {
-                    $('#message').html("Teşekkürler..")
+                    $('#subscriberMessage').html("Teşekkürler..")
                         .hide()
                         .fadeIn(2000, function () {
                             $('#message').append("");
                         });
                     $('#subscriberEmail').val("");
                 } else {
-                    $('#message').html(data)
+                    $('#subscriberMessage').html(data)
+                        .hide()
+                        .fadeIn(2000, function () {
+                            $('#subscriberMessage').append("");
+                        });
+                }
+            }
+        });
+    });
+
+    //!!Comment Reply!!//
+    $("#comment-reply-form").validate({
+        ignore: ":hidden",
+        rules: {
+            commentFullname: {
+                minlength: 2,
+                maxlength: 50,
+                required: true
+            },
+            commentEmail: {
+                minlength: 2,
+                maxlength: 50,
+                required: true
+            },
+            commentMessage: {
+                minlength: 8,
+                maxlength: 1000,
+                required: true
+            }
+
+        }
+    });
+    $('#replyComment').click(function () {
+        var commentEmail = $('#commentEmail').val();
+        if (_.isEmpty(commentEmail)) {
+            $('#replyCommentErrorMessage').html("Email alanını boş bırakmayınız..")
+                .hide()
+                .fadeIn(2000, function () {
+                    $('#replyCommentErrorMessage').append("");
+                });
+            return;
+        }
+        if (isNotValidEmail(commentEmail)) {
+            $('#replyCommentErrorMessage').html("Email formatı hatalı..")
+                .hide()
+                .fadeIn(2000, function () {
+                    $('#replyCommentErrorMessage').append("");
+                });
+            return;
+        }
+        var commentId = $('#commentId').val();
+        var commentFullname = $('#commentFullname').val();
+        if (_.isEmpty(commentFullname)) {
+            $('#replyCommentErrorMessage').html("Ad Soyad alanını boş bırakmayınız..")
+                .hide()
+                .fadeIn(2000, function () {
+                    $('#replyCommentErrorMessage').append("");
+                });
+            return;
+        }
+        var commentMessage = $('#commentMessage').val();
+        if (_.isEmpty(commentMessage) || (commentMessage.length < 10 && commentMessage.length > 1000)) {
+            $('#replyCommentErrorMessage').html("Mesajınız en az 10, en çok 1000 karakter olmalıdır..")
+                .hide()
+                .fadeIn(2000, function () {
+                    $('#replyCommentErrorMessage').append("");
+                });
+            return;
+        }
+        var replyCommentModel = {
+            email: commentEmail,
+            commentId: commentId,
+            fullname: commentFullname,
+            message: commentMessage
+        }
+        $.ajax({
+            type: "POST",
+            url: "/yorum/tekrar-yeni",
+            data: replyCommentModel,
+            error: function (data) {
+                alert(data);
+                if (data.status == 400) {
+                    console.log('Bad Request');
+                }
+                if (data.status == 500) {
+                    console.log('Server Error');
+                }
+                $('#replyCommentErrorMessage').addClass("").html("Bir yerde hata var gibi duruyor..?")
+                    .hide()
+                    .fadeIn(5000, function () {
+                        $('#replyCommentErrorMessage').html("");
+                    });
+            },
+            success: function (data) {
+                if (_.isNull(data.errorResponse)) {
+                    $('#replyCommentErrorMessage').html("Teşekkürler..")
                         .hide()
                         .fadeIn(2000, function () {
                             $('#message').append("");
+                        });
+                    $('#commentEmail').val("");
+                    $('#commentFullname').val("");
+                    $('#commentMessage').val("");
+                    $('#kpModal').modal('hide');
+                    location.reload();
+                } else {
+                    $('#replyCommentErrorMessage').html(data)
+                        .hide()
+                        .fadeIn(2000, function () {
+                            $('#replyCommentErrorMessage').append("");
                         });
                 }
             }
@@ -235,3 +342,14 @@ function isNotValidEmail(email) {
     var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
     return !re.test(email);
 }
+
+
+function showKpModal(commentId) {
+    $(document).ready(function () {
+        //$('#kpModal').modal('show');
+        $('#kpModal').modal('toggle');
+        $('#commentId').val(commentId);
+    });
+}
+
+//Uyarıları jquery.growl ile yap!

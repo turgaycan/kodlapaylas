@@ -21,11 +21,27 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <start-class>com.kp.KodlapaylasApplication</start-class>
         <java.version>1.8</java.version>
         <tomcat.version>8.0.26</tomcat.version>
         <spring.remote.version>2.0.8</spring.remote.version>
         <servlet-api.version>3.1.0</servlet-api.version>
-        <start-class>com.kp.KodlapaylasApplication</start-class>
+        <spring-springloaded.version>1.2.4.RELEASE</spring-springloaded.version>
+        <postgresql.version>9.4-1201-jdbc41</postgresql.version>
+        <hsqldb.version>2.3.2</hsqldb.version>
+        <bootstrap.version>3.3.4</bootstrap.version>
+        <masonry.version>3.3.2</masonry.version>
+        <OwlCarousel.version>1.3.2</OwlCarousel.version>
+        <jquery.version>1.11.2</jquery.version>
+        <webjars-locator.version>0.14</webjars-locator.version>
+        <modernizr.version>2.8.3</modernizr.version>
+        <jquery-validation.version>1.11.1</jquery-validation.version>
+        <underscorejs.version>1.8.3</underscorejs.version>
+        <commons-lang3.version>3.3.2</commons-lang3.version>
+        <commons-collections4.version>4.0</commons-collections4.version>
+        <ehcache.version>2.9.0</ehcache.version>
+        <spring-context-support.version>4.1.7.RELEASE</spring-context-support.version>
+        <spring-security-taglibs.version>3.2.7.RELEASE</spring-security-taglibs.version>
     </properties>
 
     <dependencies>
@@ -60,18 +76,17 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>springloaded</artifactId>
-            <version>1.2.4.RELEASE</version>
+            <version>${spring-springloaded.version}</version>
         </dependency>
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>9.4-1201-jdbc41</version>
-            <scope>runtime</scope>
+            <version>${postgresql.version}</version>
         </dependency>
         <dependency>
             <groupId>org.hsqldb</groupId>
             <artifactId>hsqldb</artifactId>
-            <version>2.3.2</version>
+            <version>${hsqldb.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -90,57 +105,57 @@
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>webjars-locator</artifactId>
-            <version>0.14</version>
+            <version>${webjars-locator.version}</version>
         </dependency>
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>jquery</artifactId>
-            <version>1.11.2</version>
+            <version>${jquery.version}</version>
         </dependency>
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>bootstrap</artifactId>
-            <version>3.1.1</version>
+            <version>${bootstrap.version}</version>
         </dependency>
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>masonry</artifactId>
-            <version>3.3.2</version>
+            <version>${masonry.version}</version>
         </dependency>
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>OwlCarousel</artifactId>
-            <version>1.3.2</version>
+            <version>${OwlCarousel.version}</version>
         </dependency>
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>modernizr</artifactId>
-            <version>2.8.3</version>
+            <version>${modernizr.version}</version>
         </dependency>
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>jquery-validation</artifactId>
-            <version>1.11.1</version>
+            <version>${jquery-validation.version}</version>
         </dependency>
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>underscorejs</artifactId>
-            <version>1.8.3</version>
+            <version>${underscorejs.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>3.3.2</version>
+            <version>${commons-lang3.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-collections4</artifactId>
-            <version>4.0</version>
+            <version>${commons-collections4.version}</version>
         </dependency>
         <dependency>
             <groupId>net.sf.ehcache</groupId>
             <artifactId>ehcache</artifactId>
-            <version>2.9.0</version>
+            <version>${ehcache.version}</version>
         </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>
@@ -149,7 +164,12 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context-support</artifactId>
-            <version>4.1.7.RELEASE</version>
+            <version>${spring-context-support.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-taglibs</artifactId>
+            <version>${spring-security-taglibs.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -173,6 +193,11 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <!--<configuration>-->
+                    <!--<jvmArguments>-->
+                        <!--<!-&#45;&#45;Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005&ndash;&gt;-->
+                    <!--</jvmArguments>-->
+                <!--</configuration>-->
             </plugin>
         </plugins>
     </build>
@@ -219,6 +244,5 @@
             </snapshots>
         </pluginRepository>
     </pluginRepositories>
-
 
 </project>

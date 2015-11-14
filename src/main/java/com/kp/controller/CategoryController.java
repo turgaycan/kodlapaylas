@@ -1,15 +1,13 @@
 package com.kp.controller;
 
+import com.kp.controller.base.PageController;
 import com.kp.domain.Article;
 import com.kp.domain.ArticleType;
 import com.kp.domain.model.dto.PagingDTO;
-import com.kp.service.article.ArticleService;
-import com.kp.service.article.ArticleTypeService;
 import com.kp.util.KpUrlPaths;
 import com.kp.util.KpUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,16 +21,10 @@ import java.util.Optional;
  * Created by turgaycan on 9/29/15.
  */
 @Controller
-@RequestMapping(value = "/kategori")
-public class CategoryController {
+@RequestMapping(value = KpUrlPaths.CATEGORY)
+public class CategoryController extends PageController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CategoryController.class);
-
-    @Autowired
-    private ArticleService articleService;
-
-    @Autowired
-    private ArticleTypeService articleTypeService;
 
     @RequestMapping(value = "/{categoryName:[A-Za-z0-9]+}", method = RequestMethod.GET)
     public ModelAndView listCategoryArticles(@PathVariable String categoryName) {
@@ -41,29 +33,26 @@ public class CategoryController {
 
     @RequestMapping(value = "/{categoryName:[A-Za-z0-9]+}/{pageNum:\\d+$}", method = RequestMethod.GET)
     public ModelAndView listCategoryArticles(@PathVariable String categoryName, @PathVariable Integer pageNum) {
-        int pageIndex = getPageIndex(pageNum);
+        int pageIndex = pageIndex(pageNum);
         return getModelAndView(categoryName, pageIndex);
     }
 
-    private int getPageIndex(Integer pageNum) {
-        if (pageNum == null || pageNum <= 0) {
-            return PagingDTO.DEFAULT_PAGE;
-        }
-        return pageNum;
-    }
-
-    private ModelAndView getModelAndView(@PathVariable String categoryName, int page) {
+    @Override
+    protected ModelAndView getModelAndView(String categoryName, Integer page) {
         final Optional<ArticleType> category = articleTypeService.findByName(categoryName);
         if (!category.isPresent()) {
-            return KpUtil.redirectToMAV("/error/404");
+            LOGGER.info("Category not found : {}  ", categoryName);
+            return KpUtil.redirectToMAV("/error");
         }
 
-        ModelAndView mav = new ModelAndView("/kategori");
         final Page<Article> articlePages = articleService.findByArticleType(category.get(), page, PagingDTO.DEFAULT_PAGE_SIZE);
-        mav.addObject("pageArticles", articlePages.getContent());
-        mav.addObject("pagingDTO", PagingDTO.newInstance().buildPagingDTO(articlePages));
-        mav.addObject("pageUrl", KpUrlPaths.buildCategoryUrl(categoryName));
-        return mav;
+        LOGGER.info("articlePages {} ", articlePages.getTotalElements());
+        return pageModelAndView(KpUrlPaths.CATEGORY_VIEW, articlePages, categoryName);
+    }
+
+    @Override
+    protected String buildPageUrl(String categoryName) {
+        return KpUrlPaths.buildCategoryUrl(categoryName);
     }
 
 }

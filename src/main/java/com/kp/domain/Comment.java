@@ -4,7 +4,9 @@ import com.kp.domain.base.BaseEntity;
 import com.kp.domain.model.CommentStatus;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by turgaycan on 9/22/15.
@@ -27,11 +29,27 @@ public class Comment extends BaseEntity {
     @Column(name = "comment_status")
     private CommentStatus commentStatus = CommentStatus.WAITING;
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "article_id", referencedColumnName = "id", nullable = false)
     private Article article;
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private User user;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent_id", referencedColumnName = "id", nullable = true)
+    private Comment parent;
 
     public Comment() {
+    }
+
+    public Comment(Long id, Comment parent) {
+        this.id = id;
+        this.parent = parent;
+    }
+
+    public Comment(Long id, Comment parent, Article article) {
+        this.id = id;
+        this.parent = parent;
+        this.article = article;
     }
 
     public Long getId() {
@@ -80,5 +98,42 @@ public class Comment extends BaseEntity {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Comment getParent() {
+        return parent;
+    }
+
+    public void setParent(Comment parent) {
+        this.parent = parent;
+    }
+
+
+    public boolean hasReplyComments() {
+        return !hasNotReplyComments();
+    }
+
+    public boolean hasNotReplyComments() {
+        return parent == null;
+    }
+
+    public boolean isChild(Comment comment){
+        return this.equals(comment);
+    }
+
+
+    public List<Comment> replyParentComments() {
+        List<Comment> replyCommentList = new ArrayList<>();
+        while (hasReplyComments()) {
+            replyCommentList.add(parent);
+            Comment replyComment = parent.getParent();
+            if (replyComment.hasNotReplyComments()) {
+                replyCommentList.add(replyComment);
+                break;
+            }
+            replyCommentList.add(replyComment);
+            setParent(replyComment.getParent());
+        }
+        return replyCommentList;
     }
 }

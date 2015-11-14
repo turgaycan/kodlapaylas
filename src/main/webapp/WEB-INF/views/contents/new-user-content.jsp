@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="container">
 
     <div class="row">
@@ -15,40 +16,40 @@
 
                         <div class="panel-body">
 
-                            <form class="entry-form" action="<c:url value='/uye/kayit-ol' />" method="post" role="form">
+                            <form class="entry-form" action="<c:url value='/uye/kayit-ol' />" method="post" role="userModel">
 
                                 <div class="form-group">
 
-                                    <input type="text" name="username" id="username" tabindex="1"
-                                           class="form-control" placeholder="Username" value="">
+                                    <input type="text" name="fullname" id="fullname" tabindex="1" required="true"
+                                           class="form-control" placeholder="Ad Soyad" value="">
 
                                 </div>
 
                                 <div class="form-group">
 
-                                    <input type="email" name="email" id="email" tabindex="1" class="form-control"
-                                           placeholder="Email Address" value="">
+                                    <input type="email" name="email" id="email" tabindex="1" class="form-control" required="true"
+                                           placeholder="Email Adresi" value="">
 
                                 </div>
 
                                 <div class="form-group">
 
-                                    <input type="password" name="password" id="password" tabindex="2"
-                                           class="form-control" placeholder="Password">
+                                    <input type="password" name="password" id="password" tabindex="2" required="true"
+                                           class="form-control" placeholder="Şifre">
 
                                 </div>
 
                                 <div class="form-group">
 
-                                    <input type="password" name="passwordRepeated" id="passwordRepeated"
-                                           tabindex="2" class="form-control" placeholder="Confirm Password">
+                                    <input type="password" name="passwordRepeated" id="passwordRepeated" required="true"
+                                           tabindex="2" class="form-control" placeholder="Şifre Onayla">
 
                                 </div>
 
                                 <div class="form-group">
 
                                     <input type="submit" name="register-submit" id="register-submit" tabindex="4"
-                                           class="btn btn-default btn-lg" value="Register">
+                                           class="btn btn-default btn-lg" value="Kaydet">
 
 
                                 </div>

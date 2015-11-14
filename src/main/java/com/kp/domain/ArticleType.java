@@ -79,4 +79,20 @@ public class ArticleType extends BaseEntity {
     public void setCreatedate(Date createdate) {
         this.createdate = createdate;
     }
+
+    public ArticleType getRoot() {
+        while (getParent() != null) {
+            return getParent().getRoot();
+        }
+        return this;
+    }
+
+    public boolean isRoot(){
+        return getParent() == null;
+    }
+
+    public boolean isChild(){
+        return !isRoot();
+    }
+
 }

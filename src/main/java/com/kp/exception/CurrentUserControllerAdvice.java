@@ -1,5 +1,6 @@
 package com.kp.exception;
 
+import com.kp.domain.User;
 import com.kp.domain.model.CurrentUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,9 +16,15 @@ public class CurrentUserControllerAdvice {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CurrentUserControllerAdvice.class);
 
-    @ModelAttribute("currentUser")
-    public CurrentUser getCurrentUser(Authentication authentication) {
-        return (authentication == null) ? null : (CurrentUser) authentication.getPrincipal();
+    @ModelAttribute
+    public User currentUser(Authentication authentication) {
+        if (authentication != null &&
+                authentication.getPrincipal() != null &&
+                authentication.getPrincipal() instanceof User
+                ) {
+            return (User) authentication.getPrincipal();
+        }
+        return null;
     }
 
 }

@@ -21,6 +21,7 @@ public class Tag extends BaseEntity {
     private String name;
     private int count;
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "article_type_id")
     private ArticleType articleType;
 
     public Tag() {

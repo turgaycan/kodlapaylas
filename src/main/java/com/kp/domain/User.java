@@ -3,9 +3,15 @@ package com.kp.domain;
 import com.kp.domain.base.BaseEntity;
 import com.kp.domain.model.Role;
 import com.kp.domain.model.UserStatus;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by turgaycan on 9/20/15.
@@ -13,7 +19,7 @@ import java.util.Date;
 @Entity
 @Table(name = "user", schema = "kp")
 @SequenceGenerator(name = "user_id_seq", sequenceName = "user_id_seq", allocationSize = 1)
-public class User extends BaseEntity {
+public class User extends BaseEntity implements UserDetails {
     private static final long serialVersionUID = 8102751320550090329L;
 
     @Id
@@ -26,6 +32,8 @@ public class User extends BaseEntity {
     private String username;
     @Column(nullable = false)
     private String password;
+    @Column
+    private String passwordsalt;
     @Enumerated(EnumType.STRING)
     @Column(name = "user_status")
     private UserStatus userStatus = UserStatus.NEW;
@@ -40,10 +48,9 @@ public class User extends BaseEntity {
     public User() {
     }
 
-    public User(Long id, String email, String username, String password) {
+    public User(Long id, String email, String password) {
         this.id = id;
         this.email = email;
-        this.username = username;
         this.password = password;
     }
 
@@ -63,6 +70,7 @@ public class User extends BaseEntity {
         this.email = email;
     }
 
+    @Override
     public String getUsername() {
         return username;
     }
@@ -77,6 +85,14 @@ public class User extends BaseEntity {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getPasswordsalt() {
+        return passwordsalt;
+    }
+
+    public void setPasswordsalt(String passwordsalt) {
+        this.passwordsalt = passwordsalt;
     }
 
     public UserStatus getUserStatus() {
@@ -125,5 +141,32 @@ public class User extends BaseEntity {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<GrantedAuthority> authorityList = new ArrayList<>();
+        authorityList.add(new SimpleGrantedAuthority(Role.USER.name()));
+        return authorityList;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }
