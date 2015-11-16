@@ -7,6 +7,6 @@ import org.springframework.context.annotation.Configuration;
  * Created by turgaycan on 9/20/15.
  */
 @Configuration
-@ComponentScan
+@ComponentScan(basePackages = "com.kp")
 public class AppConfig {
 }

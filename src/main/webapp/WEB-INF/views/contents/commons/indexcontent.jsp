@@ -26,7 +26,7 @@
                                     alt="image post"/></div>
                             <div class="info">
                                 <p>Yazar :</p>
-                                <a href="author.html">${lastArticle.user.fullname}</a></div>
+                                <a href="<c:url value="/hakkimda" />">${lastArticle.user.fullname}</a></div>
                         </li>
                         <li>
                             <div class="icon-box"><i class="fa fa-calendar"></i></div>
@@ -56,17 +56,21 @@
                     </ul>
                 </div>
                 <div class="caption">
-                    <h3><a href="<c:url value="/${lastArticle.buildUrl()}" />">${lastArticle.title}</a></h3>
+                    <h3><a title="${lastArticle.title}"
+                           href="<c:url value="/${lastArticle.buildUrl()}" />">${lastArticle.title}</a></h3>
 
-                    <p>${fn:substring(lastArticle.content, 0, 100).contains("<code>") ? '' : fn:substring(lastArticle.content, 0, 100)}</p>
+                    <p>${fn:substring(lastArticle.content, 0, 300).contains("<code>") ? '' : fn:substring(lastArticle.content, 0, 300)}</p>
 
-                    <div class="post-category"><a href="<c:url value="/kategori/${fn:toLowerCase(lastArticle.articleType.name)}" />"><span>&nbsp;</span> ${lastArticle.articleType.name}</a></div>
+                    <div class="post-category"><a title="${fn:toLowerCase(lastArticle.articleType.name)}"
+                                                  href="<c:url value="/kategori/${fn:toLowerCase(lastArticle.articleType.name)}" />"><span>&nbsp;</span> ${lastArticle.articleType.name}
+                    </a></div>
                     <ul class="list-inline tags">
                         <c:forEach items="${lastArticle.articleTags}" var="tag">
-                            <li><a href="<c:url value="/${tag}" />">${tag}</a></li>
+                            <li><a title="${tag}" href="<c:url value="/${tag}" />">${tag}</a></li>
                         </c:forEach>
                     </ul>
-                    <a class="btn btn-default btn-lg" href="<c:url value="/${lastArticle.buildUrl()}" />" role="button">Daha Fazla..</a></div>
+                    <a class="btn btn-default btn-lg" title="<c:url value="/${lastArticle.buildUrl()}"/>"
+                       href="<c:url value="/${lastArticle.buildUrl()}" />" role="button">Daha Fazla..</a></div>
             </article>
             <div class="clearfix"></div>
         </div>

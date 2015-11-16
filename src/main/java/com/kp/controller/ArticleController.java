@@ -45,4 +45,11 @@ public class ArticleController extends CommonController {
         return KpUtil.redirectToMAV(url);
     }
 
+
+    @RequestMapping(value = "/kp/articles/{page:\\d+$}", method = RequestMethod.GET)
+    public ModelAndView articles(@PathVariable("page") Long page){
+
+        return new ModelAndView("/kp/articles");
+    }
+
 }

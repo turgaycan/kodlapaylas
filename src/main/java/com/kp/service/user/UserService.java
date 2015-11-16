@@ -33,8 +33,8 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+//    @Autowired
+//    private PasswordEncoder passwordEncoder;
 
     @Transactional(readOnly = true)
     public Optional<User> getUserById(long id) {
@@ -55,7 +55,7 @@ public class UserService {
         user.setEmail(userModel.getEmail());
         user.setCreatedate(new Date());
         user.setPasswordsalt(UUID.randomUUID().toString());
-        user.setPassword(passwordEncoder.encode(userModel.getPassword() + user.getPasswordsalt()));
+//        user.setPassword(passwordEncoder.encode(userModel.getPassword() + user.getPasswordsalt()));
         return userRepository.save(user);
     }
 
@@ -73,7 +73,7 @@ public class UserService {
         user.setCreatedate(new Date());
         user.setUserStatus(UserStatus.GUEST);
         user.setPasswordsalt(UUID.randomUUID().toString());
-        user.setPassword(passwordEncoder.encode(RandomStringUtils.random(8) + user.getPasswordsalt()));
+//        user.setPassword(passwordEncoder.encode(RandomStringUtils.random(8) + user.getPasswordsalt()));
         return userRepository.save(user);
     }
 
@@ -85,9 +85,9 @@ public class UserService {
         }
 
         String saltedPassword = providedPassword + user.getPasswordsalt();
-        if (passwordEncoder.matches(saltedPassword, user.getPassword())) {
-            return user;
-        }
+//        if (passwordEncoder.matches(saltedPassword, user.getPassword())) {
+//            return user;
+//        }
 
         return null;
     }

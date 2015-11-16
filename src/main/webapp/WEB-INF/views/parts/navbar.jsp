@@ -1,81 +1,81 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <%--<script type="text/javascript">--%>
-    <%--$(document).ready(function(){--%>
-        <%--//Bilgi kısmına ilk değerimizi gönderiyoruz--%>
-        <%--$("#img_info span").html("Buraya img bilgisi gelecek...");--%>
-        <%--//Listemizin genişlik değerini buluyoruz--%>
-        <%--//(64px icon width+10px padding değeri=74px*6 (6 adet li etiketi var))--%>
-        <%--var width=($(".img_list li").length)*74;--%>
-        <%--//3 adet icon kalınca duracağımız göre--%>
-        <%--//son 3 icon soldan uzaklık değeri (left)--%>
-        <%--var last_trio=222-width;--%>
-        <%--//li etketi içindeki  a link üzerine olay tetikleyicimiz--%>
-        <%--$(".img_list li a").on({--%>
-            <%--mouseenter:function(){ //Alana girince--%>
-                <%--//Gölge sınıfımız ekleniyor(CSS3 özellik içerir: IE9 öncesi gölge eklenmez)--%>
-                <%--$(this).find("img").addClass("shadow_box");--%>
-                <%--//Resimlerin üzerine gelince 1.1 katı büyütüyoruz--%>
-                <%--var img_width=parseInt(($(this).find("img").attr("width"))*1.1);--%>
-                <%--var img_height=parseInt(($(this).find("img").attr("height"))*1.1);--%>
-                <%--//Resimlerin büyütülmüş boyutlarını giriyoruz--%>
-                <%--$(this).find("img").attr({--%>
-                    <%--'width':img_width,--%>
-                    <%--'height':img_height--%>
-                <%--});--%>
-                <%--//Bilgi alanına, resimlerin içindeki--%>
-                <%--//data-info etiketindeki bilgiyi gönderiyoruz--%>
-                <%--$("#img_info span").html($(this).find("img").data("info"));--%>
-            <%--},--%>
-            <%--mouseleave:function(){ //Alandan çıkınca--%>
-                <%--//Gölge sınıfını (CSS3 özellik içerir) kaldırıyoruz--%>
-                <%--$(this).find("img").removeClass("shadow_box");--%>
-                <%--//Resimleri orjinal boyutlarına getiriyoruz--%>
-                <%--$(this).find("img").attr({--%>
-                    <%--'width':64,--%>
-                    <%--'height':64--%>
-                <%--});--%>
-                <%--//Bilgi kısmına ilk değerimizi gönderiyoruz--%>
-                <%--$("#img_info span").html("Buraya img bilgisi gelecek...");--%>
-            <%--}--%>
-        <%--});--%>
-        <%--//Sonraki butonuna tıklanınca--%>
-        <%--$("#next_but").click(function(){--%>
-            <%--//Önceki butonunun resmini aktif resim ile değiştiriyoruz--%>
-            <%--$("#prev_but").children("img").attr('src','left_active.png');--%>
-            <%--//Listenin soldan uzaklığını belirliyoruz--%>
-            <%--var list_pos=($(".img_list")).position();--%>
-            <%--var list_left=list_pos.left;--%>
-            <%--//Eğer liste son 3 resme gelmediyse sola doğru kaydırıyoruz--%>
-            <%--if(list_left>last_trio){--%>
-                <%--$(".img_list").animate({--%>
-                    <%--left:"-=75"--%>
-                <%--});--%>
-            <%--}else{--%>
-                <%--//Son 3 resim görüntüleniyorsa, yani sona gelindiyse--%>
-                <%--//Pasif buton resmiyle değiştiriyoruz--%>
-                <%--$(this).children("img").attr("src","right_passive.png");--%>
-            <%--}--%>
-        <%--});--%>
-        <%--//Önceki butonuna tıklanınca--%>
-        <%--$("#prev_but").click(function(){--%>
-            <%--//Sonraki butonunun resmini aktif resim ile değiştiriyoruz--%>
-            <%--$("#next_but").children("img").attr("src","right_active.png");--%>
-            <%--//Listenin soldan uzaklığını belirliyoruz--%>
-            <%--var list_pos=($(".img_list")).position();--%>
-            <%--var list_left=list_pos.left;--%>
-            <%--//Eğer liste ilk 3 resme gelmediyse sağa doğru kaydırıyoruz--%>
-            <%--if(list_left<0){--%>
-                <%--$(".img_list").animate({--%>
-                    <%--left:"+=75"--%>
-                <%--});--%>
-            <%--}else{--%>
-                <%--//Son 3 resim görüntüleniyorsa, yani başa gelindiyse--%>
-                <%--//Pasif buton resmiyle değiştiriyoruz--%>
-                <%--$(this).children("img").attr("src","left_passive.png");--%>
-            <%--}--%>
-        <%--});--%>
-    <%--});--%>
+<%--$(document).ready(function(){--%>
+<%--//Bilgi kısmına ilk değerimizi gönderiyoruz--%>
+<%--$("#img_info span").html("Buraya img bilgisi gelecek...");--%>
+<%--//Listemizin genişlik değerini buluyoruz--%>
+<%--//(64px icon width+10px padding değeri=74px*6 (6 adet li etiketi var))--%>
+<%--var width=($(".img_list li").length)*74;--%>
+<%--//3 adet icon kalınca duracağımız göre--%>
+<%--//son 3 icon soldan uzaklık değeri (left)--%>
+<%--var last_trio=222-width;--%>
+<%--//li etketi içindeki  a link üzerine olay tetikleyicimiz--%>
+<%--$(".img_list li a").on({--%>
+<%--mouseenter:function(){ //Alana girince--%>
+<%--//Gölge sınıfımız ekleniyor(CSS3 özellik içerir: IE9 öncesi gölge eklenmez)--%>
+<%--$(this).find("img").addClass("shadow_box");--%>
+<%--//Resimlerin üzerine gelince 1.1 katı büyütüyoruz--%>
+<%--var img_width=parseInt(($(this).find("img").attr("width"))*1.1);--%>
+<%--var img_height=parseInt(($(this).find("img").attr("height"))*1.1);--%>
+<%--//Resimlerin büyütülmüş boyutlarını giriyoruz--%>
+<%--$(this).find("img").attr({--%>
+<%--'width':img_width,--%>
+<%--'height':img_height--%>
+<%--});--%>
+<%--//Bilgi alanına, resimlerin içindeki--%>
+<%--//data-info etiketindeki bilgiyi gönderiyoruz--%>
+<%--$("#img_info span").html($(this).find("img").data("info"));--%>
+<%--},--%>
+<%--mouseleave:function(){ //Alandan çıkınca--%>
+<%--//Gölge sınıfını (CSS3 özellik içerir) kaldırıyoruz--%>
+<%--$(this).find("img").removeClass("shadow_box");--%>
+<%--//Resimleri orjinal boyutlarına getiriyoruz--%>
+<%--$(this).find("img").attr({--%>
+<%--'width':64,--%>
+<%--'height':64--%>
+<%--});--%>
+<%--//Bilgi kısmına ilk değerimizi gönderiyoruz--%>
+<%--$("#img_info span").html("Buraya img bilgisi gelecek...");--%>
+<%--}--%>
+<%--});--%>
+<%--//Sonraki butonuna tıklanınca--%>
+<%--$("#next_but").click(function(){--%>
+<%--//Önceki butonunun resmini aktif resim ile değiştiriyoruz--%>
+<%--$("#prev_but").children("img").attr('src','left_active.png');--%>
+<%--//Listenin soldan uzaklığını belirliyoruz--%>
+<%--var list_pos=($(".img_list")).position();--%>
+<%--var list_left=list_pos.left;--%>
+<%--//Eğer liste son 3 resme gelmediyse sola doğru kaydırıyoruz--%>
+<%--if(list_left>last_trio){--%>
+<%--$(".img_list").animate({--%>
+<%--left:"-=75"--%>
+<%--});--%>
+<%--}else{--%>
+<%--//Son 3 resim görüntüleniyorsa, yani sona gelindiyse--%>
+<%--//Pasif buton resmiyle değiştiriyoruz--%>
+<%--$(this).children("img").attr("src","right_passive.png");--%>
+<%--}--%>
+<%--});--%>
+<%--//Önceki butonuna tıklanınca--%>
+<%--$("#prev_but").click(function(){--%>
+<%--//Sonraki butonunun resmini aktif resim ile değiştiriyoruz--%>
+<%--$("#next_but").children("img").attr("src","right_active.png");--%>
+<%--//Listenin soldan uzaklığını belirliyoruz--%>
+<%--var list_pos=($(".img_list")).position();--%>
+<%--var list_left=list_pos.left;--%>
+<%--//Eğer liste ilk 3 resme gelmediyse sağa doğru kaydırıyoruz--%>
+<%--if(list_left<0){--%>
+<%--$(".img_list").animate({--%>
+<%--left:"+=75"--%>
+<%--});--%>
+<%--}else{--%>
+<%--//Son 3 resim görüntüleniyorsa, yani başa gelindiyse--%>
+<%--//Pasif buton resmiyle değiştiriyoruz--%>
+<%--$(this).children("img").attr("src","left_passive.png");--%>
+<%--}--%>
+<%--});--%>
+<%--});--%>
 <%--</script>--%>
 
 <nav class="navbar main-menu navbar-default navbar-fixed-top" role="navigation">
@@ -104,13 +104,12 @@
 
             <ul class="nav navbar-nav menu" id="menu">
 
-                <li class="dropdown"><a href="<c:url value="/" /> " class="dropdown-toggle" data-toggle="dropdown"
-                                        role="button"
-                                        aria-expanded="false">Anasayfa <span class="caret"></span></a>
+                <li><a title="Anasayfa" href="<c:url value="/" />" role="button"
+                       aria-expanded="false">Anasayfa</a>
                 </li>
 
                 <li class="dropdown mega-dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Kategoriler<span
+                    <a title="Kategoriler" href="#" class="dropdown-toggle" data-toggle="dropdown">Kategoriler<span
                             class="caret"></span></a>
 
                     <script type="text/javascript">

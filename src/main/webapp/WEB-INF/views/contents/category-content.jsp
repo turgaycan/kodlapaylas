@@ -42,7 +42,7 @@
                                         <li>
                                             <div class="info">
 
-                                                <p>Posted on:</p>
+                                                <p>Tarih</p>
 
                                                 <strong>
                                                     <fmt:formatDate value="${article.createdate}" type="both"
@@ -51,9 +51,9 @@
                                         </li>
                                         <li>
                                             <div class="info">
-                                                <p>Comments:</p>
+                                                <p>Görüntüleme</p>
 
-                                                <strong>127</strong></div>
+                                                <strong>${article.viewNumber}</strong></div>
                                         </li>
                                     </ul>
                                 </div>

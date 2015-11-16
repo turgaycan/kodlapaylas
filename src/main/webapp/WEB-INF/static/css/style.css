@@ -332,7 +332,7 @@ blockquote { background: #f2f6f8; border: 1px solid #e5e5e5; line-height: 28px; 
 
 .vt-post.post .author-info ul li{padding-left: 15px;
     padding-right: 15px; float: none;}
-.vt-post.post .author-info{border-radius:0px 0px 0px 3px; border-bottom: none; border-right: 1px solid #ddd;padding: 15px 12px 15px 12px;}
+.vt-post.post .author-info{border-radius:0px 0px 0px 3px; border-bottom: none; border-right: 1px solid #ddd;padding: 15px 12px 15px 6px;}
 .vt-post.post .post-img a img{border-radius:3px 0px 0px 0px;}
 .vt-post.post .caption{padding: 25px 0px;}
 /***********************pagination*********************/

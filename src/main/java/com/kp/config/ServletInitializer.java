@@ -1,6 +1,5 @@
 package com.kp.config;
 
-import com.kp.KodlapaylasApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
 
