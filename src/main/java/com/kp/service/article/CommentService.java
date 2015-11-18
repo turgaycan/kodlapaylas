@@ -84,9 +84,4 @@ public class CommentService {
         return Optional.ofNullable(commentRepository.findByParent(comment));
     }
 
-    @Transactional
-    public long getArticleCommentCount(Article article){
-        return commentRepository.getArticleCount(article);
-    }
-
 }

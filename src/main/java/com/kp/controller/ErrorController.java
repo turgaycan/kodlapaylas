@@ -21,7 +21,7 @@ public class ErrorController {
     @RequestMapping(value = "/error", method = RequestMethod.GET)
     public ModelAndView error() {
         LOGGER.info("hasnicktir bea..");
-        ModelAndView mav = new ModelAndView("error");
+        ModelAndView mav = new ModelAndView("/error");
         mav.addObject("error", new KpErrorResponse(KpErrors.NOT_FOUND_SEARCH));
         return mav;
     }

@@ -36,8 +36,8 @@ public class KPExceptionHandlerControllerAdvice extends ResponseEntityExceptionH
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public String handleNoSuchElementException(NoSuchElementException e) {
         e.printStackTrace();
-//        ModelAndView mav = new ModelAndView("/error");
-//        mav.addObject("error", Throwables.getRootCause(e));
+        ModelAndView mav = new ModelAndView("/error");
+        mav.addObject("error", Throwables.getRootCause(e));
         return "redirect:/error";
     }
 

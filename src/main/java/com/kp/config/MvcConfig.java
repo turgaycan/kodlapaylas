@@ -45,28 +45,28 @@ public class MvcConfig extends WebMvcAutoConfiguration.WebMvcAutoConfigurationAd
         registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
     }
 
-//    @Bean
-//    public CustomHandlerAdapter customHandlerAdapter() {
-//        return new CustomHandlerAdapter();
-//    }
+    @Bean
+    public CustomHandlerAdapter customHandlerAdapter() {
+        return new CustomHandlerAdapter();
+    }
 
-//    @Bean
-//    public CustomBaseHandlerMapping customBaseHandlerMapping() {
-//        return new CustomBaseHandlerMapping();
-//    }
+    @Bean
+    public CustomBaseHandlerMapping customBaseHandlerMapping() {
+        return new CustomBaseHandlerMapping();
+    }
 
-//    @Bean
-//    public ControllerClassNameHandlerMapping controllerClassNameHandlerMapping(){
-//        ControllerClassNameHandlerMapping controllerClassNameHandlerMapping = new ControllerClassNameHandlerMapping();
-//        controllerClassNameHandlerMapping.setBasePackage("com.kp.handler");
-//        controllerClassNameHandlerMapping.setOrder(-1);
-//        return controllerClassNameHandlerMapping;
-//    }
+    @Bean
+    public ControllerClassNameHandlerMapping controllerClassNameHandlerMapping(){
+        ControllerClassNameHandlerMapping controllerClassNameHandlerMapping = new ControllerClassNameHandlerMapping();
+        controllerClassNameHandlerMapping.setBasePackage("com.kp.handler");
+        controllerClassNameHandlerMapping.setOrder(-1);
+        return controllerClassNameHandlerMapping;
+    }
 
-//    @Bean
-//    public BeanNameUrlHandlerMapping beanNameUrlHandlerMapping(){
-//        return new BeanNameUrlHandlerMapping();
-//    }
+    @Bean
+    public BeanNameUrlHandlerMapping beanNameUrlHandlerMapping(){
+        return new BeanNameUrlHandlerMapping();
+    }
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {

@@ -5,14 +5,12 @@
   Time: 01:40
   To change this template use File | Settings | File Templates.
 --%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="container">
-    <h2 class="heading">Yeni Fırından Çıktı!</h2>
+    <h2 class="heading">What's New</h2>
 
     <div class="row">
-        <div class="col-md-9 col-lg-9">
+        <div class="col-md-8 col-lg-8">
             <article class="post">
                 <div class="post-type post-img"><a href="#"><img
                         src="http://www.mirchu.net/themes/BlogDesk/assets/images/post/post.jpg"
@@ -25,67 +23,90 @@
                                     class="img-responsive"
                                     alt="image post"/></div>
                             <div class="info">
-                                <p>Yazar :</p>
-                                <a href="<c:url value="/hakkimda" />">${lastArticle.user.fullname}</a></div>
+                                <p>Posted by:</p>
+                                <a href="author.html">Waqas Hussain</a></div>
                         </li>
                         <li>
                             <div class="icon-box"><i class="fa fa-calendar"></i></div>
                             <div class="info">
-                                <p>Tarih :</p>
-                                <strong> <fmt:formatDate value="${lastArticle.createdate}" type="both"
-                                                         pattern="dd MMM, yyyy"/></strong></div>
+                                <p>Posted on:</p>
+                                <strong>Mar 21, 2015</strong></div>
                         </li>
                         <li>
                             <div class="icon-box"><i class="fa fa-comments-o"></i></div>
                             <div class="info">
-                                <p>Yorum</p>
-                                <strong>${lastArticle.commentListSize}</strong></div>
+                                <p>Comments:</p>
+                                <strong>127</strong></div>
                         </li>
                         <li>
                             <div class="icon-box"><i class="fa fa-eye"></i></div>
                             <div class="info">
-                                <p>Görüntüleme</p>
-                                <strong>${lastArticle.viewNumber}</strong></div>
-                        </li>
-                        <li>
-                            <div class="icon-box"><i class="fa fa-eye"></i></div>
-                            <div class="info">
-                                <p>İndirme</p>
-                                <strong>${lastArticle.downloadNumber}</strong></div>
+                                <p>Total View:</p>
+                                <strong>4289</strong></div>
                         </li>
                     </ul>
                 </div>
                 <div class="caption">
-                    <h3><a title="${lastArticle.title}"
-                           href="<c:url value="/${lastArticle.buildUrl()}" />">${lastArticle.title}</a></h3>
+                    <h3><a href="single.php">The Heading Text Size Should Match With the Size Of The Image</a></h3>
 
-                    <p>${fn:substring(lastArticle.content, 0, 300).contains("<code>") ? '' : fn:substring(lastArticle.content, 0, 300)}</p>
+                    <p> Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec
+                        ullamcorper nulla non metus auctor fringilla. Duis mollis, est non commodo luctus, nisi erat
+                        porttitor ligula, eget lacinia odio sem nec elit. Donec ullamcorper nulla non metus auctor
+                        fringilla.</p>
 
-                    <div class="post-category"><a title="${fn:toLowerCase(lastArticle.articleType.name)}"
-                                                  href="<c:url value="/kategori/${fn:toLowerCase(lastArticle.articleType.name)}" />"><span>&nbsp;</span> ${lastArticle.articleType.name}
-                    </a></div>
+                    <div class="post-category"><a href="#"><span>&nbsp;</span> Market Research</a></div>
                     <ul class="list-inline tags">
-                        <c:forEach items="${lastArticle.articleTags}" var="tag">
-                            <li><a title="${tag}" href="<c:url value="/${tag}" />">${tag}</a></li>
-                        </c:forEach>
+                        <li><a href="#">Photography</a></li>
+                        <li><a href="#">Products</a></li>
+                        <li><a href="#">Marketing</a></li>
+                        <li><a href="#">Business</a></li>
+                        <li><a href="#">Photoshop</a></li>
+                        <li><a href="#">LifeStyle</a></li>
                     </ul>
-                    <a class="btn btn-default btn-lg" title="<c:url value="/${lastArticle.buildUrl()}"/>"
-                       href="<c:url value="/${lastArticle.buildUrl()}" />" role="button">Daha Fazla..</a></div>
+                    <a class="btn btn-default btn-lg" href="#" role="button">Read More</a></div>
             </article>
             <div class="clearfix"></div>
         </div>
-        <aside class="col-md-3 col-lg-3">
+        <aside class="col-md-4 col-lg-4">
             <div class="row">
-                <script type="text/javascript">
-                    $.get("/recent-articles-${lastArticle.id}",
-                            async = true,
-                            function (data, status) {
-                                $('#recent-articles').append("" + data);
-                            });
+                <div class="col-sm-6 col-md-12 col-lg-12">
+                    <div class="panel panel-default theme-panel">
+                        <div class="panel-heading">Recent Articles</div>
+                        <div class="panel-body nopadding">
+                            <div class="media">
+                                <div class="media-left"><a href="#"> <img
+                                        src="http://www.mirchu.net/themes/BlogDesk/assets/images/post/rp1.jpg"
+                                        alt="author"/> </a></div>
+                                <div class="media-body">
+                                    <h4 class="media-heading"><a href="#">this is long Blog Heading Text Size for
+                                        recent articles</a></h4>
 
-                </script>
-                <div id="recent-articles"></div>
+                                    <p><a href="#">LifeStyle</a> &bull; 5 hours ago</p>
+                                </div>
+                            </div>
+                            <div class="media">
+                                <div class="media-left"><a href="#"> <img
+                                        src="http://www.mirchu.net/themes/BlogDesk/assets/images/post/rp2.jpg"
+                                        alt="author"/> </a></div>
+                                <div class="media-body">
+                                    <h4 class="media-heading"><a href="#">this is Blog Heading Text Size</a></h4>
 
+                                    <p><a href="#">Photography</a> &bull; 3 hours ago</p>
+                                </div>
+                            </div>
+                            <div class="media">
+                                <div class="media-left"><a href="#"> <img
+                                        src="http://www.mirchu.net/themes/BlogDesk/assets/images/post/rp3.jpg"
+                                        alt="author"/> </a></div>
+                                <div class="media-body">
+                                    <h4 class="media-heading"><a href="#">this is Blog Heading Text Size</a></h4>
+
+                                    <p><a href="#">Products</a> &bull; 2 hours ago</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="col-sm-6 col-md-12 col-lg-12">
                     <div class="panel panel-default theme-panel">
                         <div class="panel-heading">Categories</div>
@@ -180,7 +201,7 @@
             </div>
             <div class="clearfix"></div>
         </div>
-        <aside class="col-md-3 col-lg-3">
+        <aside class="col-md-4 col-lg-4">
             <div class="row">
                 <div class="col-sm-6 col-md-12 col-lg-12">
                     <div class="panel panel-default theme-panel">
@@ -290,7 +311,7 @@
             </div>
             <div class="clearfix"></div>
         </div>
-        <aside class="col-md-3 col-lg-3">
+        <aside class="col-md-4 col-lg-4">
             <div class="row">
                 <div class="col-sm-6 col-md-12 col-lg-12">
                     <div class="panel panel-default theme-panel">

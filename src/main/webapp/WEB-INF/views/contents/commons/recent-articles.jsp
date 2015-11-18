@@ -21,17 +21,17 @@
                 <div class="media">
                     <!--loop -->
                     <div class="media-left">
-                        <a title="${each.title}" href="<c:url value="/${each.buildUrl()}" />">
+                        <a href="<c:url value="/${each.buildUrl()}" />">
                             <img src="http://www.mirchu.net/themes/BlogDesk/assets/images/post/rp1.jpg"
-                                 alt="${each.user.fullname}"/>
+                                 alt="author"/>
                         </a>
                     </div>
                     <div class="media-body">
-                        <h4 class="media-heading"><a title="${each.title}" href="<c:url value="/${each.buildUrl()}" />">${each.title}</a>
+                        <h4 class="media-heading"><a href="<c:url value="/${each.buildUrl()}" />">${each.title}</a>
                         </h4>
 
                         <p>
-                            <a title="${fn:toLowerCase(each.articleType.name)}" href="<c:url value="/kategori/${fn:toLowerCase(each.articleType.name)}" />">${each.articleType.name}</a> &bull;
+                            <a href="<c:url value="/kategori/${fn:toLowerCase(each.articleType.name)}" />">${each.articleType.name}</a> &bull;
                             <fmt:formatDate value="${each.createdate}" type="both" timeZone="tr"
                                             pattern="dd MMM, yyyy"/>
                         </p>

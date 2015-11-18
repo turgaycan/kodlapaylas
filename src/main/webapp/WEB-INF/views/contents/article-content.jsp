@@ -54,6 +54,7 @@
 
                         </li>
 
+
                         <li>
 
                             <div class="icon-box"><i class="fa fa-comments-o"></i></div>
@@ -106,7 +107,7 @@
 
                     <ul class="list-inline tags">
 
-                        <c:forEach items="${article.articleTags}" var="tag">
+                        <c:forEach items="${articleTags}" var="tag">
                             <li><a href="<c:url value="/${tag}" />">${tag}</a></li>
                         </c:forEach>
                     </ul>
