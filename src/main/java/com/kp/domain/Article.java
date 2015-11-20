@@ -1,12 +1,12 @@
 package com.kp.domain;
 
+import com.google.common.collect.Lists;
 import com.kp.domain.base.BaseEntity;
 import com.kp.domain.model.ArticleStatus;
-import org.hibernate.annotations.LazyToOne;
-import org.hibernate.annotations.LazyToOneOption;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by turgaycan on 9/22/15.
@@ -51,6 +51,8 @@ public class Article extends BaseEntity {
     private ArticleType articleType;
     @Column(length = 500, nullable = false)
     private String url;
+    @Transient
+    private long commentListSize;
 
     public Article() {
     }
@@ -169,7 +171,20 @@ public class Article extends BaseEntity {
         this.url = url;
     }
 
+    public long getCommentListSize() {
+        return commentListSize;
+    }
+
+    public void setCommentListSize(long commentListSize) {
+        this.commentListSize = commentListSize;
+    }
+
     public String buildUrl(){
         return url + "-" + id;
     }
+
+    public List<String> getArticleTags(){
+        return Lists.newArrayList(getTags().split(","));
+    }
+
 }

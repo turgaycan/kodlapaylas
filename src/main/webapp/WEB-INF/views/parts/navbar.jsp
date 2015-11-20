@@ -104,12 +104,13 @@
 
             <ul class="nav navbar-nav menu" id="menu">
 
-                <li class="dropdown"><a href="<c:url value="/" /> " class="dropdown-toggle" data-toggle="dropdown"
-                                        role="button"
-                                        aria-expanded="false">Anasayfa <span class="caret"></span></a>
+                <li><a title="Anasayfa" href="<c:url value="/" />" role="button"
+                       aria-expanded="false">Anasayfa</a>
                 </li>
 
                 <li class="dropdown mega-dropdown">
+                    <a title="Kategoriler" href="#" class="dropdown-toggle" data-toggle="dropdown">Kategoriler<span
+                            class="caret"></span></a>
 
                     <script type="text/javascript">
                         $.get("/all-categories",

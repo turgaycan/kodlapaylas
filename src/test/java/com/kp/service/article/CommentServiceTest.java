@@ -6,6 +6,7 @@ import com.kp.dto.CommentBaseModel;
 import com.kp.dto.CommentUIModel;
 import com.kp.repository.CommentRepository;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -75,6 +76,7 @@ public class CommentServiceTest {
         assertThat(commentList, hasItems(child3, child4));
     }
 
+    @Ignore
     @Test
     public void testBuildCommentModel() {
         Article article2 = new Article();

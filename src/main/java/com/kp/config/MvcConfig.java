@@ -1,7 +1,5 @@
 package com.kp.config;
 
-import com.kp.handler.base.CustomBaseHandlerMapping;
-import com.kp.handler.base.CustomHandlerAdapter;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.web.WebMvcAutoConfiguration;
 import org.springframework.context.MessageSource;
@@ -12,10 +10,7 @@ import org.springframework.context.support.ReloadableResourceBundleMessageSource
 import org.springframework.core.Ordered;
 import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.config.annotation.*;
-import org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping;
 import org.springframework.web.servlet.handler.SimpleUrlHandlerMapping;
-import org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter;
-import org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import java.util.Properties;
@@ -45,28 +40,28 @@ public class MvcConfig extends WebMvcAutoConfiguration.WebMvcAutoConfigurationAd
         registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
     }
 
-    @Bean
-    public CustomHandlerAdapter customHandlerAdapter() {
-        return new CustomHandlerAdapter();
-    }
+//    @Bean
+//    public CustomHandlerAdapter customHandlerAdapter() {
+//        return new CustomHandlerAdapter();
+//    }
+//
+//    @Bean
+//    public CustomBaseHandlerMapping customBaseHandlerMapping() {
+//        return new CustomBaseHandlerMapping();
+//    }
 
-    @Bean
-    public CustomBaseHandlerMapping customBaseHandlerMapping() {
-        return new CustomBaseHandlerMapping();
-    }
+//    @Bean
+//    public ControllerClassNameHandlerMapping controllerClassNameHandlerMapping(){
+//        ControllerClassNameHandlerMapping controllerClassNameHandlerMapping = new ControllerClassNameHandlerMapping();
+//        controllerClassNameHandlerMapping.setBasePackage("com.kp.handler");
+//        controllerClassNameHandlerMapping.setOrder(-1);
+//        return controllerClassNameHandlerMapping;
+//    }
 
-    @Bean
-    public ControllerClassNameHandlerMapping controllerClassNameHandlerMapping(){
-        ControllerClassNameHandlerMapping controllerClassNameHandlerMapping = new ControllerClassNameHandlerMapping();
-        controllerClassNameHandlerMapping.setBasePackage("com.kp.handler");
-        controllerClassNameHandlerMapping.setOrder(-1);
-        return controllerClassNameHandlerMapping;
-    }
-
-    @Bean
-    public BeanNameUrlHandlerMapping beanNameUrlHandlerMapping(){
-        return new BeanNameUrlHandlerMapping();
-    }
+//    @Bean
+//    public BeanNameUrlHandlerMapping beanNameUrlHandlerMapping(){
+//        return new BeanNameUrlHandlerMapping();
+//    }
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -79,9 +74,9 @@ public class MvcConfig extends WebMvcAutoConfiguration.WebMvcAutoConfigurationAd
                 .setCachePeriod(0);
     }
 
-    public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
-        configurer.enable();
-    }
+//    public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
+//        configurer.enable();
+//    }
 
     @Bean
     public InternalResourceViewResolver templateResolver() {

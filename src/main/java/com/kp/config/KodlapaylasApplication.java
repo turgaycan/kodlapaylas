@@ -4,7 +4,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;
 
 @SpringBootApplication
-@Import(value = {MvcConfig.class, AppConfig.class, RepositoryConfig.class,
+@Import(value = {AppConfig.class, MvcConfig.class,
+//        AppConfig.class,
+        RepositoryConfig.class,
 //        SecurityConfig.class,
 
         CacheConfig.class})

@@ -9,9 +9,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<a href="#" class="dropdown-toggle" data-toggle="dropdown">Kategoriler<span
-        class="caret"></span></a>
-
 <div class="dropdown-menu">
 
     <div class="container">
@@ -24,13 +21,13 @@
                     <c:forEach items="${categoryUIModels}" var="categoryUIModel" varStatus="status">
                         <c:choose>
                             <c:when test="${status.first}">
-                                <li class="active"><a
+                                <li class="active"><a title="${categoryUIModels[status.index].category.name}"
                                         href="#${categoryUIModels[status.index].category.name}"
                                         data-toggle="tab">${categoryUIModels[status.index].category.name}<i
                                         class="arrow_carrot-right"></i></a></li>
                             </c:when>
                             <c:otherwise>
-                                <li><a
+                                <li><a title="${categoryUIModel.category.name}"
                                         href="#${categoryUIModel.category.name}"
                                         data-toggle="tab">${categoryUIModel.category.name}<i
                                         class="arrow_carrot-right"></i></a></li>
@@ -46,16 +43,19 @@
                              id="${categoryUIModel.category.name}">
                             <c:forEach items="${categoryUIModel.subCategories}" var="subCategory">
 
-                                <div class="col-sm-6 col-xs-12 col-md-3">
+                                <div class="col-sm-6 col-xs-12 col-md-2">
                                     <div class="thumbnail">
-                                        <a href="<c:url value="/kategori/${fn:toLowerCase(subCategory.name)}" />">
-                                            <img
-                                                    src="http://www.mirchu.net/themes/BlogDesk/assets/images/feature-posts/feature-post1.png"
-                                                    alt="Generic placeholder thumbnail">
+                                        <a title="${fn:toLowerCase(subCategory.name)}" href="<c:url value="/kategori/${fn:toLowerCase(subCategory.name)}" />">
+                                            <img src="http://www.mirchu.net/themes/BlogDesk/assets/images/feature-posts/feature-post1.png"
+                                                 alt="${fn:toLowerCase(subCategory.name)}">
                                         </a>
 
                                         <div class="caption">
-                                            <h3>${subCategory.name}</h3>
+                                            <h3>
+                                                <a title="${fn:toLowerCase(subCategory.name)}" href="<c:url value="/kategori/${fn:toLowerCase(subCategory.name)}" />">
+                                                        ${subCategory.name}
+                                                </a>
+                                            </h3>
                                         </div>
                                     </div>
                                 </div>

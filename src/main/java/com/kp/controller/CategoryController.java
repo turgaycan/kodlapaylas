@@ -28,7 +28,7 @@ public class CategoryController extends PageController {
 
     @RequestMapping(value = "/{categoryName:[A-Za-z0-9]+}", method = RequestMethod.GET)
     public ModelAndView listCategoryArticles(@PathVariable String categoryName) {
-        return getModelAndView(categoryName, PagingDTO.DEFAULT_PAGE);
+        return getModelAndView(categoryName, PagingDTO.DEFAULT_PAGE - 1);
     }
 
     @RequestMapping(value = "/{categoryName:[A-Za-z0-9]+}/{pageNum:\\d+$}", method = RequestMethod.GET)
@@ -45,7 +45,7 @@ public class CategoryController extends PageController {
             return KpUtil.redirectToMAV("/error");
         }
 
-        final Page<Article> articlePages = articleService.findByArticleType(category.get(), page, PagingDTO.DEFAULT_PAGE_SIZE);
+        final Page<Article> articlePages = articleService.findByArticleType(category.get(), page , PagingDTO.DEFAULT_PAGE_SIZE);
         LOGGER.info("articlePages {} ", articlePages.getTotalElements());
         return pageModelAndView(KpUrlPaths.CATEGORY_VIEW, articlePages, categoryName);
     }

@@ -25,8 +25,8 @@ public class IndexController extends CommonController {
     public ModelAndView index() {
         LOGGER.info("Getting home page");
         final ModelAndView mav = new ModelAndView("/index");
-        mav.addObject("featureArticles", articleService.findFeatureArticles());
-        populateCommons(mav);
+        mav.addObject("lastArticle", articleService.findLastOne());
+//        populateCommons(mav);
         return mav;
     }
 }

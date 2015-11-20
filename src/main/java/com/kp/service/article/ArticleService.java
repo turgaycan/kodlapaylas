@@ -32,6 +32,9 @@ public class ArticleService {
     private ArticleRepository articleRepository;
 
     @Autowired
+    private CommentService commentService;
+
+    @Autowired
     private DateUtils dateUtils;
 
     @Transactional(readOnly = true)
@@ -97,6 +100,16 @@ public class ArticleService {
     public List<Article> findFeatureArticles() {
         Pageable topTen = PageSpec.buildPageSpecificationByFieldDesc(0, 10, "viewNumber");
         return articleRepository.findAll(topTen).getContent();
+    }
+
+    //TODO turgay : caching..
+    @Transactional(readOnly = true)
+    public Article findLastOne() {
+        Pageable lastOne = PageSpec.buildPageSpecificationByFieldDesc(0, 1, "id");
+        Article article = articleRepository.findAll(lastOne).getContent().get(0);
+        long commentCount = commentService.getArticleCommentCount(article);
+        article.setCommentListSize(commentCount);
+        return article;
     }
 
 

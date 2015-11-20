@@ -9,10 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,8 +29,8 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+//    @Autowired
+//    private PasswordEncoder passwordEncoder;
 
     @Transactional(readOnly = true)
     public Optional<User> getUserById(long id) {
@@ -54,8 +50,8 @@ public class UserService {
         User user = new User();
         user.setEmail(userModel.getEmail());
         user.setCreatedate(new Date());
-        user.setPasswordsalt(UUID.randomUUID().toString());
-        user.setPassword(passwordEncoder.encode(userModel.getPassword() + user.getPasswordsalt()));
+//        user.setPasswordsalt(UUID.randomUUID().toString());
+//        user.setPassword(passwordEncoder.encode(userModel.getPassword() + user.getPasswordsalt()));
         return userRepository.save(user);
     }
 
@@ -72,8 +68,8 @@ public class UserService {
         user.setUsername(email.toLowerCase());
         user.setCreatedate(new Date());
         user.setUserStatus(UserStatus.GUEST);
-        user.setPasswordsalt(UUID.randomUUID().toString());
-        user.setPassword(passwordEncoder.encode(RandomStringUtils.random(8) + user.getPasswordsalt()));
+//        user.setPasswordsalt(UUID.randomUUID().toString());
+//        user.setPassword(passwordEncoder.encode(RandomStringUtils.random(8) + user.getPasswordsalt()));
         return userRepository.save(user);
     }
 
@@ -84,10 +80,10 @@ public class UserService {
             return null;
         }
 
-        String saltedPassword = providedPassword + user.getPasswordsalt();
-        if (passwordEncoder.matches(saltedPassword, user.getPassword())) {
-            return user;
-        }
+//        String saltedPassword = providedPassword + user.getPasswordsalt();
+//        if (passwordEncoder.matches(saltedPassword, user.getPassword())) {
+//            return user;
+//        }
 
         return null;
     }

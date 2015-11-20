@@ -54,6 +54,10 @@ public class DateUtils {
                 actualDate.isBefore(LocalDate.now());
     }
 
+    public boolean isNotValidYear(Integer year){
+        return !isValidYear(year);
+    }
+
     public int currentYear() {
         return LocalDate.now().getYear();
     }

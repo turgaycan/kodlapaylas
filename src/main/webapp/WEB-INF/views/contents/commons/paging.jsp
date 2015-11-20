@@ -39,7 +39,7 @@
             </c:choose>
         </c:forEach>
         <c:choose>
-            <c:when test="${pagingDTO.current >= pagingDTO.totalPages}">
+            <c:when test="${pagingDTO.current >= pagingDTO.totalPages || pagingDTO.next == 1}">
                 <li class="disabled"><a href="#">İleri</a></li>
                 <li class="disabled"><a href="#">&gt;&gt;</a></li>
             </c:when>

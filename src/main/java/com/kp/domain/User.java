@@ -32,8 +32,8 @@ public class User extends BaseEntity implements UserDetails {
     private String username;
     @Column(nullable = false)
     private String password;
-    @Column
-    private String passwordsalt;
+//    @Column
+//    private String passwordsalt;
     @Enumerated(EnumType.STRING)
     @Column(name = "user_status")
     private UserStatus userStatus = UserStatus.NEW;
@@ -87,13 +87,13 @@ public class User extends BaseEntity implements UserDetails {
         this.password = password;
     }
 
-    public String getPasswordsalt() {
-        return passwordsalt;
-    }
+//    public String getPasswordsalt() {
+//        return passwordsalt;
+//    }
 
-    public void setPasswordsalt(String passwordsalt) {
-        this.passwordsalt = passwordsalt;
-    }
+//    public void setPasswordsalt(String passwordsalt) {
+//        this.passwordsalt = passwordsalt;
+//    }
 
     public UserStatus getUserStatus() {
         return userStatus;

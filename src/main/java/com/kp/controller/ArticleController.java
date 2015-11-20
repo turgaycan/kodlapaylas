@@ -38,12 +38,18 @@ public class ArticleController extends CommonController {
             ModelAndView mav = new ModelAndView("/article");
             Article article = currentArticle.get();
             mav.addObject("article", article);
-            mav.addObject("articleTags", Lists.newArrayList(article.getTags().split(",")));
             //TODO turgay : ComponentHandler/UrlHandler vb.. mappingHandler'a çekiver..
             populateCommonsForArticle(mav, article);
             return mav;
         }
         return KpUtil.redirectToMAV(url);
+    }
+
+
+    @RequestMapping(value = "/kp/articles/{page:\\d+$}", method = RequestMethod.GET)
+    public ModelAndView articles(@PathVariable("page") Long page){
+
+        return new ModelAndView("/kp/articles");
     }
 
 }
