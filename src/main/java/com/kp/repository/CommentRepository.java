@@ -20,4 +20,8 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
 
     @Query("select count(c) from Comment c where c.article = ?1")
     public Long getArticleCount(Article article);
+
+    List<Comment> findByArticleIdOrderByCreatedateDesc(Long articleId);
+
+
 }

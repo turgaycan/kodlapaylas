@@ -54,7 +54,7 @@ public class KPExceptionHandlerControllerAdvice extends ResponseEntityExceptionH
 //        if (ex instanceof ServiceHttpException) {
 //            return new ResponseEntity<Object>(errorResponse, ((ServiceHttpException) ex).getStatus());
 //        } else {
-        return new ResponseEntity<Object>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
 //        }
     }
 

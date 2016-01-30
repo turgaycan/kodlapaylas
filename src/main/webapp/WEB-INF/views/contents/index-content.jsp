@@ -7,7 +7,6 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<%--<%@include file="commons/feature-articles.jsp" %>--%>
 <script type="text/javascript">
     $.get("/feature-articles",
             async = true,

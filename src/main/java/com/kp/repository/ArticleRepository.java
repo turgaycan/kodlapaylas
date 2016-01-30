@@ -26,11 +26,20 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
 
     Page<Article> findByArticleType(ArticleType articleType, Pageable page);
 
+    Page<Article> findByArticleTypeIn(List<ArticleType> articleType, Pageable page);
+
     Page<Article> findByCreatedateBetween(Date startDate, Date endDate, Pageable page);
 
     Page<Article> findByCreatedateAfterAndCreatedateBefore(Date startDate, Date endDate, Pageable page);
 
+    Page<Article> OrderByCreatedateDesc(Pageable page);
+
     Article findById(Long id);
 
     List<Article> findByArticleTypeIn(List<ArticleType> articleTypes);
+
+    @Query(value = "SELECT * FROM kp.article WHERE article_type_id IN (:article_type_id) order by view_number desc LIMIT 2",
+            nativeQuery = true)
+    List<Article> findByArticleTypeId(@Param("article_type_id") Long[] parentIds);
+
 }

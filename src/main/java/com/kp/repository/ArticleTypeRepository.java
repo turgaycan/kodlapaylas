@@ -20,4 +20,7 @@ public interface ArticleTypeRepository extends JpaRepository<ArticleType, Long> 
     @Query(value = "SELECT * FROM kp.article_type at WHERE lower(at.name) = lower(:name)",
             nativeQuery = true)
     Optional<ArticleType> findByName(@Param("name") String name);
+
+    List<ArticleType> findByParentId(Long parentId);
+
 }

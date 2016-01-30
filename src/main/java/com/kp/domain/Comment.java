@@ -1,5 +1,6 @@
 package com.kp.domain;
 
+import com.google.common.collect.Lists;
 import com.kp.domain.base.BaseEntity;
 import com.kp.domain.model.CommentStatus;
 
@@ -7,6 +8,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by turgaycan on 9/22/15.
@@ -110,14 +112,14 @@ public class Comment extends BaseEntity {
 
 
     public boolean hasReplyComments() {
-        return !hasNotReplyComments();
+        return !isRootComment();
     }
 
-    public boolean hasNotReplyComments() {
+    public boolean isRootComment() {
         return parent == null;
     }
 
-    public boolean isChild(Comment comment){
+    public boolean isChild(Comment comment) {
         return this.equals(comment);
     }
 
@@ -127,7 +129,7 @@ public class Comment extends BaseEntity {
         while (hasReplyComments()) {
             replyCommentList.add(parent);
             Comment replyComment = parent.getParent();
-            if (replyComment.hasNotReplyComments()) {
+            if (replyComment.isRootComment()) {
                 replyCommentList.add(replyComment);
                 break;
             }
@@ -135,5 +137,30 @@ public class Comment extends BaseEntity {
             setParent(replyComment.getParent());
         }
         return replyCommentList;
+    }
+
+    public static List<Comment> rootComments(List<Comment> commentList) {
+        List<Comment> rootComments = Lists.newArrayList();
+        rootComments.addAll(commentList.stream().filter(comment -> comment.isRootComment()).collect(Collectors.toList()));
+
+        return rootComments;
+    }
+
+    public static List<Comment> childComments(List<Comment> comments) {
+        List<Comment> childComments = Lists.newArrayList();
+        childComments.addAll(comments.stream().filter(c -> c.hasReplyComments()).collect(Collectors.toList()));
+
+        return childComments;
+    }
+
+    public static List<Comment> findReplys(List<Comment> replyComments, Comment root) {
+        List<Comment> childComments = Lists.newArrayList();
+        for (Comment replyComment : replyComments) {
+            if (replyComment.getParent().equals(root)) {
+                childComments.add(replyComment);
+            }
+        }
+
+        return childComments;
     }
 }

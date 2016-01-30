@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.kp.domain.Article;
 import com.kp.domain.ArticleType;
 import com.kp.domain.spec.PageSpec;
+import com.kp.dto.DateRange;
 import com.kp.repository.ArticleRepository;
 import com.kp.util.DateUtils;
 import com.kp.util.ListUtil;
@@ -17,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,6 +32,9 @@ public class ArticleService {
 
     @Autowired
     private ArticleRepository articleRepository;
+
+    @Autowired
+    private ArticleTypeService articleTypeService;
 
     @Autowired
     private CommentService commentService;
@@ -71,18 +76,24 @@ public class ArticleService {
         return subtractList;
     }
 
-
     @Transactional(readOnly = true)
     public Page<Article> findByArticleType(ArticleType articleType, int pageNum, int size) {
         return articleRepository.findByArticleType(articleType,
                 PageSpec.buildPageSpecificationByFieldDesc(pageNum, size, "createdate"));
     }
 
+
     @Transactional(readOnly = true)
-    public Page<Article> findByCreatedateAfterAndCreatedateBefore(int year, int pageNum, int size) {
+    public Page<Article> findByArticleTypeIn(List<ArticleType> articleTypes, int pageNum, int size) {
+        return articleRepository.findByArticleTypeIn(articleTypes,
+                PageSpec.buildPageSpecificationByFieldDesc(pageNum, size, "createdate"));
+    }
+
+    @Transactional(readOnly = true)
+    public Page<Article> findByCreatedateAfterAndCreatedateBefore(DateRange dateRange, int pageNum, int size) {
         return articleRepository.findByCreatedateAfterAndCreatedateBefore(
-                dateUtils.currentYear(year),
-                dateUtils.dateOfNextYear(year),
+                dateRange.getStartDate(),
+                dateRange.getEndDate(),
                 PageSpec.buildPageSpecificationByFieldDesc(pageNum, size, "createdate"));
     }
 
@@ -112,5 +123,25 @@ public class ArticleService {
         return article;
     }
 
+    //TODO turgay: caching.. (ONE_DAY)
+    @Transactional(readOnly = true)
+    public List<Article> findByArticleTypeOrderByViewNumber(Long articleTypeParentId) {
+        List<ArticleType> articleTypes = articleTypeService.findByParentId(articleTypeParentId);
+        Long[] articleTypeIds = new Long[articleTypes.size()];
+        int index = 0;
+        for (ArticleType articleType : articleTypes) {
+            if (articleType.isChildCategory()) {
+                articleTypeIds[index++] = articleType.getId();
+            }
+        }
+
+        return articleRepository.findByArticleTypeId(articleTypeIds);
+    }
+
+    //TODO turgay : cacheable..(ONE_DAY)
+    @Transactional(readOnly = true)
+    public Page<Article> findArticlesAsPageable(int pageNum, int size) {
+        return articleRepository.OrderByCreatedateDesc(PageSpec.buildPageSpecificationByFieldDesc(pageNum, size, "createdate"));
+    }
 
 }

@@ -2,6 +2,7 @@ package com.kp.controller.base;
 
 import com.kp.domain.Article;
 import com.kp.domain.ArticleType;
+import com.kp.domain.Tag;
 import com.kp.dto.CategoryUIModel;
 import com.kp.service.article.ArticleService;
 import com.kp.service.article.ArticleTypeService;
@@ -29,15 +30,18 @@ public abstract class CommonController {
     protected CommentService commentService;
 
     @Autowired
-    private TagService tagService;
+    protected TagService tagService;
 
     protected void populateCommonsForArticle(ModelAndView mav, Article article) {
         final List<Article> recentArticles = articleService.findRecentArticles(article, Article.RECENT_ARTICLE_LIMIT);
         final List<Article> relatedArticles = articleService.findRelatedArticles(recentArticles, article, Article.RECENT_ARTICLE_LIMIT);
         mav.addObject("relatedArticles", relatedArticles);
         mav.addObject("commentBaseModel", commentService.buildCommentModel(article));
-        mav.addObject("tags", tagService.findByArticleType(article.getArticleType()));
-//        populateCommons(mav);
+        populateTags(mav, tagsByArticleType(article.getArticleType()));
+    }
+
+    protected List<Tag> tagsByArticleType(ArticleType articleType) {
+        return tagService.findByArticleType(articleType);
     }
 
     private List<ArticleType> getAllRootTypes() {
@@ -56,9 +60,15 @@ public abstract class CommonController {
         }
 
         mav.addObject("categoryUIModels", categoryUIModels);
+        List<Article> articles = (List<Article>) mav.getModel().get("pageArticles");
+        populateTags(mav, tagsByArticleType(articles.get(0).getArticleType()));
+    }
+
+    private void populateTags(ModelAndView mav, List<Tag> attributeValue) {
+        mav.addObject("tags", attributeValue);
     }
 
     private boolean isValidCategory(ArticleType category, ArticleType eachCategory) {
-        return eachCategory.isChild() && eachCategory.getParent().equals(category);
+        return eachCategory.isChildCategory() && eachCategory.getParent().equals(category);
     }
 }

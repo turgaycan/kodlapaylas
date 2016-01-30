@@ -19,6 +19,15 @@
   <%@include file="parts/header.jsp" %>
 </header>
 
+<script type="text/javascript">
+  $.get("/feature-articles",
+          async = true,
+          function (data, status) {
+            $('#feature-articles').append("" + data);
+          });
+
+</script>
+<div id="feature-articles"></div>
 <section class="innercontent">
   <%@include file="contents/archive-content.jsp" %>
 </section>

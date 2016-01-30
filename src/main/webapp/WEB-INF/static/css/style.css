@@ -74,7 +74,7 @@ textarea.form-control {height: auto;min-height: 200px;}
 #parallax-1 { margin-bottom: 25px; padding:0px 0px; background-image: url(../images/adds-banner.jpg); background-position:top center; }
 #parallax-2 { padding:0px 0px; background-image: url(../images/perallax.jpg); background-size:cover; background-position:center center; }
 #parallax-3 { padding:0px 0px; background-image: url(../images/parallax-3.jpg); background-size:cover; background-position:center center; }
-#parallax-1 h3{ margin:0px; padding:25px 0px;font-weight: 300;}
+#parallax-1 h3{ margin:0px; padding:25px 0px;font-weight: 300;text-align: left;}
 #parallax-1 h3 span{color:#e74c3c; font-weight: 700;}
 #parallax-2 .container { padding:50px 0px; }
 #parallax-3 .container { padding:50px 0px; }
@@ -248,7 +248,7 @@ section { padding:0px 0px; }
 .post .post-img:hover a img { opacity: 0.7; }
 .post .post-img a img { -webkit-transition: all 0.5s ease-in-out; -moz-transition: all 0.5s ease-in-out; -o-transition: all 0.5s ease-in-out; transition: all 0.5s ease-in-out; width: 100%; height: auto; border-radius: 3px 3px 0px 0px; }
 .post-detail .post .caption { padding:55px 45px 0px 45px; }
-.post .caption { float: left; width: 100%; text-align: left; padding:25px 25px; }
+.post .caption { float: left; width: 100%; text-align: left; padding:25px 25px; word-wrap: break-word;}
 .post .caption h3 { margin: 0px 0px 20px 0px; color: #36a0e7; font-weight: 300; font-size: 34px; line-height: 42px; }
 .post .caption p { line-height: 28px; margin-bottom: 20px; font-size: 16px; }
 .post .author-info { padding: 15px 15px 15px 15px; text-align: left; min-height: 60px; border-bottom: 1px solid #ddd; background: #fcfcfc; float: left; width: 100%; }
@@ -331,7 +331,7 @@ blockquote { background: #f2f6f8; border: 1px solid #e5e5e5; line-height: 28px; 
 
 
 .vt-post.post .author-info ul li{padding-left: 15px;
-    padding-right: 15px; float: none;}
+    padding-right: 10px; float: none;}
 .vt-post.post .author-info{border-radius:0px 0px 0px 3px; border-bottom: none; border-right: 1px solid #ddd;padding: 15px 12px 15px 6px;}
 .vt-post.post .post-img a img{border-radius:3px 0px 0px 0px;}
 .vt-post.post .caption{padding: 25px 0px;}

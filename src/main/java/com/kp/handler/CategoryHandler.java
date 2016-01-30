@@ -41,8 +41,6 @@ public class CategoryHandler {
         return articleTypeService.findAllRootTypes();
     }
 
-
-
     @RequestMapping(value = "/all-categories", method = RequestMethod.GET)
     public
     @ResponseBody
@@ -56,6 +54,9 @@ public class CategoryHandler {
                     .stream()
                     .filter(eachCategory -> isValidCategory(category, eachCategory))
                     .collect(Collectors.toList());
+            if(subCategories.isEmpty() && category.isChild()){
+                subCategories.add(category);
+            }
             categoryUIModels.add(new CategoryUIModel(category, subCategories));
         }
 
@@ -64,6 +65,6 @@ public class CategoryHandler {
     }
 
     private boolean isValidCategory(ArticleType category, ArticleType eachCategory) {
-        return eachCategory.isChild() && eachCategory.getParent().equals(category);
+        return eachCategory.isChildCategory() && eachCategory.getParent().equals(category);
     }
 }

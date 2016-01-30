@@ -1,6 +1,5 @@
 package com.kp.controller;
 
-import com.google.common.collect.Lists;
 import com.kp.controller.base.CommonController;
 import com.kp.domain.Article;
 import com.kp.util.KpUtil;
@@ -27,7 +26,7 @@ public class ArticleController extends CommonController {
     @RequestMapping(value = "/{title:[A-Za-z0-9-|_|.|~]+}-{articleId:\\d+$}", method = RequestMethod.GET)
     public ModelAndView article(@PathVariable("title") String title, @PathVariable("articleId") String articleId,
                                 HttpServletRequest request) {
-        String url = request.getRequestURI() + "/error";
+        String url = "/error";
         if (!NumberUtils.isNumber(articleId)) {
             LOGGER.error("numeric failed..");
             return KpUtil.redirectToMAV(url);
@@ -38,7 +37,6 @@ public class ArticleController extends CommonController {
             ModelAndView mav = new ModelAndView("/article");
             Article article = currentArticle.get();
             mav.addObject("article", article);
-            //TODO turgay : ComponentHandler/UrlHandler vb.. mappingHandler'a çekiver..
             populateCommonsForArticle(mav, article);
             return mav;
         }

@@ -46,7 +46,6 @@ public abstract class PageController extends CommonController {
 
     protected ModelAndView pageModelAndView(String view, Page<Article> articlePages, String url) {
         ModelAndView mav = new ModelAndView(view);
-//        mav.addObject("pageArticles", articlePages);
         mav.addObject("pageArticles", articlePages.getContent());
         mav.addObject("pagingDTO", PagingDTO.buildPagingDTO(articlePages));
         mav.addObject("pageUrl", buildPageUrl(url));

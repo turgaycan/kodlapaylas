@@ -16,7 +16,7 @@ public class AuthenticationService {
 //    private SecurityExpressionOperations securityExpressionOperations;
 
     public boolean isKpAuthenticated() {
-        return getKpAuthentication().isAuthenticated() &&
+        return getKpAuthentication() != null && getKpAuthentication().isAuthenticated() &&
 //                securityExpressionOperations.isFullyAuthenticated()
                 !getKpAuthentication().getName().equals("anonymousUser");
     }

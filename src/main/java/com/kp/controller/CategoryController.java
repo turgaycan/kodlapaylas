@@ -15,7 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
 import java.util.Optional;
+
+import static com.google.common.collect.Lists.newArrayList;
 
 /**
  * Created by turgaycan on 9/29/15.
@@ -37,6 +40,19 @@ public class CategoryController extends PageController {
         return getModelAndView(categoryName, pageIndex);
     }
 
+    @RequestMapping(value = "/kp", method = RequestMethod.GET)
+    public ModelAndView listAllCategoryArticles() {
+        return listALlCategoryArticles(PagingDTO.DEFAULT_PAGE - 1);
+    }
+
+    @RequestMapping(value = "/kp/{pageNum:\\d+$}", method = RequestMethod.GET)
+    public ModelAndView listALlCategoryArticles(@PathVariable Integer pageNum) {
+        int pageIndex = pageIndex(pageNum);
+        final Page<Article> articlePages = articleService.findArticlesAsPageable(pageIndex, PagingDTO.DEFAULT_PAGE_SIZE);
+        LOGGER.info("articlePages {} ", articlePages.getTotalElements());
+        return pageModelAndView(KpUrlPaths.CATEGORY_VIEW, articlePages, "kp");
+    }
+
     @Override
     protected ModelAndView getModelAndView(String categoryName, Integer page) {
         final Optional<ArticleType> category = articleTypeService.findByName(categoryName);
@@ -45,7 +61,15 @@ public class CategoryController extends PageController {
             return KpUtil.redirectToMAV("/error");
         }
 
-        final Page<Article> articlePages = articleService.findByArticleType(category.get(), page , PagingDTO.DEFAULT_PAGE_SIZE);
+        final ArticleType rootArticleType = category.get();
+        List<ArticleType> articleTypeList = newArrayList(rootArticleType);
+
+        if(rootArticleType.isRoot() && !rootArticleType.isChild()){
+            articleTypeList.remove(rootArticleType);
+            articleTypeList.addAll(articleTypeService.findByParentId(rootArticleType.getId()));
+        }
+
+        final Page<Article> articlePages = articleService.findByArticleTypeIn(articleTypeList, page, PagingDTO.DEFAULT_PAGE_SIZE);
         LOGGER.info("articlePages {} ", articlePages.getTotalElements());
         return pageModelAndView(KpUrlPaths.CATEGORY_VIEW, articlePages, categoryName);
     }

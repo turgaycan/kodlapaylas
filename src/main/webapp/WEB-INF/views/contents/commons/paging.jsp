@@ -30,7 +30,7 @@
         <c:forEach var="i" begin="${pagingDTO.begin}" end="${pagingDTO.end}">
             <c:url var="url" value="${pageUrl}/${i}"/>
             <c:choose>
-                <c:when test="${i == pagingDTO.current}">
+                <c:when test="${i == pagingDTO.current + 1}">
                     <li class="active"><a title="${url}" href="${url}"><c:out value="${i}"/></a></li>
                 </c:when>
                 <c:otherwise>
@@ -39,7 +39,7 @@
             </c:choose>
         </c:forEach>
         <c:choose>
-            <c:when test="${pagingDTO.current >= pagingDTO.totalPages || pagingDTO.next == 1}">
+            <c:when test="${pagingDTO.current >= pagingDTO.totalPages || pagingDTO.end == 1}">
                 <li class="disabled"><a href="#">İleri</a></li>
                 <li class="disabled"><a href="#">&gt;&gt;</a></li>
             </c:when>

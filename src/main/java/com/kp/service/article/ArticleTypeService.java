@@ -32,4 +32,9 @@ public class ArticleTypeService {
     public List<ArticleType> findAll(){
         return articleTypeRepository.findAll();
     }
+
+    @Transactional(readOnly = true)
+    public List<ArticleType> findByParentId(Long parentId){
+        return articleTypeRepository.findByParentId(parentId);
+    }
 }

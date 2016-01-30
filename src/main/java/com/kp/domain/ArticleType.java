@@ -26,6 +26,7 @@ public class ArticleType extends BaseEntity {
     private ArticleType parent;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date createdate;
+    private boolean child;
 
     public ArticleType() {
     }
@@ -80,6 +81,14 @@ public class ArticleType extends BaseEntity {
         this.createdate = createdate;
     }
 
+    public boolean isChild(){
+        return child;
+    }
+
+    public void setChild(boolean child) {
+        this.child = child;
+    }
+
     public ArticleType getRoot() {
         while (getParent() != null) {
             return getParent().getRoot();
@@ -91,8 +100,9 @@ public class ArticleType extends BaseEntity {
         return getParent() == null;
     }
 
-    public boolean isChild(){
+    public boolean isChildCategory(){
         return !isRoot();
     }
+
 
 }

@@ -21,7 +21,7 @@
                            title="${article.title}">${article.title}</a></h3>
 
                     <p>
-                        <a href="<c:url value="/kategori/${fn:toLowerCase(article.articleType.name)}" />">
+                        <a title="${article.articleType.name}" href="<c:url value="/kategori/${fn:toLowerCase(article.articleType.name)}" />">
                                 ${article.articleType.name}
                         </a></p>
                 </div>

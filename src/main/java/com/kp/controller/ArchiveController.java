@@ -3,9 +3,8 @@ package com.kp.controller;
 import com.kp.controller.base.PageController;
 import com.kp.domain.Article;
 import com.kp.domain.model.dto.PagingDTO;
+import com.kp.dto.DateRange;
 import com.kp.util.KpUrlPaths;
-import com.kp.util.KpUtil;
-import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,37 +31,48 @@ public class ArchiveController extends PageController {
             possibleArchiveYears.add(index);
         }
         mav.addObject("years", possibleArchiveYears);
+        mav.addObject("pageUrl", buildPageUrl(possibleArchiveYears.get(0).toString()));
+        populateMonths(mav);
         return mav;
     }
 
-
     @RequestMapping(value = "/{year:\\d+}", method = RequestMethod.GET)
     public ModelAndView listArchiveArticles(@PathVariable String year) {
-        LOGGER.info("year : {} ", year);
-        return getModelAndView(year, PagingDTO.DEFAULT_PAGE);
+        return getModelAndView(year, PagingDTO.DEFAULT_PAGE - 1);
     }
 
-    @RequestMapping(value = "/{year:\\d+}/{pageNum:\\d+$", method = RequestMethod.GET)
+    @RequestMapping(value = "/{year:\\d+}/{pageNum:\\d+$}", method = RequestMethod.GET)
     public ModelAndView listArchiveArticlesByYear(@PathVariable("year") String year,
                                                   @PathVariable Integer pageNum) {
         return getModelAndView(year, pageNum);
     }
 
-    @Override
-    public ModelAndView getModelAndView(String year, Integer pageNum) {
-        if (!NumberUtils.isNumber(year)) {
-            LOGGER.error("numeric value failed..", pageNum);
-            return KpUtil.redirectToMAV(KpUrlPaths.ERROR);
-        }
+    @RequestMapping(value = "/{year:\\d+}/{pageNum:\\d+$}/{month:d+$}", method = RequestMethod.GET)
+    public ModelAndView listArchiveArticlesByYear(@PathVariable("year") String year, @PathVariable Integer pageNum, @PathVariable Integer month) {
 
-        int currentYear = archiveYear(Integer.getInteger(year));
-        final Page<Article> archiveArticlePages = articleService.findByCreatedateAfterAndCreatedateBefore(currentYear, pageNum, PagingDTO.DEFAULT_PAGE_SIZE);
-        System.out.println(archiveArticlePages.getContent().size());
-        return pageModelAndView(KpUrlPaths.ARCHIVE_VIEW, archiveArticlePages, year);
+        DateRange dateRange = dateUtils.dateWithMonthAtEndDay(archiveYear(Integer.valueOf(year)), month);
+        return getModelAndView(year, pageNum, dateRange);
+    }
+
+    @Override
+    protected ModelAndView getModelAndView(String year, Integer pageNum) {
+        DateRange dateRange = dateUtils.prepareDateRange(archiveYear(Integer.valueOf(year)));
+        return getModelAndView(year, pageNum, dateRange);
+    }
+
+    private ModelAndView getModelAndView(String year, Integer pageNum, DateRange dateRange) {
+        final Page<Article> archiveArticlePages = articleService.findByCreatedateAfterAndCreatedateBefore(dateRange, pageNum, PagingDTO.DEFAULT_PAGE_SIZE);
+        ModelAndView mav = pageModelAndView(KpUrlPaths.ARCHIVE_VIEW, archiveArticlePages, year);
+        populateMonths(mav);
+        return mav;
     }
 
     @Override
     protected String buildPageUrl(String url) {
-        return KpUrlPaths.buildCategoryUrl(KpUrlPaths.buildArchiveUrl(url));
+        return KpUrlPaths.buildArchiveUrl(url);
+    }
+
+    private void populateMonths(ModelAndView mav) {
+        mav.addObject("months", dateUtils.monthUiModels());
     }
 }

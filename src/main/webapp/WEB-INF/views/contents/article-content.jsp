@@ -156,8 +156,6 @@
                 </script>
                 <div id="recent-articles"></div>
 
-                <%--<%@include file="commons/recent-articles.jsp" %>--%>
-
                 <script type="text/javascript">
                     $.get("/root-categories",
                             async = true,
@@ -167,9 +165,6 @@
 
                 </script>
                 <div id="root-categories"></div>
-
-
-            <%--<%@include file="commons/root-categories.jsp" %>--%>
 
                 <%@include file="commons/tags.jsp" %>
 

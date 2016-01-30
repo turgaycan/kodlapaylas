@@ -22,9 +22,13 @@ public class TagService {
     @Transactional(readOnly = true)
     public List<Tag> findByArticleType(ArticleType articleType) {
         final ArticleType rootArticleType = articleType.getRoot();
-        System.out.println("article type id  -> " + rootArticleType.getId());
         return tagRepository.findByArticleType(rootArticleType,
                 PageSpec.buildPageSpecificationByFieldDesc(1, 15, "count")).getContent();
+    }
+
+    @Transactional(readOnly = true)
+    public List<Tag> findByOrderCountDesc() {
+        return tagRepository.OrderByCountDesc(PageSpec.buildPageSpecificationByFieldDesc(0, 15, "count"));
     }
 
 }
