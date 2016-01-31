@@ -22,6 +22,9 @@ public class IndexController extends CommonController {
 
     private static final long PROGRAMMING_ID = 5l;
     private static final long DATABASE_ID = 7l;
+    private static final String ACTIVITIES = "Etkinlikler";
+    private static final int PAGENUM = 1;
+    private static final int PAGESIZE = 1;
 
     @Autowired
     private ArticleService articleService;
@@ -32,14 +35,38 @@ public class IndexController extends CommonController {
     @RequestMapping(value = {"/", "/index"}, method = RequestMethod.GET)
     public ModelAndView index() {
         LOGGER.info("Getting home page");
-        final ModelAndView mav = new ModelAndView("/index");
+        final ModelAndView mav = new ModelAndView("index");
         mav.addObject("lastArticle", articleService.findLastOne());
-        //TODO turgay : refactor..
-        mav.addObject("latestEvents", articleService.findByArticleType(new ArticleType(19l, "Etkinlikler"), 1, 1).getContent());
+        final ArticleType activities = new ArticleType(19l, ACTIVITIES);
+        mav.addObject("latestEvents", articleService.findByArticleType(activities, PAGENUM, PAGESIZE).getContent());
         mav.addObject("mostViewsOfProgramming", articleService.findByArticleTypeOrderByViewNumber(PROGRAMMING_ID));
         mav.addObject("mostViewsOfDatabase", articleService.findByArticleTypeOrderByViewNumber(DATABASE_ID));
         mav.addObject("tags", tagService.findByOrderCountDesc());
-//        populateCommons(mav);
+        addSeoMetaDataToMav(mav);
+        addArchiveYearsToMav(mav);
         return mav;
     }
+
+
+    @RequestMapping(value = {"/hakkimda"}, method = RequestMethod.GET)
+    public ModelAndView aboutUs() {
+        LOGGER.info("Getting about us..");
+        final ModelAndView mav = new ModelAndView("aboutus");
+        return mav;
+    }
+
+    @RequestMapping(value = {"/iletisim"}, method = RequestMethod.GET)
+    public ModelAndView contactMe() {
+        LOGGER.info("Getting contact me..");
+        final ModelAndView mav = new ModelAndView("contact");
+        return mav;
+    }
+
+    @RequestMapping(value = {"/hata"}, method = RequestMethod.GET)
+    public ModelAndView error() {
+        LOGGER.info("Getting error");
+        final ModelAndView mav = new ModelAndView("error");
+        return mav;
+    }
+
 }

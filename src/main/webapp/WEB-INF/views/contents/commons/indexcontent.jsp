@@ -15,14 +15,15 @@
         <div class="col-md-9 col-lg-9">
             <article class="post">
                 <div class="post-type post-img"><a href="#"><img
-                        src="http://www.mirchu.net/themes/BlogDesk/assets/images/post/post.jpg"
-                        class="img-responsive" alt="image post"/></a></div>
+                        src="<c:url value='/resources/static/img/${fn:toLowerCase(lastArticle.mainImageUrl)}' />"
+                        class="img-responsive" style="height: 400px !important;"
+                        alt="${fn:toLowerCase(lastArticle.categoryName)}"/></a></div>
                 <div class="author-info">
                     <ul class="list-inline">
                         <li>
-                            <div class="icon-box"><img
-                                    src="http://www.mirchu.net/themes/BlogDesk/assets/images/post/author.png"
-                                    class="img-responsive"
+                            <div class="icon-box" style="width: auto;"><img
+                                    src="<c:url value='/resources/static/img/tcan_min.png' />"
+                                    class="img-responsive" style="width: 100px !important;"
                                     alt="image post"/></div>
                             <div class="info">
                                 <p>Yazar :</p>
@@ -61,8 +62,8 @@
 
                     <p>${fn:substring(lastArticle.content, 0, 300).contains("<code>") ? '' : fn:substring(lastArticle.content, 0, 300)}</p>
 
-                    <div class="post-category"><a title="${fn:toLowerCase(lastArticle.articleType.name)}"
-                                                  href="<c:url value="/kategori/${fn:toLowerCase(lastArticle.articleType.name)}" />"><span>&nbsp;</span> ${lastArticle.articleType.name}
+                    <div class="post-category"><a title="${fn:toLowerCase(lastArticle.categoryName)}"
+                                                  href="<c:url value="/kategori/${fn:toLowerCase(lastArticle.categoryName)}" />"><span>&nbsp;</span> ${lastArticle.articleType.name}
                     </a></div>
                     <ul class="list-inline tags">
                         <c:forEach items="${lastArticle.articleTags}" var="tag">
@@ -140,18 +141,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-6 col-md-12 col-lg-12">
-                    <div class="panel panel-default theme-panel">
-                        <div class="panel-heading"><a href="<c:url value="/arsiv" /> ">Arşiv</a></div>
-                        <div class="panel-body nopadding">
-                            <div class="list-group"><a href="#" class="list-group-item">January 2014</a> <a href="#"
-                                                                                                            class="list-group-item">February
-                                2014</a> <a href="#" class="list-group-item">March 2014</a> <a href="#"
-                                                                                               class="list-group-item">April
-                                2014</a> <a href="#" class="list-group-item">May 2014</a></div>
-                        </div>
-                    </div>
-                </div>
+                <%@include file="archive.jsp" %>
             </div>
         </aside>
     </div>

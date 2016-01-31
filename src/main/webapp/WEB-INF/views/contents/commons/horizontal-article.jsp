@@ -15,7 +15,7 @@
             <div class="post-type post-img">
 
                 <a href="#"><img
-                        src="http://www.mirchu.net/themes/BlogDesk/assets/images/post/m2.jpg"
+                        src="<c:url value='/resources/static/img/${fn:toLowerCase(article.mainImageUrl)}' />"
                         class="img-responsive"
                         alt="image post"/></a>
             </div>

@@ -51,6 +51,8 @@ public class Article extends BaseEntity {
     private ArticleType articleType;
     @Column(length = 500, nullable = false)
     private String url;
+    @Column(name = "main_image_url")
+    private String mainImageUrl;
     @Transient
     private long commentListSize;
 
@@ -171,6 +173,14 @@ public class Article extends BaseEntity {
         this.url = url;
     }
 
+    public String getMainImageUrl() {
+        return mainImageUrl;
+    }
+
+    public void setMainImageUrl(String mainImageUrl) {
+        this.mainImageUrl = mainImageUrl;
+    }
+
     public long getCommentListSize() {
         return commentListSize;
     }
@@ -185,6 +195,10 @@ public class Article extends BaseEntity {
 
     public List<String> getArticleTags(){
         return Lists.newArrayList(getTags().split(","));
+    }
+
+    public String getCategoryName(){
+        return getArticleType().getName();
     }
 
 }

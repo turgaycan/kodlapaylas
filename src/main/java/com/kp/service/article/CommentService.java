@@ -63,6 +63,8 @@ public class CommentService {
         for (Comment comment : findCommentsByArticleId(article.getId())) {
             CommentUIModel commentUIModel = new CommentUIModel();
             commentUIModel.setComment(comment);
+
+            commentUIModels.add(commentUIModel);
         }
         return new CommentBaseModel(commentUIModels.size(), commentUIModels);
     }

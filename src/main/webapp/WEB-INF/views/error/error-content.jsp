@@ -7,6 +7,9 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page pageEncoding="UTF-8" %>
+<c:set var="error" value="Bilinmedik bir hata! Şlaps bit with around.."/>
+<c:set var="errorType" value="404"/>
 <section class="innercontent">
 
     <div class="container">
@@ -18,15 +21,30 @@
                 <div class="error-post">
 
                     <h1 id="error_title">
-                        <%--${error.type}--%>
+                        <c:choose>
+                            <c:when test="${not empty param.errorType}">
+                                <c:out value="${param.errorType}"/>
+                            </c:when>
+                            <c:otherwise>
+                                ${errorType}
+                            </c:otherwise>
+                        </c:choose>
+
                     </h1>
 
                     <div id="error_msg">
-                        <%--${error}--%>
-                        NOT FOUND!
+                        <c:choose>
+                            <c:when test="${not empty param.error}">
+                                <c:out value="${param.error}"/>
+                            </c:when>
+                            <c:otherwise>
+                                ${error}
+                            </c:otherwise>
+                        </c:choose>
+                        <br/>
                     </div>
 
-                    <form action="<c:url value='/search' />" class="error-search-form">
+                    <form action="<c:url value='/ara' />" class="error-search-form">
 
                         <div class="input-group">
 
@@ -41,12 +59,19 @@
                         </div>
 
                     </form>
+                    <div class="error-search-form">
+                        <a href='<c:url value='/' />'><img
+                                src='<c:url value='/resources/static/img/error/uzgunuzpampa.png' />'
+                                class='img-responsive' style='height: 400px !important;' alt='Bulunamadı..'/>
+                        </a>
+                    </div>
 
                 </div>
-
             </div>
 
         </div>
+
+    </div>
 
     </div>
 

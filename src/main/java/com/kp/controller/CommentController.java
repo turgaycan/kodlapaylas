@@ -71,20 +71,29 @@ public class CommentController {
         String articleId = commentModel.getArticleId();
         LOGGER.info("model {}", articleId);
         ModelAndView mav = new ModelAndView("/article");
+
         if (!NumberUtils.isNumber(commentModel.getArticleId()) || bindingResult.hasErrors()) {
             mav.addAllObjects(bindingResult.getModel());
+
             return mav;
         }
+
         final Optional<Article> article = articleService.findById(Long.parseLong(articleId));
+
         if (article.isPresent()) {
             LOGGER.info("model {}", commentModel.getMessage());
             final Article currentArticle = article.get();
+
             mav.addObject("persistedComment", createNewComment(commentModel, currentArticle));
+
             return KpUtil.redirectToMAV(mav, currentArticle.buildUrl());
         }
+
         commentModel.setErrorResponse(new KpErrorResponse(KpErrors.NOT_FOUND));
+
         mav.addObject("newComment", commentModel);
         mav.addAllObjects(bindingResult.getModel());
+
         return KpUtil.redirectToMAV(mav, request.getRequestURI());
     }
 

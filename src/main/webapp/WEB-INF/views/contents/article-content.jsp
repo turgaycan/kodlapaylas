@@ -13,34 +13,25 @@
 
                 <div class="post-type post-img">
 
-                    <a href="#"><img src="http://www.mirchu.net/themes/BlogDesk/assets/images/post/post-2.jpg"
-                                     class="img-responsive" alt="image post"/></a>
+                    <a href="#"><img src="<c:url value='/resources/static/img/${article.mainImageUrl}' />"
+                                     class="img-responsive" style="height: 400px !important;" alt="${fn:toLowerCase(article.categoryName)}"/></a>
 
                 </div>
 
                 <div class="author-info">
 
                     <ul class="list-inline">
-
                         <li>
-
-                            <div class="icon-box"><img
-                                    src="http://www.mirchu.net/themes/BlogDesk/assets/images/post/author.png"
-                                    class="img-responsive"
-                                    alt="image post"/></div>
-
+                            <div class="icon-box" style="width: auto"><img
+                                    src="<c:url value='/resources/static/img/tcan_min.png' />"
+                                    class="img-responsive" style="width: 100px !important;"
+                                    alt="Turgay Can"/></div>
                             <div class="info">
-
                                 <p>Yazar</p>
-
-                                <a href="author.html">${article.user.fullname}</a>
-
+                                <a href="<c:url value='/hakkimda'/>"> ${article.user.fullname}</a>
                             </div>
-
                         </li>
-
                         <li>
-
                             <div class="icon-box"><i class="fa fa-calendar"></i></div>
 
                             <div class="info">
@@ -62,7 +53,7 @@
 
                                 <p>Yorum</p>
 
-                                <strong>127</strong></div>
+                                <a href="#comment-list"><strong>${commentBaseModel.commentSize}</strong></a></div>
 
                         </li>
 

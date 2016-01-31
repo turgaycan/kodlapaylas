@@ -18,9 +18,6 @@ public abstract class PageController extends CommonController {
 
     protected static final Logger LOGGER = LoggerFactory.getLogger(PageController.class);
 
-    @Autowired
-    protected DateUtils dateUtils;
-
     protected abstract String buildPageUrl(String url);
 
     protected abstract ModelAndView getModelAndView(String page, Integer pageNum);
@@ -29,14 +26,19 @@ public abstract class PageController extends CommonController {
         if (pageNum == null || pageNum <= 0) {
             return PagingDTO.DEFAULT_PAGE - 1;
         }
+
         return pageNum - 1;
     }
 
     protected int archiveYear(Integer year) {
-        if (year == null)
+        if (year == null) {
             return currentYear();
-        if (dateUtils.isNotValidYear(year))
+        }
+
+        if (dateUtils.isNotValidYear(year)) {
             return currentYear();
+        }
+
         return year;
     }
 

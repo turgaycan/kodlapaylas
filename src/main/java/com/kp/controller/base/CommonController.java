@@ -8,11 +8,15 @@ import com.kp.service.article.ArticleService;
 import com.kp.service.article.ArticleTypeService;
 import com.kp.service.article.CommentService;
 import com.kp.service.article.TagService;
+import com.kp.service.seo.SeoMetaDataService;
+import com.kp.util.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -32,13 +36,38 @@ public abstract class CommonController {
     @Autowired
     protected TagService tagService;
 
+    @Autowired
+    private SeoMetaDataService seoMetaDataService;
+
+    @Autowired
+    protected DateUtils dateUtils;
+
     protected void populateCommonsForArticle(ModelAndView mav, Article article) {
         final List<Article> recentArticles = articleService.findRecentArticles(article, Article.RECENT_ARTICLE_LIMIT);
         final List<Article> relatedArticles = articleService.findRelatedArticles(recentArticles, article, Article.RECENT_ARTICLE_LIMIT);
         mav.addObject("relatedArticles", relatedArticles);
         mav.addObject("commentBaseModel", commentService.buildCommentModel(article));
+        mav.addObject("seoMetaData", seoMetaDataService.buildPageSeoMetaData(mav.getViewName(), buildPropertyMap(article)));
         populateTags(mav, tagsByArticleType(article.getArticleType()));
     }
+
+    private Map<String, String[]> buildPropertyMap(Article article) {
+        Map<String, String[]> propertyMap = new HashMap<>();
+        propertyMap.put(SeoMetaDataService.TITLE, new String[]{article.getTitle()});
+        propertyMap.put(SeoMetaDataService.KEYWORDS, new String[]{article.getTags()});
+        propertyMap.put(SeoMetaDataService.DESCRIPTION, new String[]{article.getTitle()});
+
+        return propertyMap;
+    }
+
+    protected void addSeoMetaDataToMav(ModelAndView mav) {
+        mav.addObject("seoMetaData", seoMetaDataService.buildPageSeoMetaData(mav.getViewName()));
+    }
+
+    protected void addArchiveYearsToMav(ModelAndView mav) {
+        mav.addObject("years", dateUtils.possibleArchiveYears());
+    }
+
 
     protected List<Tag> tagsByArticleType(ArticleType articleType) {
         return tagService.findByArticleType(articleType);
@@ -61,6 +90,10 @@ public abstract class CommonController {
 
         mav.addObject("categoryUIModels", categoryUIModels);
         List<Article> articles = (List<Article>) mav.getModel().get("pageArticles");
+        if(articles.isEmpty()){
+            populateTags(mav, new ArrayList<>());
+            return;
+        }
         populateTags(mav, tagsByArticleType(articles.get(0).getArticleType()));
     }
 

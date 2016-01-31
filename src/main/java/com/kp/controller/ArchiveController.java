@@ -26,10 +26,7 @@ public class ArchiveController extends PageController {
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView listArchiveArticles() {
         ModelAndView mav = new ModelAndView(KpUrlPaths.ARCHIVE_VIEW);
-        List<Integer> possibleArchiveYears = new ArrayList<>();
-        for (int index = dateUtils.BORN_YEAR; index <= dateUtils.currentYear(); index++) {
-            possibleArchiveYears.add(index);
-        }
+        final List<Integer> possibleArchiveYears = dateUtils.possibleArchiveYears();
         mav.addObject("years", possibleArchiveYears);
         mav.addObject("pageUrl", buildPageUrl(possibleArchiveYears.get(0).toString()));
         populateMonths(mav);

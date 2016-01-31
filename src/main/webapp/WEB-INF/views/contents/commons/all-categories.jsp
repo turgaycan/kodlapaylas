@@ -43,10 +43,10 @@
                              id="${categoryUIModel.category.name}">
                             <c:forEach items="${categoryUIModel.subCategories}" var="subCategory">
 
-                                <div class="col-sm-6 col-xs-12 col-md-2">
-                                    <div class="thumbnail">
+                                <div class="col-sm-6 col-xs-12 col-md-2" style="width:150px !important;height:105px !important;">
+                                    <div class="thumbnail" style="margin-bottom: 15px !important;">
                                         <a title="${fn:toLowerCase(subCategory.name)}" href="<c:url value="/kategori/${fn:toLowerCase(subCategory.name)}" />">
-                                            <img src="http://www.mirchu.net/themes/BlogDesk/assets/images/feature-posts/feature-post1.png"
+                                            <img src="<c:url value='/resources/static/img/${fn:toLowerCase(subCategory.name)}.png' />"
                                                  alt="${fn:toLowerCase(subCategory.name)}">
                                         </a>
 

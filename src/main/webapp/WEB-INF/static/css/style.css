@@ -251,7 +251,7 @@ section { padding:0px 0px; }
 .post .caption { float: left; width: 100%; text-align: left; padding:25px 25px; word-wrap: break-word;}
 .post .caption h3 { margin: 0px 0px 20px 0px; color: #36a0e7; font-weight: 300; font-size: 34px; line-height: 42px; }
 .post .caption p { line-height: 28px; margin-bottom: 20px; font-size: 16px; }
-.post .author-info { padding: 15px 15px 15px 15px; text-align: left; min-height: 60px; border-bottom: 1px solid #ddd; background: #fcfcfc; float: left; width: 100%; }
+.post .author-info { padding: 10px 0px 0px 5px; text-align: left; min-height: 75px; border-bottom: 1px solid #ddd; background: #fcfcfc; float: left; width: 100%; }
 .post .author-info .list-inline { margin: 0px; }
 .post .author-info ul li:first-child { border-left: none; padding-left: 0px; }
 .post .author-info ul li { float: left; border-left: 1px solid #ddd; padding-left: 20px; padding-right: 20px; }

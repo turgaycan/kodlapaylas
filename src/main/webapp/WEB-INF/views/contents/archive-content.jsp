@@ -7,73 +7,87 @@
 --%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page pageEncoding="UTF-8"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<section class="innercontent">
+<c:choose>
+    <c:when test="${!pageArticles.isEmpty()}">
+        <section class="innercontent">
 
-    <div class="container">
-        <h2 class="heading">Search...</h2>
+            <div class="container">
 
-        <div class="row">
-            <div class="col-md-8 col-lg-8">
-                <c:choose>
-                    <c:when test="${not empty years}">
-                        <c:forEach items="${years}" var="itemYear">
-                            <ul class="list-unstyled">
-                                <li><i class="fa fa-circle"></i>
-                                    <a href="<c:url value="/arsiv/${itemYear}" />">Arşiv ${itemYear}</a></li>
-                            </ul>
-                        </c:forEach>
-                    </c:when>
-                    <c:otherwise>
-                        <c:forEach var="article" items="${pageArticles}">
-                            <%@include file="commons/horizontal-article.jsp" %>
-                        </c:forEach>
-                    </c:otherwise>
-                </c:choose>
-                <c:if test="${empty years}">
-                    <%@include file="commons/paging.jsp" %>
-                </c:if>
-                <div class="clearfix"></div>
-            </div>
-
-            <aside class="col-md-4 col-lg-4">
+                <h2 class="heading">Search...</h2>
 
                 <div class="row">
+                    <div class="col-md-8 col-lg-8">
+                        <c:choose>
+                            <c:when test="${not empty years}">
+                                <c:forEach items="${years}" var="itemYear">
+                                    <ul class="list-unstyled">
+                                        <li><i class="fa fa-circle"></i>
+                                            <a href="<c:url value="/arsiv/${itemYear}" />">Arşiv ${itemYear}</a></li>
+                                    </ul>
+                                </c:forEach>
+                            </c:when>
+                            <c:otherwise>
+                                <c:forEach var="article" items="${pageArticles}">
+                                    <%@include file="commons/horizontal-article.jsp" %>
+                                </c:forEach>
+                            </c:otherwise>
+                        </c:choose>
+                        <c:if test="${empty years}">
+                            <%@include file="commons/paging.jsp" %>
+                        </c:if>
+                        <div class="clearfix"></div>
+                    </div>
 
-                    <%@include file="commons/subscribeus.jsp" %>
+                    <aside class="col-md-4 col-lg-4">
 
-                    <script type="text/javascript">
-                        $.get("/recent-articles-${article.id}",
-                                async = true,
-                                function (data, status) {
-                                    $('#recent-articles').append("" + data);
-                                });
+                        <div class="row">
 
-                    </script>
-                    <div id="recent-articles"></div>
+                            <%@include file="commons/subscribeus.jsp" %>
 
-                    <script type="text/javascript">
-                        $.get("/root-categories",
-                                async = true,
-                                function (data, status) {
-                                    $('#root-categories').append("" + data);
-                                });
+                            <script type="text/javascript">
+                                $.get("/recent-articles-${article.id}",
+                                        async = true,
+                                        function (data, status) {
+                                            $('#recent-articles').append("" + data);
+                                        });
 
-                    </script>
-                    <div id="root-categories"></div>
+                            </script>
+                            <div id="recent-articles"></div>
 
-                    <%@include file="commons/tags.jsp" %>
+                            <script type="text/javascript">
+                                $.get("/root-categories",
+                                        async = true,
+                                        function (data, status) {
+                                            $('#root-categories').append("" + data);
+                                        });
 
-                    <%@include file="commons/months.jsp" %>
+                            </script>
+                            <div id="root-categories"></div>
+
+                            <%@include file="commons/tags.jsp" %>
+
+                            <%@include file="commons/months.jsp" %>
+
+                        </div>
+
+
+                    </aside>
 
                 </div>
+            </div>
 
+        </section>
+    </c:when>
+    <c:otherwise>
 
-            </aside>
+        <jsp:include page="error/error-content.jsp">
+            <jsp:param name="error" value="Henüz bu yıl içinde yazılmış bir yazı bulunamadı!"/>
+            <jsp:param name="errorType" value="499"/>
+        </jsp:include>
 
-        </div>
+    </c:otherwise>
+</c:choose>
 
-    </div>
-
-</section>
 

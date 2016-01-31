@@ -9,11 +9,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <section id="feature-posts" class="section">
-    <div class="feature-posts-grid" id="feature-posts-grid">
+    <div class="feature-posts-grid owl-carousel owl-theme" id="feature-posts-grid">
         <c:forEach items="${featureArticles}" var="article">
-            <article class="col-md-12 col-sm-12 nopadding item"><a href="<c:url value="${article.url}-${article.id}" />"
-                                                                   class="thumbnail"> <img
-                    src="http://www.mirchu.net/themes/BlogDesk/assets/images/feature-posts/feature-post1.png"
+            <article class="col-md-12 col-sm-12 nopadding item"><a
+                    href="<c:url value="${article.url}-${article.id}" />"
+                    class="thumbnail"> <img
+                    src="<c:url value='/resources/static/img/${fn:toLowerCase(article.mainImageUrl)}' />"
                     alt="${article.title}"> </a>
 
                 <div class="feature-text">
@@ -21,8 +22,9 @@
                            title="${article.title}">${article.title}</a></h3>
 
                     <p>
-                        <a title="${article.articleType.name}" href="<c:url value="/kategori/${fn:toLowerCase(article.articleType.name)}" />">
-                                ${article.articleType.name}
+                        <a title="${article.categoryName}"
+                           href="<c:url value="/kategori/${fn:toLowerCase(article.categoryName)}" />">
+                                ${article.categoryName}
                         </a></p>
                 </div>
             </article>

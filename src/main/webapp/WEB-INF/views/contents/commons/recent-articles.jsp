@@ -22,7 +22,7 @@
                     <!--loop -->
                     <div class="media-left">
                         <a title="${each.title}" href="<c:url value="/${each.buildUrl()}" />">
-                            <img src="http://www.mirchu.net/themes/BlogDesk/assets/images/post/rp1.jpg"
+                            <img src="<c:url value='/resources/static/img/${fn:toLowerCase(each.mainImageUrl)}' />"
                                  alt="${each.user.fullname}"/>
                         </a>
                     </div>

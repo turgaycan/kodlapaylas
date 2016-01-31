@@ -1,4 +1,5 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <nav class="navbar main-menu navbar-default navbar-fixed-top" role="navigation">
 
@@ -46,150 +47,31 @@
 
                 </li>
 
-                <li class="dropdown mega-dropdown">
-
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Mega Menu 2<span
-                            class="caret"></span></a>
-
-                    <div class="dropdown-menu">
-
-                        <div class="container">
-
-                            <div class="mega-dropdown-menu">
-
-                                <div class="col-md-3 col-xs-12 col-sm-6 sub-menu">
-
-                                    <h3>Categories</h3>
-
-                                    <ul class="list-unstyled">
-
-                                        <li><a href="#">Photography </a></li>
-
-                                        <li><a href="#">Travel </a></li>
-
-                                        <li><a href="#">Music </a></li>
-
-                                        <li><a href="#">LifeStyle </a></li>
-
-                                        <li><a href="#">Apps </a></li>
-
-                                        <li><a href="#">Business </a></li>
-
-                                    </ul>
-
-                                </div>
-
-                                <div class="col-md-3 col-xs-12 col-sm-6 sub-menu">
-
-                                    <h3>Social Menu</h3>
-
-                                    <ul class="list-unstyled">
-
-                                        <li><a href="#"><i class="fa fa-facebook-square"></i> Facebook </a></li>
-
-                                        <li><a href="#"><i class="fa fa-google-plus-square"></i> Google Plus </a>
-                                        </li>
-
-                                        <li><a href="#"><i class="fa fa-twitter-square"></i> Twitter </a></li>
-
-                                        <li><a href="#"><i class="fa fa-pinterest-square"></i> Pinterest </a></li>
-
-                                        <li><a href="#"><i class="fa fa-linkedin-square"></i> Linkedin </a></li>
-
-                                        <li><a href="#"><i class="fa fa-tumblr-square"></i> Tumblr </a></li>
-
-                                    </ul>
-
-                                </div>
-
-                                <div class="col-md-3 col-sm-6 sub-menu hidden-xs">
-
-                                    <h3>Recent Post Menu</h3>
-
-                                    <ul class="list-unstyled">
-
-                                        <li><a href="single.php">Should Be A Large Heading </a></li>
-
-                                        <li><a href="single.php">Match With the Size </a></li>
-
-                                        <li><a href="single.php">The Heading Text Size</a></li>
-
-                                        <li><a href="single.php">Lorem ipsum dolor sit </a></li>
-
-                                        <li><a href="single.php">Should Be A Large Heading </a></li>
-
-                                        <li><a href="single.php">Match With the Image </a></li>
-
-                                    </ul>
-
-                                </div>
-
-                                <div class="col-md-3 col-sm-6 sub-menu  hidden-xs">
-
-                                    <h3>About Us</h3>
-
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sit amet
-                                        lectus congue mi viverra congue in sed leo.</p>
-
-                                    <br/>
-
-                                    <ul class="list-inline store-icon">
-
-                                        <li><a href=""><i class="fa fa-android"></i> Google Play</a></li>
-
-                                        <li><a href=""><i class="fa fa-apple"></i> Apple Store</a></li>
-
-                                    </ul>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </li>
 
                 <li class="dropdown">
 
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Features
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Olurda..
                         <span class="caret"></span></a>
 
                     <ul class="dropdown-menu" role="menu">
 
-                        <li><a href="masonry-blog.php">Masonry Blog</a></li>
+                        <li><a href="/giris-yap">Giriş Yapmak İstersen..</a></li>
 
-                        <li><a href="classic-blog.php">Classic Blog</a></li>
-
-                        <li class="divider"></li>
-
-                        <li><a href="single.php">Single Post</a></li>
-
-                        <li><a href="video-blog.php">Video Post</a></li>
-
-                        <li><a href="audio-blog.php">Audio Post</a></li>
+                        <li><a href="/kayit-ol">Kayıt Olmak İstersen..</a></li>
 
                         <li class="divider"></li>
 
-                        <li><a href="signin.php">SignIn Page</a></li>
-
-                        <li><a href="signup.php">SignUp Page</a></li>
-
-                        <li class="divider"></li>
-
-                        <li><a href="search.php">Search Page</a></li>
+                        <li><a href="/ara">Arama Yapmak İstersen..</a></li>
 
                     </ul>
 
                 </li>
 
+                <li><a href="/hata">Hata :)</a></li>
 
-                <li><a href="404.php">404 Page</a></li>
+                <li><a href="/hakkimda">Hakkımda</a></li>
 
-                <li><a href="about.php">About Us</a></li>
-
-                <li><a href="contact.php">Contact</a></li>
+                <li><a href="/iletisim">İletişim</a></li>
 
             </ul>
 
@@ -223,11 +105,12 @@
                                                     <input type="text" class="form-control"
                                                            placeholder="Search for...">
 
-                              <span class="input-group-btn">
+                                                      <span class="input-group-btn">
 
-                                <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
+                                                        <button class="btn btn-default" type="submit"><i
+                                                                class="fa fa-search"></i></button>
 
-                              </span>
+                                                      </span>
 
                                                 </div>
                                                 <!-- /input-group -->

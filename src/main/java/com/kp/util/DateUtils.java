@@ -98,4 +98,13 @@ public class DateUtils {
     public int currentYear() {
         return LocalDate.now().getYear();
     }
+
+    public List<Integer> possibleArchiveYears() {
+        List<Integer> possibleArchiveYears = new ArrayList<>();
+        for (int index = BORN_YEAR; index <= currentYear(); index++) {
+            possibleArchiveYears.add(index);
+        }
+        return possibleArchiveYears;
+    }
+
 }

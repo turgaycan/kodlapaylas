@@ -17,8 +17,11 @@ import java.util.stream.Collectors;
 @Table(name = "comment", schema = "kp")
 @SequenceGenerator(name = "comment_id_seq", sequenceName = "comment_id_seq", allocationSize = 1)
 public class Comment extends BaseEntity {
+
     private static final long serialVersionUID = 3951817938640184706L;
+
     private static final int COMMENT_MAX_SIZE = 4000;
+
     @Id
     @Column(name = "id", nullable = false, unique = true, updatable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "comment_id_seq")

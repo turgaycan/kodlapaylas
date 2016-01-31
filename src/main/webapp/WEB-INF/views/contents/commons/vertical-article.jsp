@@ -10,7 +10,7 @@
 <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
     <article class="post">
         <div class="post-type post-img"><a href="#"><img
-                src="http://www.mirchu.net/themes/BlogDesk/assets/images/post/post-1.jpg"
+                src="<c:url value='/resources/static/img/${fn:toLowerCase(vArticle.mainImageUrl)}' />"
                 class="img-responsive"
                 alt="image post"/></a></div>
         <div class="author-info author-info-2">
@@ -39,8 +39,8 @@
             <p>${fn:substring(vArticle.content, 0, 300).contains("<code>") ? '' : fn:substring(vArticle.content, 0, 300)}</p>
 
             <div class="post-category"><a
-                    title="${fn:toLowerCase(vArticle.articleType.name)}"
-                    href="<c:url value="/kategori/${fn:toLowerCase(vArticle.articleType.name)}" />"><span>&nbsp;</span> ${vArticle.articleType.name}
+                    title="${fn:toLowerCase(vArticle.categoryName)}"
+                    href="<c:url value="/kategori/${fn:toLowerCase(vArticle.categoryName)}" />"><span>&nbsp;</span> ${vArticle.categoryName}
             </a></div>
 
             <a class="btn btn-default"

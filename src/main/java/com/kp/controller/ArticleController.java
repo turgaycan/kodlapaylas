@@ -34,7 +34,7 @@ public class ArticleController extends CommonController {
 
         Optional<Article> currentArticle = articleService.findArticleById(Long.valueOf(articleId));
         if (currentArticle.isPresent()) {
-            ModelAndView mav = new ModelAndView("/article");
+            ModelAndView mav = new ModelAndView("article");
             Article article = currentArticle.get();
             mav.addObject("article", article);
             populateCommonsForArticle(mav, article);

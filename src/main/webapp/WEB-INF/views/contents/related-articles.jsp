@@ -13,7 +13,7 @@
             <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
                 <div class="thumbnail">
                     <a href="#"><img
-                            src="http://www.mirchu.net/themes/BlogDesk/assets/images/post/related-post1.png"
+                            src="<c:url value='/resources/static/img/${fn:toLowerCase(relatedArticle.mainImageUrl)}' />"
                             alt="related post"></a>
 
                     <div class="caption">

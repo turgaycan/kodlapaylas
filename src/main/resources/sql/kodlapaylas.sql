@@ -342,3 +342,7 @@ OWNER TO kpadmin;
 
 --URL from title--
 update kp.article set url = lower(regexp_replace(title, '\W+', '-', 'g') );
+
+
+--add Article to main_image_url
+alter table kp.article add COLUMN main_image_url VARCHAR(1000)

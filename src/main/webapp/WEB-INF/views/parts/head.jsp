@@ -9,19 +9,22 @@
 <sec:authorize access="isFullyAuthenticated()">
     <c:set var="userLoggedIn" value="true"/>
 </sec:authorize>
+<c:set var="rootUrl" value="${pageContext.request.requestURL}"/>
+<c:set var="rootUri" value="${pageContext.request.requestURI}"/>
 <meta charset="utf-8">
+
+<title>${seoMetaData.title}</title>
 
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<meta name="description" content="">
+<meta name="keywords" content="${seoMetaData.keywords}">
+<meta name="description" content="${seoMetaData.description}">
 
 <meta name="author" content="Turgay Can">
 
 <%--<link rel="icon" href="http://www.mirchu.net/themes/BlogDesk/assets/icon/favicon.ico">--%>
-
-<title>Üye Ol | KodlaPaylas.com</title>
 
 <!-- Bootstrap core CSS -->
 <spring:url value="/webjars/bootstrap/3.3.4/css/bootstrap.min.css" var="bootstrapCss"/>
