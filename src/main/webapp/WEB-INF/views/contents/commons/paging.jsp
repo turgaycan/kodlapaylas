@@ -7,12 +7,12 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<c:url var="firstUrl" value="${pageUrl}/${pagingDTO.first}"/>
-<c:url var="beginUrl" value="${pageUrl}/${pagingDTO.begin}"/>
-<c:url var="endUrl" value="${pageUrl}/${pagingDTO.end}"/>
-<c:url var="prevUrl" value="${pageUrl}/${pagingDTO.prev}"/>
-<c:url var="nextUrl" value="${pageUrl}/${pagingDTO.next}"/>
-<c:url var="lastUrl" value="${pageUrl}/${pagingDTO.totalPages}"/>
+<c:url var="firstUrl" value="${pageUrl}/p${pagingDTO.first}"/>
+<c:url var="beginUrl" value="${pageUrl}/p${pagingDTO.begin}"/>
+<c:url var="endUrl" value="${pageUrl}/p${pagingDTO.end}"/>
+<c:url var="prevUrl" value="${pageUrl}/p${pagingDTO.prev}"/>
+<c:url var="nextUrl" value="${pageUrl}/p${pagingDTO.next}"/>
+<c:url var="lastUrl" value="${pageUrl}/p${pagingDTO.totalPages}"/>
 
 <div class="pagination-wrap">
     <ul class="pagination">

@@ -12,7 +12,7 @@ public class KpUrlPaths {
     public static final String ARCHIVE = "/arsiv";
     public static final String ARCHIVE_VIEW = "archive";
     public static final String ALL = "/kp";
-    public static final String SEARCH = "/arama";
+    public static final String SEARCH = "/ara";
     public static final String ERROR = "/error";
     public static final String ARCHIVE_WITH_SLASH = ARCHIVE + BACK_SLASH;
     public static final String CATEGORY_WITH_SLASH = CATEGORY + BACK_SLASH;

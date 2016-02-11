@@ -1,12 +1,9 @@
 package com.kp.controller.base;
 
-import com.google.common.collect.Lists;
 import com.kp.domain.Article;
 import com.kp.domain.model.dto.PagingDTO;
-import com.kp.util.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -51,7 +48,7 @@ public abstract class PageController extends CommonController {
         mav.addObject("pageArticles", articlePages.getContent());
         mav.addObject("pagingDTO", PagingDTO.buildPagingDTO(articlePages));
         mav.addObject("pageUrl", buildPageUrl(url));
-        mav.addObject("years", Lists.newArrayList());
+        mav.addObject("years", addArchiveYearsToMav());
         populateCommons(mav);
         return mav;
     }

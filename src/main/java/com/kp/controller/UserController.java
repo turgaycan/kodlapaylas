@@ -2,6 +2,7 @@ package com.kp.controller;
 
 import com.kp.dto.UserModel;
 import com.kp.service.user.UserService;
+import com.kp.util.KpUtil;
 import com.kp.validator.UserModelValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,21 +54,21 @@ public class UserController {
         return new ModelAndView("user_create", "form", new UserModel());
     }
 
-    @RequestMapping(value = "/yeni-uye", method = RequestMethod.GET)
+    @RequestMapping(value = "/kayıt-ol", method = RequestMethod.GET)
     public ModelAndView newUser() {
         return new ModelAndView("/new-user");
     }
 
-    @RequestMapping(value = "/uye/kayit-ol", method = RequestMethod.POST)
-    public String newUser(@Valid @ModelAttribute("userModel") UserModel userModel, BindingResult bindingResult,
+    @RequestMapping(value = "/kayit-ol", method = RequestMethod.POST)
+    public ModelAndView newUser(@Valid @ModelAttribute("userModel") UserModel userModel, BindingResult bindingResult,
                           Model model,
                           RedirectAttributes redirectAttributes) {
         LOGGER.debug("Processing user create form={}, bindingResult={}", userModel, bindingResult);
 
-        ModelAndView mav = new ModelAndView("/new-user");
+        ModelAndView mav = new ModelAndView("new-user");
         if (bindingResult.hasErrors()) {
             model.addAttribute("userModel", userModel);
-            return "/uye/kayit-ol";
+            return mav;
         }
         try {
             userService.create(userModel);
@@ -76,12 +77,12 @@ public class UserController {
             // at the same time and form validation has passed for more than one of them.
             LOGGER.warn("Exception occurred when trying to save the user, assuming duplicate email", e);
             bindingResult.reject("email.exists", "Email already exists");
-            return "/uye/kayit-ol";
+            return KpUtil.redirectToMAV("/hata");
         }
         LOGGER.info("Successfully registered");
         // ok, redirect
         redirectAttributes.addFlashAttribute("success", "Account successfully created");
-        return "redirect:/login";
+        return KpUtil.redirectToMAV("/kayit-ol");
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")

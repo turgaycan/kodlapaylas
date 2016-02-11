@@ -19,8 +19,8 @@
 
             </button>
 
-            <a class="navbar-brand" href="#" title="logo">
-                <img src="http://www.mirchu.net/themes/BlogDesk/assets/images/logo.png" alt="logo"/>
+            <a class="navbar-brand" href="<c:url value="/" /> " title="Kodlapaylas.com">
+                <img src="<c:url value='/resources/static/img/kodlapaylas-white-logo.jpg' /> " alt="logo"/>
             </a></div>
 
         <div class="navbar-collapse collapse pull-left">
@@ -134,13 +134,13 @@
 
             </li>
 
-            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+            <li><a href="https://www.facebook.com/Kodlapaylas" target="_blank"><i class="fa fa-facebook"></i></a></li>
 
             <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
 
-            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+            <li><a href="https://www.twitter.com/Kodlapaylas" target="_blank" ><i class="fa fa-twitter"></i></a></li>
 
-            <li><a href="signin.jsp"><i class="fa fa-user"></i></a></li>
+            <li><a href="<c:url value="/giris-yap" /> "><i class="fa fa-user"></i></a></li>
 
         </ul>
 

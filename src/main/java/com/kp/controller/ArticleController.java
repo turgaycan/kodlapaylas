@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -32,7 +33,7 @@ public class ArticleController extends CommonController {
             return KpUtil.redirectToMAV(url);
         }
 
-        Optional<Article> currentArticle = articleService.findArticleById(Long.valueOf(articleId));
+        Optional<Article> currentArticle = articleService.findById(Long.valueOf(articleId));
         if (currentArticle.isPresent()) {
             ModelAndView mav = new ModelAndView("article");
             Article article = currentArticle.get();
@@ -45,9 +46,14 @@ public class ArticleController extends CommonController {
 
 
     @RequestMapping(value = "/kp/articles/{page:\\d+$}", method = RequestMethod.GET)
-    public ModelAndView articles(@PathVariable("page") Long page){
+    public ModelAndView articles(@PathVariable("page") Long page) {
 
         return new ModelAndView("/kp/articles");
+    }
+
+    @Override
+    protected List<Integer> addArchiveYearsToMav() {
+        return dateUtils.possibleArchiveYears();
     }
 
 }

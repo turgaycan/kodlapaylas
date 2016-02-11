@@ -13,7 +13,7 @@ import java.util.Optional;
  */
 public interface ArticleTypeRepository extends JpaRepository<ArticleType, Long> {
 
-    @Query(value = "SELECT * FROM kp.article_type at WHERE at.parent_id is null order by id asc",
+    @Query(value = "SELECT * FROM kp.article_type at WHERE at.parent_id is null order by at.id asc",
             nativeQuery = true)
     List<ArticleType> findRootArticleTypes();
 

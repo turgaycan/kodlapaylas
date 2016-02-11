@@ -20,6 +20,12 @@ public class SearchController {
     @Autowired
     private SearchService searchService;
 
+    @RequestMapping(method = RequestMethod.GET)
+    public ModelAndView index(@PathVariable String keyword) {
+
+        return new ModelAndView("/search");
+    }
+
     @RequestMapping(value = "/{keyword}", method = RequestMethod.GET)
     public ModelAndView search(@PathVariable String keyword) {
 

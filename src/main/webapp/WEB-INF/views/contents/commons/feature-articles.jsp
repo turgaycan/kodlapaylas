@@ -9,7 +9,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <section id="feature-posts" class="section">
-    <div class="feature-posts-grid owl-carousel owl-theme" id="feature-posts-grid">
+    <div class="feature-posts-grid owl-carousel owl-theme" id="feature-posts-grid" style="opacity: 1; display: block;">
         <c:forEach items="${featureArticles}" var="article">
             <article class="col-md-12 col-sm-12 nopadding item"><a
                     href="<c:url value="${article.url}-${article.id}" />"

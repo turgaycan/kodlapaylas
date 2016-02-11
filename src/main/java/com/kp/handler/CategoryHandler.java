@@ -31,7 +31,7 @@ public class CategoryHandler {
     public
     @ResponseBody
     ModelAndView listRootCategories() {
-        ModelAndView mav = new ModelAndView("/contents/commons/root-categories");
+        ModelAndView mav = new ModelAndView("contents/commons/root-categories");
         LOGGER.info("Root Categories page..");
         mav.addObject("categories", getAllRootTypes());
         return mav;
@@ -45,11 +45,12 @@ public class CategoryHandler {
     public
     @ResponseBody
     ModelAndView populateCategories() {
-        ModelAndView mav = new ModelAndView("/contents/commons/all-categories");
+        ModelAndView mav = new ModelAndView("contents/commons/all-categories");
         LOGGER.info("Root Categories page..");
         List<CategoryUIModel> categoryUIModels = new ArrayList<>();
         final List<ArticleType> allCategories = articleTypeService.findAll();
         for (ArticleType category : getAllRootTypes()) {
+
             List<ArticleType> subCategories = allCategories
                     .stream()
                     .filter(eachCategory -> isValidCategory(category, eachCategory))

@@ -34,7 +34,7 @@ public class CategoryController extends PageController {
         return getModelAndView(categoryName, PagingDTO.DEFAULT_PAGE - 1);
     }
 
-    @RequestMapping(value = "/{categoryName:[A-Za-z0-9]+}/{pageNum:\\d+$}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{categoryName:[A-Za-z0-9]+}/p{pageNum:\\d+$}", method = RequestMethod.GET)
     public ModelAndView listCategoryArticles(@PathVariable String categoryName, @PathVariable Integer pageNum) {
         int pageIndex = pageIndex(pageNum);
         return getModelAndView(categoryName, pageIndex);
@@ -45,7 +45,7 @@ public class CategoryController extends PageController {
         return listALlCategoryArticles(PagingDTO.DEFAULT_PAGE - 1);
     }
 
-    @RequestMapping(value = "/kp/{pageNum:\\d+$}", method = RequestMethod.GET)
+    @RequestMapping(value = "/kp/p{pageNum:\\d+$}", method = RequestMethod.GET)
     public ModelAndView listALlCategoryArticles(@PathVariable Integer pageNum) {
         int pageIndex = pageIndex(pageNum);
         final Page<Article> articlePages = articleService.findArticlesAsPageable(pageIndex, PagingDTO.DEFAULT_PAGE_SIZE);
@@ -79,4 +79,8 @@ public class CategoryController extends PageController {
         return KpUrlPaths.buildCategoryUrl(categoryName);
     }
 
+    @Override
+    protected List<Integer> addArchiveYearsToMav() {
+        return dateUtils.possibleArchiveYears();
+    }
 }

@@ -12,17 +12,17 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.context.NullSecurityContextRepository;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 /**
  * Created by turgaycan on 9/20/15.
  */
 @Configuration
 @EnableWebSecurity
-@EnableWebMvcSecurity
+@EnableWebMvc
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SecurityConfig.class);
@@ -42,21 +42,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.exceptionHandling().and().anonymous().and().servletApi().and().headers().cacheControl().and().authorizeRequests()
-
-                // Allow anonymous resource requests
-                .antMatchers("/favicon.ico", "**/*.html", "**/*.css", "**/*.js").permitAll()
-
+        http.exceptionHandling().and().anonymous().and().servletApi().and().headers().cacheControl()
                 //Allow anonymous logins
-                .antMatchers("/auth/**").permitAll()
-
-                .antMatchers("/try").hasRole("ADMIN")
-
-                // All other request need to be authenticated
-                .anyRequest().authenticated()
-                .and()
-                .csrf().disable()
-                .authorizeRequests()
+                .and().xssProtection().xssProtectionEnabled(true)
+                .and().and()
+                .csrf().disable().authorizeRequests()
                 .antMatchers("/**").permitAll()
                 .antMatchers("/user/**").hasAuthority(Role.USER.name())
                 .antMatchers("/admin/**").hasAuthority(Role.ADMIN.name())

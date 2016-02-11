@@ -11,7 +11,8 @@ import org.springframework.context.annotation.Import;
         AppConfig.class,
         RepositoryConfig.class,
         SecurityConfig.class,
-        CacheConfig.class
+//        CacheConfig.class,
+        CouchbaseConfiguration.class
 })
 public class KodlapaylasApplication {
 }

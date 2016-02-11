@@ -23,7 +23,7 @@
                     <div class="media-left">
                         <a title="${each.title}" href="<c:url value="/${each.buildUrl()}" />">
                             <img src="<c:url value='/resources/static/img/${fn:toLowerCase(each.mainImageUrl)}' />"
-                                 alt="${each.user.fullname}"/>
+                                 alt="${each.userFullname}"/>
                         </a>
                     </div>
                     <div class="media-body">
@@ -31,7 +31,7 @@
                         </h4>
 
                         <p>
-                            <a title="${fn:toLowerCase(each.articleType.name)}" href="<c:url value="/kategori/${fn:toLowerCase(each.articleType.name)}" />">${each.articleType.name}</a> &bull;
+                            <a title="${fn:toLowerCase(each.categoryName)}" href="<c:url value="/kategori/${fn:toLowerCase(each.categoryName)}" />">${each.categoryName}</a> &bull;
                             <fmt:formatDate value="${each.createdate}" type="both" timeZone="tr"
                                             pattern="dd MMM, yyyy"/>
                         </p>

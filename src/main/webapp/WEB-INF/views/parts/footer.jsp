@@ -1,67 +1,65 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="container">
 
     <div class="row footer-top">
 
         <div class="col-sm-4 footer-box">
 
-            <h4>About us</h4>
+            <h4>Hakkımda</h4>
 
             <div class="footer-box-text">
 
                 <p>
-
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                    labore et.
-
-                    Ut wisi enim ad minim veniam, quis nostrud exerci tation ullam corper suscipit lobortis nisl ut.
-
+                    İlgili detay linkte mevcuttur.
                 </p>
 
-                <p><a href="about.html">Read more...</a></p>
+                <p><a href="<c:url value="/hakkimda" /> ">Hakkımda..</a></p>
 
             </div>
 
         </div>
 
         <div class="col-sm-4 footer-box">
+            <!--
+                        <h4></h4>
 
-            <h4>Flickr photos</h4>
+                        <div class="footer-box-text flickr-feed">
 
-            <div class="footer-box-text flickr-feed">
+                            <a href="#" target="_blank" rel="nofollow"><img src="assets/images/post/rp4.jpg" alt=" Flickr"/></a>
 
-                <a href="#" target="_blank" rel="nofollow"><img src="assets/images/post/rp4.jpg" alt=" Flickr"/></a>
+                            <a href="#" target="_blank" rel="nofollow"><img src="assets/images/post/rp1.jpg" alt=" Flickr"/></a>
 
-                <a href="#" target="_blank" rel="nofollow"><img src="assets/images/post/rp1.jpg" alt=" Flickr"/></a>
+                            <a href="#" target="_blank" rel="nofollow"><img src="assets/images/post/rp2.jpg" alt=" Flickr"/></a>
 
-                <a href="#" target="_blank" rel="nofollow"><img src="assets/images/post/rp2.jpg" alt=" Flickr"/></a>
+                            <a href="#" target="_blank" rel="nofollow"><img src="assets/images/post/rp3.jpg" alt=" Flickr"/></a>
 
-                <a href="#" target="_blank" rel="nofollow"><img src="assets/images/post/rp3.jpg" alt=" Flickr"/></a>
+                            <a href="#" target="_blank" rel="nofollow"><img src="assets/images/post/rp1.jpg" alt=" Flickr"/></a>
 
-                <a href="#" target="_blank" rel="nofollow"><img src="assets/images/post/rp1.jpg" alt=" Flickr"/></a>
+                            <a href="#" target="_blank" rel="nofollow"><img src="assets/images/post/rp2.jpg" alt=" Flickr"/></a>
 
-                <a href="#" target="_blank" rel="nofollow"><img src="assets/images/post/rp2.jpg" alt=" Flickr"/></a>
+                            <a href="#" target="_blank" rel="nofollow"><img src="assets/images/post/rp3.jpg" alt=" Flickr"/></a>
 
-                <a href="#" target="_blank" rel="nofollow"><img src="assets/images/post/rp3.jpg" alt=" Flickr"/></a>
+                            <a href="#" target="_blank" rel="nofollow"><img src="assets/images/post/rp4.jpg" alt=" Flickr"/></a>
 
-                <a href="#" target="_blank" rel="nofollow"><img src="assets/images/post/rp4.jpg" alt=" Flickr"/></a>
+                        </div>
 
-            </div>
-
+            -->
         </div>
 
         <div class="col-sm-4 footer-box">
 
-            <h4>Find us here</h4>
+            <h4>İletişim..</h4>
 
             <div class="footer-box-text">
 
-                <p><span class="gray-text">Address:</span> Istanbul</p>
+                <p><span class="gray-text">Adres:</span> Istanbul</p>
 
-                <p><span class="gray-text">Phone:</span> +90 ******</p>
+                <p><span class="gray-text">Tel:</span> +90 ******</p>
 
-                <p><span class="gray-text">Twitter:</span> @KodlaPaylas</p>
+                <p><span class="gray-text">Twitter:</span><a href="https://www.tiwitter.com/KodlaPaylas"> @KodlaPaylas</a></p>
 
-                <p><span class="gray-text">Email:</span> <a href="">info@kodlapaylas.com</a></p>
+                <p><span class="gray-text">Email:</span> <a href="<c:url value="/iletisim" /> ">info@kodlapaylas.com</a>
+                </p>
 
             </div>
 
@@ -81,9 +79,9 @@
 
             <ul class="list-inline footer-social">
 
-                <li><a class="facebook" target="_blank" href="#"><i class="fa fa-facebook"></i></a></li>
+                <li><a class="facebook" target="_blank" href="https://www.facebook.com/Kodlapaylas"><i class="fa fa-facebook"></i></a></li>
 
-                <li><a class="twitter" target="_blank" href="#"><i class="fa fa-twitter"></i></a></li>
+                <li><a class="twitter" target="_blank" href="https://www.tiwitter.com/KodlaPaylas"><i class="fa fa-twitter"></i></a></li>
 
                 <li><a class="google-plus" target="_blank" href="#"><i class="fa fa-google-plus"></i></a></li>
 

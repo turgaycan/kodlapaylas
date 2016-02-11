@@ -21,4 +21,13 @@ public class ListUtil {
 
         return list.subList(0, size);
     }
+
+    public static <T extends Serializable> List<T> defensiveSubList(List<T> list, int startIndex, int endIndex) {
+
+        if (CollectionUtils.isEmpty(list) || list.size() < endIndex) {
+            return list;
+        }
+
+        return list.subList(startIndex, endIndex);
+    }
 }

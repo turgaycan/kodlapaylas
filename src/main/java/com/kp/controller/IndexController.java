@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
+
 /**
  * Created by turgaycan on 9/20/15.
  */
@@ -69,4 +71,8 @@ public class IndexController extends CommonController {
         return mav;
     }
 
+    @Override
+    protected List<Integer> addArchiveYearsToMav() {
+        return dateUtils.possibleArchiveYears();
+    }
 }

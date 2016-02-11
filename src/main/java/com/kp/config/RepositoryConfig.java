@@ -107,6 +107,7 @@ public class RepositoryConfig {
         properties.setProperty("spring.jpa.hibernate.naming-strategy", namingStrategy);
         properties.setProperty("spring.datasource.schema", schema);
         properties.setProperty("spring.datasource.platform", databasePlatform);
+        properties.setProperty("hibernate.temp.use_jdbc_metadata_defaults", "false");
 
         return properties;
     }

@@ -27,7 +27,7 @@
                                     alt="image post"/></div>
                             <div class="info">
                                 <p>Yazar :</p>
-                                <a href="<c:url value='/hakkimda' />">${lastArticle.user.fullname}</a></div>
+                                <a href="<c:url value='/hakkimda' />">${lastArticle.userFullname}</a></div>
                         </li>
                         <li>
                             <div class="icon-box"><i class="fa fa-calendar"></i></div>
@@ -63,7 +63,7 @@
                     <p>${fn:substring(lastArticle.content, 0, 300).contains("<code>") ? '' : fn:substring(lastArticle.content, 0, 300)}</p>
 
                     <div class="post-category"><a title="${fn:toLowerCase(lastArticle.categoryName)}"
-                                                  href="<c:url value="/kategori/${fn:toLowerCase(lastArticle.categoryName)}" />"><span>&nbsp;</span> ${lastArticle.articleType.name}
+                                                  href="<c:url value="/kategori/${fn:toLowerCase(lastArticle.categoryName)}" />"><span>&nbsp;</span> ${lastArticle.categoryName}
                     </a></div>
                     <ul class="list-inline tags">
                         <c:forEach items="${lastArticle.articleTags}" var="tag">
@@ -78,7 +78,7 @@
         <aside class="col-md-3 col-lg-3">
             <div class="row">
                 <script type="text/javascript">
-                    $.get("/recent-articles-${lastArticle.id}",
+                    $.get("/recent-articles",
                             async = true,
                             function (data, status) {
                                 $('#recent-articles').append("" + data);

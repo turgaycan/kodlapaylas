@@ -3,6 +3,7 @@ package com.kp.handler;
 
 import com.kp.domain.Article;
 import com.kp.service.article.ArticleService;
+import com.kp.util.ListUtil;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,4 +48,15 @@ public class RecentArticlesHandler {
         mav.addObject("recentArticles", recentArticles);
         return mav;
     }
+
+    @RequestMapping(value = "/recent-articles", method = RequestMethod.GET)
+    public
+    @ResponseBody
+    ModelAndView listRecentArticlesForIndex() {
+        ModelAndView mav = new ModelAndView("/contents/commons/recent-articles");
+        final List<Article> recentArticles = ListUtil.defensiveSubList(articleService.findArticlesAsPageable(0, 4).getContent(), 1, 4);
+        mav.addObject("recentArticles", recentArticles);
+        return mav;
+    }
+
 }

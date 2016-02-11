@@ -10,23 +10,24 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h2 class="heading">Our Sponsor</h2>
+                <h2 class="heading">Favori Kategoriler.. (İleride kardeş bloglar eklenecek..)</h2>
 
                 <div id="sponsor-carousel">
-                    <div class="item"><a href="#"><img
-                            src="http://www.mirchu.net/themes/BlogDesk/assets/images/sponsor/themeforest.png"
-                            alt="themeforest"></a></div>
-                    <div class="item"><a href="#"><img
-                            src="http://www.mirchu.net/themes/BlogDesk/assets/images/sponsor/themesafari.png"
-                            alt="themesafari"></a></div>
-                    <div class="item"><a href="#"><img
-                            src="http://www.mirchu.net/themes/BlogDesk/assets/images/sponsor/mirchu-net.png"
-                            alt="mirchu-net"></a></div>
-                    <div class="item"><a href="#"><img
-                            src="http://www.mirchu.net/themes/BlogDesk/assets/images/sponsor/smashing-magazine.png"
-                            alt="smashing-magazine"></a></div>
-                    <div class="item"><a href="#"><img
-                            src="http://www.mirchu.net/themes/BlogDesk/assets/images/sponsor/behance.png" alt="behance"></a>
+                    <div class="item"><a href="<c:url value="/kategori/java" /> "><img
+                            src="<c:url value='/resources/static/img/java.png' />"
+                            alt="Java"></a></div>
+                    <div class="item"><a href="<c:url value="/kategori/csharp" /> "><img
+                            src="<c:url value='/resources/static/img/csharp.png' />"
+                            alt="C#"></a></div>
+                    <div class="item"><a href="<c:url value="/kategori/spring" /> "><img
+                            src="<c:url value='/resources/static/img/spring.png' />"
+                            alt="Spring"></a></div>
+                    <div class="item"><a href="<c:url value="/kategori/hibernate" /> "><img
+                            src="<c:url value='/resources/static/img/hibernate.png' />"
+                            alt="Hibernate"></a></div>
+                    <div class="item"><a href="<c:url value="/kategori/kpuygulamalar" /> "><img
+                            src="<c:url value='/resources/static/img/kpuygulamalar.png' />"
+                            alt="Kodlapaylas.com"></a>
                     </div>
                 </div>
             </div>

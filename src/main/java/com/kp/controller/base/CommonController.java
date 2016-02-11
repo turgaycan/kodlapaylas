@@ -42,6 +42,8 @@ public abstract class CommonController {
     @Autowired
     protected DateUtils dateUtils;
 
+    protected abstract List<Integer> addArchiveYearsToMav();
+
     protected void populateCommonsForArticle(ModelAndView mav, Article article) {
         final List<Article> recentArticles = articleService.findRecentArticles(article, Article.RECENT_ARTICLE_LIMIT);
         final List<Article> relatedArticles = articleService.findRelatedArticles(recentArticles, article, Article.RECENT_ARTICLE_LIMIT);
@@ -65,7 +67,7 @@ public abstract class CommonController {
     }
 
     protected void addArchiveYearsToMav(ModelAndView mav) {
-        mav.addObject("years", dateUtils.possibleArchiveYears());
+        mav.addObject("years", addArchiveYearsToMav());
     }
 
 
@@ -90,7 +92,7 @@ public abstract class CommonController {
 
         mav.addObject("categoryUIModels", categoryUIModels);
         List<Article> articles = (List<Article>) mav.getModel().get("pageArticles");
-        if(articles.isEmpty()){
+        if (articles.isEmpty()) {
             populateTags(mav, new ArrayList<>());
             return;
         }

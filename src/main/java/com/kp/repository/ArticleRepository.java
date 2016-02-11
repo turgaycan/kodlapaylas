@@ -20,7 +20,9 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
     @Query("FROM Article a LEFT JOIN FETCH  a.user u LEFT JOIN FETCH a.articleType at WHERE a.id =(:id)")
     Article findArticleById(@Param("id") Long id);
 
-    Page<Article> findByArticleTypeOrderByCreatedateDesc(ArticleType articleType, Pageable page);
+    @Query(value = "SELECT a From Article a LEFT JOIN a.user u LEFT JOIN a.articleType at WHERE a.articleType.id = (:articleTypeId) ORDER BY a.createdate DESC",
+            countQuery = "SELECT count(a) FROM Article a LEFT JOIN a.user u LEFT JOIN a.articleType at WHERE a.articleType.id = (:articleTypeId) ORDER BY a.createdate DESC")
+    Page<Article> findByArticleTypePageable(@Param("articleTypeId") long articleTypeId, Pageable page);
 
     Page<Article> findByArticleTypeOrTitleLike(ArticleType articleType, String title, Pageable page);
 
@@ -32,13 +34,16 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
 
     Page<Article> findByCreatedateAfterAndCreatedateBefore(Date startDate, Date endDate, Pageable page);
 
-    Page<Article> OrderByCreatedateDesc(Pageable page);
+    @Query(value = "SELECT a From Article a LEFT JOIN a.user u LEFT JOIN a.articleType at ORDER BY a.createdate DESC")
+    Page<Article> findPageableOrderByCreatedateDesc(Pageable page);
 
+    @Query(value = "select * from kp.article a left join kp.user u on u.id = a.user_id left join kp.article_type at on at.id = a.article_type_id where a.id = (:id)",
+            nativeQuery = true)
     Article findById(Long id);
 
     List<Article> findByArticleTypeIn(List<ArticleType> articleTypes);
 
-    @Query(value = "SELECT * FROM kp.article WHERE article_type_id IN (:article_type_id) order by view_number desc LIMIT 2",
+    @Query(value = "SELECT * FROM kp.article a left join kp.article_type at on at.id = a.article_type_id left join kp.user u on u.id = a.user_id WHERE  article_type_id IN (:article_type_id) order by view_number desc LIMIT 2",
             nativeQuery = true)
     List<Article> findByArticleTypeId(@Param("article_type_id") Long[] parentIds);
 

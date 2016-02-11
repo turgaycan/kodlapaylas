@@ -201,4 +201,8 @@ public class Article extends BaseEntity {
         return getArticleType().getName();
     }
 
+    public String GetUserFullname(){
+        return getUser().getFullname();
+    }
+
 }

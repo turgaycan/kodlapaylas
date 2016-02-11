@@ -159,35 +159,7 @@
 
                 <%@include file="commons/tags.jsp" %>
 
-                <div class=" col-sm-6 col-md-12 col-lg-12">
-
-                    <div class="panel panel-default theme-panel">
-
-                        <div class="panel-heading">
-                            <a href="<c:url value="/arsiv"/> ">Arşiv</a>
-                        </div>
-
-                        <div class="panel-body nopadding">
-
-                            <div class="list-group">
-
-                                <a href="#" class="list-group-item">January 2014</a>
-
-                                <a href="#" class="list-group-item">February 2014</a>
-
-                                <a href="#" class="list-group-item">March 2014</a>
-
-                                <a href="#" class="list-group-item">April 2014</a>
-
-                                <a href="#" class="list-group-item">May 2014</a>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
+                <%@include file="commons/archive.jsp" %>
 
             </div>
 

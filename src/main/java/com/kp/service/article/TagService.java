@@ -5,6 +5,7 @@ import com.kp.domain.Tag;
 import com.kp.domain.spec.PageSpec;
 import com.kp.repository.TagRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +20,7 @@ public class TagService {
     @Autowired
     private TagRepository tagRepository;
 
+    @Cacheable(value = "kpCache", key = "'tags-'.concat(#articleType.name)")
     @Transactional(readOnly = true)
     public List<Tag> findByArticleType(ArticleType articleType) {
         final ArticleType rootArticleType = articleType.getRoot();
@@ -26,6 +28,7 @@ public class TagService {
                 PageSpec.buildPageSpecificationByFieldDesc(1, 15, "count")).getContent();
     }
 
+    @Cacheable(value = "kpCache", key = "'tags-count'")
     @Transactional(readOnly = true)
     public List<Tag> findByOrderCountDesc() {
         return tagRepository.OrderByCountDesc(PageSpec.buildPageSpecificationByFieldDesc(0, 15, "count"));

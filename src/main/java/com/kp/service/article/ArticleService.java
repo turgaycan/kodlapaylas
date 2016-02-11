@@ -6,19 +6,19 @@ import com.kp.domain.ArticleType;
 import com.kp.domain.spec.PageSpec;
 import com.kp.dto.DateRange;
 import com.kp.repository.ArticleRepository;
-import com.kp.util.DateUtils;
 import com.kp.util.ListUtil;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.ListUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.couchbase.cache.CouchbaseCacheManager;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,25 +40,21 @@ public class ArticleService {
     private CommentService commentService;
 
     @Autowired
-    private DateUtils dateUtils;
+    private CouchbaseCacheManager kpCacheManager;
 
-    @Transactional(readOnly = true)
-    public Optional<Article> findArticleById(Long id) {
-        return Optional.ofNullable(articleRepository.findArticleById(id));
-    }
-
-    //Caching..
+    @Cacheable(value = "kpCache", key = "'article-recent'+#article.articleType.name+ '-'+#recent")
     @Transactional(readOnly = false)
     public List<Article> findRecentArticles(Article article, int recent) {
+        final ArticleType articleType = article.getArticleType();
         List<Article> recentArticles = articleRepository.
-                findByArticleTypeOrderByCreatedateDesc(article.getArticleType(),
+                findByArticleTypePageable(articleType.getId(),
                         PageSpec.buildPageSpecificationByFieldDesc(0, 10, "createdate")).getContent();
         return ListUtil.defensiveSubList(
                 Lists.newArrayList(CollectionUtils.select(recentArticles, each -> each != article))
                 , recent);
     }
 
-    //Caching..
+    @Cacheable(value = "kpCache", key = "'related-'+#article.id+ '-'+#recent")
     @Transactional(readOnly = true)
     public List<Article> findRelatedArticles(List<Article> recentArticles, Article article, int recent) {
         List<Article> relatedArticles = articleRepository.
@@ -76,19 +72,21 @@ public class ArticleService {
         return subtractList;
     }
 
+    @Cacheable(value = "kpCache", key = "'articleType-'+#articleType.name")
     @Transactional(readOnly = true)
     public Page<Article> findByArticleType(ArticleType articleType, int pageNum, int size) {
         return articleRepository.findByArticleType(articleType,
                 PageSpec.buildPageSpecificationByFieldDesc(pageNum, size, "createdate"));
     }
 
-
+    //@Cacheable(value = "kpCache", key = "'articleTypes-'+#articleType.name")
     @Transactional(readOnly = true)
     public Page<Article> findByArticleTypeIn(List<ArticleType> articleTypes, int pageNum, int size) {
         return articleRepository.findByArticleTypeIn(articleTypes,
                 PageSpec.buildPageSpecificationByFieldDesc(pageNum, size, "createdate"));
     }
 
+    @Cacheable(value = "kpCache", key = "'dateRange-' + #dateRange.startDate + '-' +#dateRange.endDate + '-' +#pageNum + '-' + #size")
     @Transactional(readOnly = true)
     public Page<Article> findByCreatedateAfterAndCreatedateBefore(DateRange dateRange, int pageNum, int size) {
         return articleRepository.findByCreatedateAfterAndCreatedateBefore(
@@ -97,33 +95,38 @@ public class ArticleService {
                 PageSpec.buildPageSpecificationByFieldDesc(pageNum, size, "createdate"));
     }
 
+    @Cacheable(value = "kpCache", key = "'optional-article-'+#articleId")
     @Transactional(readOnly = true)
-    public Optional<Article> findById(Long id) {
-        return Optional.ofNullable(articleRepository.findById(id));
+    public Optional<Article> findById(Long articleId) {
+        return Optional.ofNullable(articleRepository.findById(articleId));
     }
 
+    @Cacheable(value = "kpCache", key = "'article-'+#id")
     @Transactional(readOnly = true)
     public Article findBy(Long id) {
         return articleRepository.findOne(id);
     }
 
+    @Cacheable(value = "kpCache", key = "'featureArticles'")
     @Transactional(readOnly = true)
     public List<Article> findFeatureArticles() {
         Pageable topTen = PageSpec.buildPageSpecificationByFieldDesc(0, 10, "viewNumber");
-        return articleRepository.findAll(topTen).getContent();
+        return articleRepository.findPageableOrderByCreatedateDesc(topTen).getContent();
     }
 
-    //TODO turgay : caching..
+    @Cacheable(value = "kpCache", key = "'lastOne'")
     @Transactional(readOnly = true)
     public Article findLastOne() {
-        Pageable lastOne = PageSpec.buildPageSpecificationByFieldDesc(0, 1, "id");
-        Article article = articleRepository.findAll(lastOne).getContent().get(0);
+        Pageable lastOne = PageSpec.buildPageSpecificationByFieldDesc(0, 1, "createdate");
+        Article article = articleRepository.findPageableOrderByCreatedateDesc(lastOne).getContent().get(0);
+        article.getArticleType();
+        article.getUser();
         long commentCount = commentService.getArticleCommentCount(article);
         article.setCommentListSize(commentCount);
         return article;
     }
 
-    //TODO turgay: caching.. (ONE_DAY)
+    @Cacheable(value = "kpCache", key = "'articletype-' + #articleTypeParentId")
     @Transactional(readOnly = true)
     public List<Article> findByArticleTypeOrderByViewNumber(Long articleTypeParentId) {
         List<ArticleType> articleTypes = articleTypeService.findByParentId(articleTypeParentId);
@@ -138,10 +141,11 @@ public class ArticleService {
         return articleRepository.findByArticleTypeId(articleTypeIds);
     }
 
-    //TODO turgay : cacheable..(ONE_DAY)
+    @Cacheable(value = "kpCache", key = "'pageable-' + #pageNum + '-' + #size")
     @Transactional(readOnly = true)
     public Page<Article> findArticlesAsPageable(int pageNum, int size) {
-        return articleRepository.OrderByCreatedateDesc(PageSpec.buildPageSpecificationByFieldDesc(pageNum, size, "createdate"));
+        final Pageable page = PageSpec.buildPageSpecificationByFieldDesc(pageNum, size, "createdate");
+        return articleRepository.findPageableOrderByCreatedateDesc(page);
     }
 
 }
