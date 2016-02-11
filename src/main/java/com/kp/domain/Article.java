@@ -43,10 +43,10 @@ public class Article extends BaseEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "article_status")
     private ArticleStatus articleStatus = ArticleStatus.IN_PROGRESS;
-    @OneToOne(fetch = FetchType.LAZY, targetEntity = User.class)
+    @OneToOne(fetch = FetchType.EAGER, targetEntity = User.class)
     @JoinColumn(name = "user_id")
     private User user;
-    @OneToOne(fetch = FetchType.LAZY, targetEntity = ArticleType.class)
+    @OneToOne(fetch = FetchType.EAGER, targetEntity = ArticleType.class)
     @JoinColumn(name = "article_type_id")
     private ArticleType articleType;
     @Column(length = 500, nullable = false)
@@ -201,7 +201,7 @@ public class Article extends BaseEntity {
         return getArticleType().getName();
     }
 
-    public String GetUserFullname(){
+    public String getUserFullname(){
         return getUser().getFullname();
     }
 

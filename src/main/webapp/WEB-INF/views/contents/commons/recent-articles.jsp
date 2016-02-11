@@ -23,7 +23,7 @@
                     <div class="media-left">
                         <a title="${each.title}" href="<c:url value="/${each.buildUrl()}" />">
                             <img src="<c:url value='/resources/static/img/${fn:toLowerCase(each.mainImageUrl)}' />"
-                                 alt="${each.userFullname}"/>
+                                 alt="${each.getUserFullname()}"/>
                         </a>
                     </div>
                     <div class="media-body">

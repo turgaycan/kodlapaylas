@@ -119,8 +119,6 @@ public class ArticleService {
     public Article findLastOne() {
         Pageable lastOne = PageSpec.buildPageSpecificationByFieldDesc(0, 1, "createdate");
         Article article = articleRepository.findPageableOrderByCreatedateDesc(lastOne).getContent().get(0);
-        article.getArticleType();
-        article.getUser();
         long commentCount = commentService.getArticleCommentCount(article);
         article.setCommentListSize(commentCount);
         return article;

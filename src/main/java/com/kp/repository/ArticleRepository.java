@@ -39,7 +39,7 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
 
     @Query(value = "select * from kp.article a left join kp.user u on u.id = a.user_id left join kp.article_type at on at.id = a.article_type_id where a.id = (:id)",
             nativeQuery = true)
-    Article findById(Long id);
+    Article findById(@Param("id")Long id);
 
     List<Article> findByArticleTypeIn(List<ArticleType> articleTypes);
 

@@ -66,6 +66,6 @@ public class CategoryHandler {
     }
 
     private boolean isValidCategory(ArticleType category, ArticleType eachCategory) {
-        return eachCategory.isChildCategory() && eachCategory.getParent().equals(category);
+        return eachCategory.isChildCategory() && eachCategory.getParent().getId().equals(category.getId());
     }
 }

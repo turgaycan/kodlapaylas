@@ -18,7 +18,7 @@
                 <li>
                     <div class="info">
                         <p>Yazar:</p>
-                        <a href="<c:url value='/hakkimda' />">${vArticle.user.fullname}</a>
+                        <a href="<c:url value='/hakkimda' />">${vArticle.getUserFullname()}</a>
                     </div>
                 </li>
                 <li>

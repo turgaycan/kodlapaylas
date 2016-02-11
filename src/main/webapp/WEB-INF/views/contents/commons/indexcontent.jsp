@@ -27,7 +27,7 @@
                                     alt="image post"/></div>
                             <div class="info">
                                 <p>Yazar :</p>
-                                <a href="<c:url value='/hakkimda' />">${lastArticle.userFullname}</a></div>
+                                <a href="<c:url value='/hakkimda' />">${lastArticle.getUserFullname()}</a></div>
                         </li>
                         <li>
                             <div class="icon-box"><i class="fa fa-calendar"></i></div>
