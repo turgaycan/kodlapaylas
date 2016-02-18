@@ -21,7 +21,7 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
     Article findArticleById(@Param("id") Long id);
 
     @Query(value = "SELECT a From Article a LEFT JOIN a.user u LEFT JOIN a.articleType at WHERE a.articleType.id = (:articleTypeId) ORDER BY a.createdate DESC",
-            countQuery = "SELECT count(a) FROM Article a LEFT JOIN a.user u LEFT JOIN a.articleType at WHERE a.articleType.id = (:articleTypeId) ORDER BY a.createdate DESC")
+            countQuery = "SELECT count(a) FROM Article a LEFT JOIN a.user u LEFT JOIN a.articleType at WHERE a.articleType.id = (:articleTypeId)")
     Page<Article> findByArticleTypePageable(@Param("articleTypeId") long articleTypeId, Pageable page);
 
     Page<Article> findByArticleTypeOrTitleLike(ArticleType articleType, String title, Pageable page);
@@ -39,12 +39,14 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
 
     @Query(value = "select * from kp.article a left join kp.user u on u.id = a.user_id left join kp.article_type at on at.id = a.article_type_id where a.id = (:id)",
             nativeQuery = true)
-    Article findById(@Param("id")Long id);
+    Article findById(@Param("id") Long id);
 
     List<Article> findByArticleTypeIn(List<ArticleType> articleTypes);
 
     @Query(value = "SELECT * FROM kp.article a left join kp.article_type at on at.id = a.article_type_id left join kp.user u on u.id = a.user_id WHERE  article_type_id IN (:article_type_id) order by view_number desc LIMIT 2",
             nativeQuery = true)
     List<Article> findByArticleTypeId(@Param("article_type_id") Long[] parentIds);
+
+    Page<Article> findByTagsContaining(String tag, Pageable page);
 
 }

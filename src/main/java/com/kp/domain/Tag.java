@@ -1,6 +1,7 @@
 package com.kp.domain;
 
 import com.kp.domain.base.BaseEntity;
+import com.kp.util.KpUrlPaths;
 
 import javax.persistence.*;
 
@@ -57,5 +58,9 @@ public class Tag extends BaseEntity {
 
     public void setArticleType(ArticleType articleType) {
         this.articleType = articleType;
+    }
+
+    public String tagUrl(){
+        return KpUrlPaths.TAG_WITH_SLASH + name.toLowerCase();
     }
 }

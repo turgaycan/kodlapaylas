@@ -8,6 +8,7 @@ public class KpUrlPaths {
 
     public static final String BACK_SLASH = "/";
     public static final String CATEGORY = "/kategori";
+    public static final String TAG = "/tag";
     public static final String CATEGORY_VIEW = "/category";
     public static final String ARCHIVE = "/arsiv";
     public static final String ARCHIVE_VIEW = "archive";
@@ -16,6 +17,7 @@ public class KpUrlPaths {
     public static final String ERROR = "/error";
     public static final String ARCHIVE_WITH_SLASH = ARCHIVE + BACK_SLASH;
     public static final String CATEGORY_WITH_SLASH = CATEGORY + BACK_SLASH;
+    public static final String TAG_WITH_SLASH = TAG + BACK_SLASH;
     public static final String ALL_WITH_SLASH = CATEGORY + ALL;
 
     public static String buildCategoryUrl(String categoryName) {
@@ -24,6 +26,10 @@ public class KpUrlPaths {
 
     public static String buildArchiveUrl(String archive) {
         return ARCHIVE_WITH_SLASH + archive;
+    }
+
+    public static String buildTagUrl(String tag) {
+        return TAG_WITH_SLASH + tag;
     }
 
     private KpUrlPaths() {

@@ -33,15 +33,15 @@ public class ArticleController extends CommonController {
             return KpUtil.redirectToMAV(url);
         }
 
-        Optional<Article> currentArticle = articleService.findById(Long.valueOf(articleId));
-        if (currentArticle.isPresent()) {
-            ModelAndView mav = new ModelAndView("article");
-            Article article = currentArticle.get();
-            mav.addObject("article", article);
-            populateCommonsForArticle(mav, article);
-            return mav;
+        Article currentArticle = articleService.findById(Long.valueOf(articleId));
+        if (currentArticle == null) {
+            return KpUtil.redirectToMAV(url);
         }
-        return KpUtil.redirectToMAV(url);
+
+        ModelAndView mav = new ModelAndView("article");
+        mav.addObject("article", currentArticle);
+        populateCommonsForArticle(mav, currentArticle);
+        return mav;
     }
 
 

@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Created by turgaycan on 9/27/15.
@@ -25,10 +24,10 @@ public class ArticleTypeService {
         return articleTypeRepository.findRootArticleTypes();
     }
 
-    @Cacheable(value = "kpCache", key = "'articleType-'.concat(#name)")
+    @Cacheable(value = "kpCache", key = "'articleType-'.concat(#name)", condition = "#this != null")
     @Transactional(readOnly = true)
-    public Optional<ArticleType> findByName(String name) {
-        return articleTypeRepository.findByName(name);
+    public ArticleType findByName(String name) {
+        return articleTypeRepository.findByName(name).get();
     }
 
     @Cacheable(value = "kpCache", key = "'allCategories'")

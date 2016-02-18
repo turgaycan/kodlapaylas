@@ -28,7 +28,7 @@
             </c:otherwise>
         </c:choose>
         <c:forEach var="i" begin="${pagingDTO.begin}" end="${pagingDTO.end}">
-            <c:url var="url" value="${pageUrl}/${i}"/>
+            <c:url var="url" value="${pageUrl}/p${i}"/>
             <c:choose>
                 <c:when test="${i == pagingDTO.current + 1}">
                     <li class="active"><a title="${url}" href="${url}"><c:out value="${i}"/></a></li>

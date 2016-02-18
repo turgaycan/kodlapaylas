@@ -5,6 +5,8 @@ import org.apache.commons.collections4.CollectionUtils;
 import java.io.Serializable;
 import java.util.List;
 
+import static com.google.common.collect.Lists.newArrayList;
+
 /**
  * Created by turgaycan on 9/28/15.
  */
@@ -29,5 +31,9 @@ public class ListUtil {
         }
 
         return list.subList(startIndex, endIndex);
+    }
+
+    public static <T extends Serializable> List<T> defensiveArrayList(List<T> list, int size) {
+        return newArrayList(defensiveSubList(list, size));
     }
 }

@@ -53,14 +53,13 @@ public class CommentController {
     public ModelAndView listComments(@PathVariable Long articleId) {
         LOGGER.info("article id {}", articleId);
         ModelAndView mav = new ModelAndView("/contents/comments");
-        final Optional<Article> article = articleService.findById(articleId);
-        if (article.isPresent()) {
-            final Article currentArticle = article.get();
-            CommentBaseModel commentBaseModel = commentService.buildCommentModel(currentArticle);
-            mav.addObject("commentBaseModel", commentBaseModel);
+        final Article article = articleService.findById(articleId);
+        if (article == null) {
             return mav;
         }
 
+        CommentBaseModel commentBaseModel = commentService.buildCommentModel(article);
+        mav.addObject("commentBaseModel", commentBaseModel);
         return mav;
     }
 
@@ -78,23 +77,20 @@ public class CommentController {
             return mav;
         }
 
-        final Optional<Article> article = articleService.findById(Long.parseLong(articleId));
+        final Article article = articleService.findById(Long.parseLong(articleId));
 
-        if (article.isPresent()) {
-            LOGGER.info("model {}", commentModel.getMessage());
-            final Article currentArticle = article.get();
+        if (article == null) {
+            commentModel.setErrorResponse(new KpErrorResponse(KpErrors.NOT_FOUND));
+            mav.addObject("newComment", commentModel);
+            mav.addAllObjects(bindingResult.getModel());
 
-            mav.addObject("persistedComment", createNewComment(commentModel, currentArticle));
-
-            return KpUtil.redirectToMAV(mav, currentArticle.buildUrl());
+            return KpUtil.redirectToMAV(mav, request.getRequestURI());
         }
 
-        commentModel.setErrorResponse(new KpErrorResponse(KpErrors.NOT_FOUND));
+        LOGGER.info("model {}", commentModel.getMessage());
+        mav.addObject("persistedComment", createNewComment(commentModel, article));
 
-        mav.addObject("newComment", commentModel);
-        mav.addAllObjects(bindingResult.getModel());
-
-        return KpUtil.redirectToMAV(mav, request.getRequestURI());
+        return KpUtil.redirectToMAV(mav, article.buildUrl());
     }
 
     @RequestMapping(value = "/yorum/tekrar-yeni", method = RequestMethod.POST)

@@ -16,15 +16,17 @@
 
             <ul class="list-inline tags">
                 <c:forEach items="${tags}" var="tag">
+                    <c:url value="${tag.tagUrl()}" var="tagUrl"/>
                     <c:choose>
                         <c:when test="${tag.count >= 10}">
-                            <li class="big"><a href="<c:url value="/${fn:toLowerCase(tag.name)}" />">${tag.name}</a></li>
+                            <li class="big"><a href="<c:out value='${tagUrl}'/>">${tag.name}</a></li>
                         </c:when>
                         <c:when test="${tag.count > 5 && tag.count <10}">
-                            <li><a href="<c:url value="/${fn:toLowerCase(tag.name)}" />">${tag.name}</a></li>
+                            <li><a href="<c:out value='${tagUrl}'/>">${tag.name}</a></li>
                         </c:when>
                         <c:otherwise>
-                            <li class="small"><a href="<c:url value="/${fn:toLowerCase(tag.name)}" />">${tag.name}</a></li>
+
+                            <li class="small"><a href="<c:out value='${tagUrl}'/>">${tag.name}</a></li>
                         </c:otherwise>
                     </c:choose>
                 </c:forEach>
