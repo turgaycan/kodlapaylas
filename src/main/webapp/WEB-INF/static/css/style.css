@@ -71,9 +71,9 @@ textarea.form-control {height: auto;min-height: 200px;}
 .post iframe{ border:none; width:100%; outline:none;}
 /**************************Parallax*********************************/
 
-#parallax-1 { margin-bottom: 25px; padding:0px 0px; background-image: url(../images/adds-banner.jpg); background-position:top center; }
-#parallax-2 { padding:0px 0px; background-image: url(../images/perallax.jpg); background-size:cover; background-position:center center; }
-#parallax-3 { padding:0px 0px; background-image: url(../images/parallax-3.jpg); background-size:cover; background-position:center center; }
+#parallax-1 { margin-bottom: 25px; padding:0px 0px;  background-position:top center; }
+#parallax-2 { padding:0px 0px; background-size:cover; background-position:center center; }
+#parallax-3 { padding:0px 0px; background-size:cover; background-position:center center; }
 #parallax-1 h3{ margin:0px; padding:25px 0px;font-weight: 300;text-align: left;}
 #parallax-1 h3 span{color:#e74c3c; font-weight: 700;}
 #parallax-2 .container { padding:50px 0px; }

@@ -8,7 +8,7 @@
     <version>1.0</version>
     <packaging>war</packaging>
 
-    <name>kodlapaylas</name>
+    <name>kodlapaylas.com</name>
     <description>Kodlapayas.com blog project</description>
 
     <parent>

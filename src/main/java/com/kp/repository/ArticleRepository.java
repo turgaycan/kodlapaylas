@@ -30,7 +30,6 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
 
     Page<Article> findByArticleTypeIn(List<ArticleType> articleType, Pageable page);
 
-    Page<Article> findByCreatedateBetween(Date startDate, Date endDate, Pageable page);
 
     Page<Article> findByCreatedateAfterAndCreatedateBefore(Date startDate, Date endDate, Pageable page);
 
@@ -41,12 +40,12 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
             nativeQuery = true)
     Article findById(@Param("id") Long id);
 
-    List<Article> findByArticleTypeIn(List<ArticleType> articleTypes);
-
     @Query(value = "SELECT * FROM kp.article a left join kp.article_type at on at.id = a.article_type_id left join kp.user u on u.id = a.user_id WHERE  article_type_id IN (:article_type_id) order by view_number desc LIMIT 2",
             nativeQuery = true)
     List<Article> findByArticleTypeId(@Param("article_type_id") Long[] parentIds);
 
     Page<Article> findByTagsContaining(String tag, Pageable page);
+
+
 
 }

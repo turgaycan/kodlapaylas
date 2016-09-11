@@ -189,20 +189,32 @@ public class Article extends BaseEntity {
         this.commentListSize = commentListSize;
     }
 
-    public String buildUrl(){
+    public String buildUrl() {
         return url + "-" + id;
     }
 
-    public List<String> getArticleTags(){
+    public List<String> getArticleTags() {
         return Lists.newArrayList(getTags().split(","));
     }
 
-    public String getCategoryName(){
+    public String getCategoryName() {
         return getArticleType().getName();
     }
 
-    public String getUserFullname(){
+    public String getUserFullname() {
         return getUser().getFullname();
     }
 
+    public String buildResizedImageUrl(String size) {
+        final String replacement = "_" + size + ".png";
+        return getMainImageUrl().replaceAll(".png", replacement);
+    }
+
+    public void increment() {
+        ++viewNumber;
+    }
+
+    public String getCacheKey() {
+        return "article-" + id;
+    }
 }

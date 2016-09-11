@@ -14,10 +14,10 @@
 
             <div class="post-type post-img">
 
-                <a href="#"><img
-                        src="<c:url value='/resources/static/img/${fn:toLowerCase(article.mainImageUrl)}' />"
+                <a href="<c:url value="/${article.buildUrl()}" />" title="${article.title}"><img
+                        src="<c:url value='/resources/static/img/${fn:toLowerCase(article.buildResizedImageUrl("300_300"))}' />"
                         class="img-responsive"
-                        alt="image post"/></a>
+                        alt="${article.title}"/></a>
             </div>
 
             <div class="author-info author-info-2">

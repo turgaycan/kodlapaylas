@@ -13,7 +13,7 @@
 
                 <div class="post-type post-img">
 
-                    <a href="#"><img src="<c:url value='/resources/static/img/${article.mainImageUrl}' />"
+                    <a href="#"><img src="<c:url value='/resources/static/img/${article.buildResizedImageUrl("300_300")}' />"
                                      class="img-responsive" style="height: 400px !important;" alt="${fn:toLowerCase(article.categoryName)}"/></a>
 
                 </div>

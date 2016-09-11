@@ -67,7 +67,7 @@ public class IndexController extends CommonController {
     @RequestMapping(value = {"/hata"}, method = RequestMethod.GET)
     public ModelAndView error() {
         LOGGER.info("Getting error");
-        final ModelAndView mav = new ModelAndView("error");
+        final ModelAndView mav = new ModelAndView("/error");
         return mav;
     }
 

@@ -14,8 +14,8 @@
     <div class="row">
         <div class="col-md-9 col-lg-9">
             <article class="post">
-                <div class="post-type post-img"><a href="#"><img
-                        src="<c:url value='/resources/static/img/${fn:toLowerCase(lastArticle.mainImageUrl)}' />"
+                <div class="post-type post-img"><a href="<c:url value="/${lastArticle.buildUrl()}" />" title="${lastArticle.title}"><img
+                        src="<c:url value='/resources/static/img/${fn:toLowerCase(lastArticle.buildResizedImageUrl("800_400"))}' />"
                         class="img-responsive" style="height: 400px !important;"
                         alt="${fn:toLowerCase(lastArticle.categoryName)}"/></a></div>
                 <div class="author-info">
@@ -157,9 +157,9 @@
                     <li class="disabled"><a href="#" aria-label="Previous"> <span aria-hidden="true">Previous</span>
                     </a></li>
                     <li class="active"><a href="<c:url value="/kategori/kp" />">1</a></li>
-                    <li><a href="<c:url value="/kategori/kp/2" />">2</a></li>
+                    <li><a href="<c:url value="/kategori/kp/p2" />">2</a></li>
                     <li><a href="<c:url value="/kategori/kp" />">...</a></li>
-                    <li><a href="<c:url value="/kategori/kp/61" />" aria-label="Next"> <span
+                    <li><a href="<c:url value="/kategori/kp/p61" />" aria-label="Next"> <span
                             aria-hidden="true">Next</span> </a></li>
                 </ul>
             </div>

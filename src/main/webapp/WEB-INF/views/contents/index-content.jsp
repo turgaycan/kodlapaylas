@@ -9,7 +9,7 @@
 
 <script type="text/javascript">
     $.get("/feature-articles",
-            async = true,
+            async = false,
             function (data, status) {
                 $('#feature-articles').append("" + data);
             });

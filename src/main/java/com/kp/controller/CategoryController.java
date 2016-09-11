@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
-import java.util.Optional;
 
 import static com.google.common.collect.Lists.newArrayList;
 
@@ -42,11 +41,11 @@ public class CategoryController extends PageController {
 
     @RequestMapping(value = "/kp", method = RequestMethod.GET)
     public ModelAndView listAllCategoryArticles() {
-        return listALlCategoryArticles(PagingDTO.DEFAULT_PAGE - 1);
+        return listAllCategoryArticles(PagingDTO.DEFAULT_PAGE - 1);
     }
 
     @RequestMapping(value = "/kp/p{pageNum:\\d+$}", method = RequestMethod.GET)
-    public ModelAndView listALlCategoryArticles(@PathVariable Integer pageNum) {
+    public ModelAndView listAllCategoryArticles(@PathVariable Integer pageNum) {
         int pageIndex = pageIndex(pageNum);
         final Page<Article> articlePages = articleService.findArticlesAsPageable(pageIndex, PagingDTO.DEFAULT_PAGE_SIZE);
         return pageModelAndView(KpUrlPaths.CATEGORY_VIEW, articlePages, "kp");
