@@ -9,10 +9,10 @@
 <html>
 <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
     <article class="post">
-        <div class="post-type post-img"><a href="#"><img
-                src="<c:url value='/resources/static/img/${fn:toLowerCase(vArticle.mainImageUrl)}' />"
+        <div class="post-type post-img"><a href="<c:url value="/${vArticle.buildUrl()}" />" title="${vArticle.title}">${vArticle.title}><img
+                src="<c:url value='/resources/static/img/${fn:toLowerCase(vArticle.buildResizedImageUrl("300_300"))}' />"
                 class="img-responsive"
-                alt="image post"/></a></div>
+                alt="${vArticle.title}">${vArticle.title}/></a></div>
         <div class="author-info author-info-2">
             <ul class="list-inline">
                 <li>

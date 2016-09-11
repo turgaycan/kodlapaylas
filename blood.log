@@ -1,0 +1,34 @@
+/*C21*/SET SCHEMA PUBLIC
+drop table kp.article if exists
+drop table kp.article_type if exists
+drop table kp.comment if exists
+drop table kp.kp_statistic if exists
+drop table kp.seo_stat if exists
+drop table kp.tag if exists
+drop table kp.user if exists
+drop table kp.article if exists
+drop table kp.article_type if exists
+drop table kp.comment if exists
+drop table kp.kp_statistic if exists
+drop table kp.seo_stat if exists
+drop table kp.tag if exists
+drop table kp.user if exists
+DISCONNECT
+/*C20*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C19*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C18*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C17*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C16*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C15*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C14*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C13*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C12*/SET SCHEMA PUBLIC
+DISCONNECT

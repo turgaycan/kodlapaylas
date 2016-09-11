@@ -14,7 +14,7 @@
             <article class="col-md-12 col-sm-12 nopadding item"><a
                     href="<c:url value="${article.url}-${article.id}" />"
                     class="thumbnail"> <img
-                    src="<c:url value='/resources/static/img/${fn:toLowerCase(article.mainImageUrl)}' />"
+                    src="<c:url value='/resources/static/img/${fn:toLowerCase(article.buildResizedImageUrl("300_300"))}' />"
                     alt="${article.title}"> </a>
 
                 <div class="feature-text">

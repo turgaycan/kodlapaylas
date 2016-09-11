@@ -38,6 +38,8 @@ public class ArticleController extends CommonController {
             return KpUtil.redirectToMAV(url);
         }
 
+        currentArticle = articleService.save(currentArticle);
+
         ModelAndView mav = new ModelAndView("article");
         mav.addObject("article", currentArticle);
         populateCommonsForArticle(mav, currentArticle);

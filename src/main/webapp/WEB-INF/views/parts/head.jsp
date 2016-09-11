@@ -24,8 +24,6 @@
 
 <meta name="author" content="Turgay Can">
 
-<%--<link rel="icon" href="http://www.mirchu.net/themes/BlogDesk/assets/icon/favicon.ico">--%>
-
 <!-- Bootstrap core CSS -->
 <spring:url value="/webjars/bootstrap/3.3.4/css/bootstrap.min.css" var="bootstrapCss"/>
 <link rel="stylesheet" href="${bootstrapCss}" type='text/css'/>

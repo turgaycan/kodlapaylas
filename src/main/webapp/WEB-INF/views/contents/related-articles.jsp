@@ -13,7 +13,7 @@
             <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
                 <div class="thumbnail">
                     <a href="#"><img
-                            src="<c:url value='/resources/static/img/${fn:toLowerCase(relatedArticle.mainImageUrl)}' />"
+                            src="<c:url value='/resources/static/img/${fn:toLowerCase(relatedArticle.buildResizedImageUrl("300_300"))}' />"
                             alt="related post"></a>
 
                     <div class="caption">
