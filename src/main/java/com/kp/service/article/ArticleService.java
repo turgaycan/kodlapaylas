@@ -93,7 +93,7 @@ public class ArticleService {
                 PageSpec.buildPageSpecificationByFieldDesc(pageNum, size, "createdate"));
     }
 
-    //@Cacheable(value = "kpCache", key = "'articleTypes-'+#articleType.name")
+    @Cacheable(value = "kpCache", key = "'articleTypes-'+#articleTypes.get(0).name")
     @Transactional(readOnly = true)
     public Page<Article> findByArticleTypeIn(List<ArticleType> articleTypes, int pageNum, int size) {
         return articleRepository.findByArticleTypeIn(articleTypes,
