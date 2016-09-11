@@ -89,28 +89,24 @@ public class ArticleService {
     @Cacheable(value = "kpCache", key = "'articleType-'+#articleType.name")
     @Transactional(readOnly = true)
     public Page<Article> findByArticleType(ArticleType articleType, int pageNum, int size) {
-        final Pageable page = buildPageableByParam(pageNum, size, "createdate");
-
-        return articleRepository.findByArticleType(articleType, page);
+        return articleRepository.findByArticleType(articleType,
+                PageSpec.buildPageSpecificationByFieldDesc(pageNum, size, "createdate"));
     }
 
-    @Cacheable(value = "kpCache", key = "'articleTypes-'+#articleTypes.get(0).name")
+    //@Cacheable(value = "kpCache", key = "'articleTypes-'+#articleType.name")
     @Transactional(readOnly = true)
     public Page<Article> findByArticleTypeIn(List<ArticleType> articleTypes, int pageNum, int size) {
-        final Pageable page = buildPageableByParam(pageNum, size, "createdate");
-
-        return articleRepository.findByArticleTypeIn(articleTypes, page);
+        return articleRepository.findByArticleTypeIn(articleTypes,
+                PageSpec.buildPageSpecificationByFieldDesc(pageNum, size, "createdate"));
     }
 
     @Cacheable(value = "kpCache", key = "'dateRange-' + #dateRange.startDate + '-' +#dateRange.endDate + '-' +#pageNum + '-' + #size")
     @Transactional(readOnly = true)
     public Page<Article> findByCreatedateAfterAndCreatedateBefore(DateRange dateRange, int pageNum, int size) {
-        final Pageable page = buildPageableByParam(pageNum, size, "createdate");
-
         return articleRepository.findByCreatedateAfterAndCreatedateBefore(
                 dateRange.getStartDate(),
                 dateRange.getEndDate(),
-                page);
+                PageSpec.buildPageSpecificationByFieldDesc(pageNum, size, "createdate"));
     }
 
     @Cacheable(value = "kpCache", key = "'article-'+#articleId")
@@ -122,14 +118,14 @@ public class ArticleService {
     @Cacheable(value = "kpCache", key = "'featureArticles'")
     @Transactional(readOnly = true)
     public List<Article> findFeatureArticles() {
-        Pageable topTen = buildPageableByParam(0, 10, "viewNumber");
+        Pageable topTen = PageSpec.buildPageSpecificationByFieldDesc(0, 10, "viewNumber");
         return articleRepository.findPageableOrderByCreatedateDesc(topTen).getContent();
     }
 
     @Cacheable(value = "kpCache", key = "'lastOne'")
     @Transactional(readOnly = true)
     public Article findLastOne() {
-        Pageable lastOne = buildPageableByParam(0, 1, "createdate");
+        Pageable lastOne = PageSpec.buildPageSpecificationByFieldDesc(0, 1, "createdate");
         Article article = articleRepository.findPageableOrderByCreatedateDesc(lastOne).getContent().get(0);
         long commentCount = commentService.getArticleCommentCount(article);
         article.setCommentListSize(commentCount);
@@ -154,22 +150,15 @@ public class ArticleService {
     @Cacheable(value = "kpCache", key = "'pageable-' + #pageNum + '-' + #size")
     @Transactional(readOnly = true)
     public Page<Article> findArticlesAsPageable(int pageNum, int size) {
-        final Pageable page = buildPageableByParam(pageNum, size, "createdate");
+        final Pageable page = PageSpec.buildPageSpecificationByFieldDesc(pageNum, size, "createdate");
         return articleRepository.findPageableOrderByCreatedateDesc(page);
     }
 
     @Cacheable(value = "kpCache", key = "'tag-' + #tag + '-' + #pageNum + '-' + #size")
     @Transactional(readOnly = true)
     public Page<Article> findArticlesByTagAsPageable(String tag, int pageNum, int size) {
-        final Pageable page = buildPageableByParam(pageNum, size, "createdate");
+        final Pageable page = PageSpec.buildPageSpecificationByFieldDesc(pageNum, size, "createdate");
         return articleRepository.findByTagsContaining(tag, page);
-    }
-
-
-    private final Pageable buildPageableByParam(int pageNum, int pageSize, String param) {
-        final Pageable page = PageSpec.buildPageSpecificationByFieldDesc(pageNum, pageSize, param);
-
-        return page;
     }
 
 }
