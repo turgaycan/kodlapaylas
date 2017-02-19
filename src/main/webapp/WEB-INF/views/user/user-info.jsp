@@ -18,18 +18,20 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-lg-6">
-                            <form action="<c:url value='/user/info-update' />" method="post"
-                                  role="userUpdateInfo">
+                            <form action="<c:url value='/user/info-update' />" method="post" role="userUpdateInfo">
+
+                                <input type="hidden" id="username" name="username" value="${currentUser.username}"/>
+                                <input type="hidden" id="email" name="email" value="${currentUser.username}"/>
 
                                 <div class="form-group">
                                     <label for="disabledSelect">E-Posta</label>
-                                    <input class="form-control" id="email" name="email" type="text"
+                                    <input class="form-control" id="email2" name="email2" type="text"
                                            placeholder="${currentUser.email}" disabled>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="disabledSelect">Kullanıcı Ad</label>
-                                    <input class="form-control" id="username" name="username" type="text"
+                                    <input class="form-control" id="username2" name="username2" type="text"
                                            placeholder="${currentUser.username}" disabled>
                                 </div>
 
@@ -40,13 +42,15 @@
 
                                 <div class="form-group">
                                     <label>Ad Soyad</label>
-                                    <input class="form-control" id="fullname" name="fullname" value="${currentUser.fullname}"
+                                    <input class="form-control" id="fullname" name="fullname"
+                                           value="${currentUser.fullname}"
                                            placeholder="${currentUser.fullname}">
                                 </div>
 
                                 <div class="form-group">
                                     <label>Website</label>
-                                    <input class="form-control" id="website" name="website" value="${currentUser.website}"
+                                    <input class="form-control" id="website" name="website"
+                                           value="${currentUser.website}"
                                            placeholder="${currentUser.website}">
                                 </div>
 

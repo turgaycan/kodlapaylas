@@ -1,6 +1,5 @@
 package com.kp.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.kp.domain.base.BaseEntity;
 
 import javax.persistence.*;
@@ -25,7 +24,6 @@ public class ArticleType extends BaseEntity {
     private String icon;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id", referencedColumnName = "id")
-    @JsonIgnore
     private ArticleType parent;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date createdate;

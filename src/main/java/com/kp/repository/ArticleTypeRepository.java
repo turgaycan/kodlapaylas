@@ -13,11 +13,11 @@ import java.util.Optional;
  */
 public interface ArticleTypeRepository extends JpaRepository<ArticleType, Long> {
 
-    @Query(value = "SELECT * FROM article_type at WHERE at.parent_id is null order by at.id asc",
+    @Query(value = "SELECT * FROM kp.article_type at WHERE at.parent_id is null order by at.id asc",
             nativeQuery = true)
     List<ArticleType> findRootArticleTypes();
 
-    @Query(value = "SELECT * FROM article_type at WHERE lower(at.name) = lower(:name)",
+    @Query(value = "SELECT * FROM kp.article_type at WHERE lower(at.name) = lower(:name)",
             nativeQuery = true)
     Optional<ArticleType> findByName(@Param("name") String name);
 

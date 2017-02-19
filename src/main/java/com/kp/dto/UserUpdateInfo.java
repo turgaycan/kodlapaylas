@@ -36,11 +36,6 @@ public class UserUpdateInfo extends User implements Validateable<UserUpdateInfo>
 
                 final User user = userService.getUserByUsername(target.getUsername());
 
-                if(user != null && target.getUsername().equals(user.getUsername())){
-                    errors.rejectValue("username", "", "Aynı Kullanıcı adını seçtiniz!");
-                    return;
-                }
-
                 if (user != null && !target.getUsername().equals(user.getUsername())) {
                     errors.rejectValue("username", "", "Kullanıcı adı farklı bir kullanıcı tarafından kullanılmaktadır!");
                 }

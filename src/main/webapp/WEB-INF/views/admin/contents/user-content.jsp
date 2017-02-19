@@ -26,25 +26,29 @@
                                 <form action="<c:url value='/update/user' />" method="post" role="userUpdateInfo">
 
                                     <input type="hidden" id="id" name="id" value="${user.id}"/>
+                                    <input type="hidden" id="email" name="email" value="${user.email}"/>
+                                    <input type="hidden" id="username" name="username" value="${user.username}"/>
 
                                     <div class="form-group">
                                         <label for="disabledSelect">E-Posta</label>
-                                        <input class="form-control" id="email" name="email" type="text"
+                                        <input class="form-control" id="email2" name="email2" type="text"
                                                placeholder="${user.email}" value="${user.email}" disabled>
                                     </div>
 
                                     <div class="form-group">
                                         <label for="disabledSelect">Kullanıcı Ad</label>
-                                        <input class="form-control" id="username" name="username" type="text"
+                                        <input class="form-control" id="username2" name="username2" type="text"
                                                placeholder="${user.username}" value="${user.username}" disabled>
                                     </div>
 
                                     <div class="form-group">
                                         <label>Kayıt Tarihi</label>
-                                        <p class="form-control-static"><input class="form-control" id="createdate"
-                                                                              name="createdate" type="text"
-                                                                              placeholder="${user.createdate}"
-                                                                              value="${user.createdate}" disabled></p>
+                                        <p class="form-control-static">
+                                        <input class="form-control" id="createdate"
+                                               name="createdate" type="text"
+                                               placeholder="${user.createdate}"
+                                               value="${user.createdate}" disabled>
+                                        </p>
                                     </div>
 
                                     <div class="form-group">
@@ -65,7 +69,8 @@
                                         <select id="userStatus" name="userStatus"
                                                 class="form-control selectpicker col-xs-3">
                                             <option value="${user.userStatus.name()}">${user.userStatus.name()}</option>
-                                            <c:forEach var="userStatus" items="<%=com.kp.domain.model.UserStatus.values()%>">
+                                            <c:forEach var="userStatus"
+                                                       items="<%=com.kp.domain.model.UserStatus.values()%>">
                                                 <c:if test="${user.userStatus.name() ne userStatus.name()}">
                                                     <option value="${userStatus.name()}">${userStatus.name()}</option>
                                                 </c:if>

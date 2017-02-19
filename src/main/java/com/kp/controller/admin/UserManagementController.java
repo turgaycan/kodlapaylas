@@ -77,6 +77,7 @@ public class UserManagementController {
         persisted.setUserStatus(userUpdateInfo.getUserStatus());
         persisted.setWebsite(userUpdateInfo.getWebsite());
         persisted.setRole(userUpdateInfo.getRole());
+        persisted.setFullname(userUpdateInfo.getFullname());
 
         userService.merge(persisted);
 

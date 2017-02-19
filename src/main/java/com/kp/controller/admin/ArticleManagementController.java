@@ -3,12 +3,16 @@ package com.kp.controller.admin;
 import com.kp.controller.util.KpControllerUtil;
 import com.kp.domain.Article;
 import com.kp.domain.Comment;
+import com.kp.domain.User;
+import com.kp.dto.ArticleModel;
 import com.kp.dto.ArticleUpdateInfo;
 import com.kp.service.article.ArticleService;
 import com.kp.service.article.ArticleTypeService;
 import com.kp.service.article.CommentService;
+import com.kp.service.security.AuthenticationService;
 import com.kp.util.DateUtils;
 import com.kp.util.KpUtil;
+import com.kp.util.TurkishCharUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -44,6 +48,9 @@ public class ArticleManagementController {
 
     @Autowired
     private DateUtils dateUtils;
+
+    @Autowired
+    private AuthenticationService authenticationService;
 
     @RequestMapping(value = "/articles", method = RequestMethod.GET)
     public ModelAndView list() {
@@ -88,9 +95,9 @@ public class ArticleManagementController {
         return mav;
     }
 
-    @RequestMapping(value = "/update/article", method = RequestMethod.POST, produces = {"text/html; charset=utf-8","text/plain; charset=utf-8"})
+    @RequestMapping(value = "/update/article", method = RequestMethod.POST)
     public ModelAndView updateOne(@Valid @ModelAttribute("articleUpdateInfo") ArticleUpdateInfo articleUpdateInfo, BindingResult bindingResult) {
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             return KpControllerUtil.buildErrorMav(bindingResult, new ModelAndView("/admin/article-edit"));
         }
 
@@ -102,6 +109,7 @@ public class ArticleManagementController {
         article.setArticleStatus(articleUpdateInfo.getArticleStatus());
         article.setArticleType(articleUpdateInfo.getArticleType());
         article.setModifydate(dateUtils.now());
+        article.setUrl(article.createUrl());
 
         articleService.save(article);
 
@@ -109,4 +117,25 @@ public class ArticleManagementController {
         return KpUtil.redirectToMAV(showArticleUrl);
     }
 
+    @RequestMapping(value = "/new", method = RequestMethod.GET)
+    public ModelAndView newOne() {
+        final ModelAndView modelAndView = new ModelAndView("/admin/new-article");
+        modelAndView.addObject("articleTypes", articleTypeService.findAll());
+        modelAndView.addObject("article", new ArticleModel());
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/new", method = RequestMethod.POST)
+    public ModelAndView create(@Valid @ModelAttribute("articleModel") ArticleModel articleModel, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return KpControllerUtil.buildErrorMav(bindingResult, new ModelAndView("/admin/new-article"));
+        }
+
+        final User currentUser = authenticationService.getCurrentUser();
+        Article article = articleModel.buildNewArticle(currentUser);
+        final Article persistedArticle = articleService.save(article);
+
+        final String showArticleUrl = "/show/article/" + persistedArticle.getId();
+        return KpUtil.redirectToMAV(showArticleUrl);
+    }
 }

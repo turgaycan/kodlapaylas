@@ -1,8 +1,10 @@
 package com.kp.domain;
 
+import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 import com.kp.domain.base.BaseEntity;
 import com.kp.domain.model.ArticleStatus;
+import com.kp.util.TurkishCharUtil;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -216,5 +218,15 @@ public class Article extends BaseEntity {
 
     public String getCacheKey() {
         return "article-" + id;
+    }
+
+    public String createUrl() {
+        if (getTitle().contains(" ")) {
+            final String[] splittedValues = getTitle().split(" ");
+            final String url = Joiner.on('-').skipNulls().join(splittedValues).toLowerCase();
+
+            return TurkishCharUtil.replace(url);
+        }
+        return TurkishCharUtil.replace(getTitle());
     }
 }

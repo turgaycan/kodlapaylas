@@ -14,7 +14,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.1.RELEASE</version>
+        <version>1.4.3.RELEASE</version>
         <relativePath/>
     </parent>
 
@@ -77,10 +77,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
-        <!--<dependency>-->
-        <!--<groupId>org.springframework.boot</groupId>-->
-        <!--<artifactId>spring-boot-actuator</artifactId>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-actuator</artifactId>
+        </dependency>
         <dependency>
             <groupId>com.couchbase.client</groupId>
             <artifactId>couchbase-spring-cache</artifactId>
@@ -170,7 +170,11 @@
             <artifactId>h2</artifactId>
             <scope>runtime</scope>
         </dependency>
-
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -226,7 +230,7 @@
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <executions>
                     <execution>
-                        <id>integration-test</id>
+                        <id>test</id>
                         <goals>
                             <goal>integration-test</goal>
                         </goals>
@@ -245,7 +249,7 @@
 
     <profiles>
         <profile>
-            <id>integration</id>
+            <id>test</id>
             <properties>
                 <unit-tests.skip>false</unit-tests.skip>
                 <integration-tests.skip>false</integration-tests.skip>

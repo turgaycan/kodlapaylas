@@ -66,16 +66,6 @@ public class UserModel implements Validateable<UserModel>, Serializable {
     }
 
     @Override
-    public String toString() {
-        return "UserModel{" +
-                "username='" + fullname + "'\n'" +
-                "email='" + email.replaceFirst("@.+", "@***") + '\'' +
-                ", password=***" + '\'' +
-                ", passwordRepeated=***" + '\'' +
-                '}';
-    }
-
-    @Override
     public KpInfoValidator<UserModel> validator() {
         return new KpInfoValidator<UserModel>() {
             @Autowired
@@ -94,5 +84,15 @@ public class UserModel implements Validateable<UserModel>, Serializable {
             }
 
         };
+    }
+
+    @Override
+    public String toString() {
+        return "UserModel{" +
+                "username='" + fullname + "'\n'" +
+                "email='" + email.replaceFirst("@.+", "@***") + '\'' +
+                ", password=***" + '\'' +
+                ", passwordRepeated=***" + '\'' +
+                '}';
     }
 }
