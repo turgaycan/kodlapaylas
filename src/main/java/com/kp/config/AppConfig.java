@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @ComponentScan(basePackages = {
-        "com.kp.service", "com.kp.handler", "com.kp.exception", "com.kp.util", "com.kp.validator"
+        "com.kp.service", "com.kp.exception", "com.kp.util", "com.kp.validator"
 })
 public class AppConfig {
 }

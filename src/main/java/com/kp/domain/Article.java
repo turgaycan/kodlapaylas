@@ -16,8 +16,8 @@ import java.util.List;
 @SequenceGenerator(name = "article_id_seq", sequenceName = "article_id_seq", allocationSize = 1)
 public class Article extends BaseEntity {
     private static final long serialVersionUID = -243601926592177028L;
-    private static final int MAX_CONTENT_SIZE = 100000;
-    private static final int MAX_TITLE_SIZE = 100;
+    public static final int MAX_CONTENT_SIZE = 100000;
+    public static final int MAX_TITLE_SIZE = 100;
     public static final int RECENT_ARTICLE_LIMIT = 3;
 
     @Id

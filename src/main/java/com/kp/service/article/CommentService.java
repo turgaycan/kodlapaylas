@@ -3,11 +3,13 @@ package com.kp.service.article;
 import com.kp.domain.Article;
 import com.kp.domain.Comment;
 import com.kp.domain.model.CommentTree;
+import com.kp.domain.spec.PageSpec;
 import com.kp.dto.CommentBaseModel;
 import com.kp.dto.CommentUIModel;
 import com.kp.repository.CommentRepository;
 import com.kp.util.Queries;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -36,6 +38,11 @@ public class CommentService {
     @Transactional
     public Comment save(Comment comment) {
         return commentRepository.save(comment);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<Comment> getPaginated(int pageIndex, int pageSize) {
+        return commentRepository.findAll(PageSpec.buildPageSpecificationByFieldDesc(pageIndex, pageSize, "createdate"));
     }
 
     @Transactional(readOnly = true)
@@ -86,10 +93,6 @@ public class CommentService {
         return Optional.ofNullable(getOne(id));
     }
 
-    private Comment getOne(Long id) {
-        return commentRepository.findOne(id);
-    }
-
     @Transactional(readOnly = true)
     public Optional<Comment> findByParent(Comment comment) {
         return Optional.ofNullable(commentRepository.findByParent(comment));
@@ -100,4 +103,18 @@ public class CommentService {
         return commentRepository.getArticleCount(article);
     }
 
+    @Transactional(readOnly = true)
+    public long countOfTotalComments() {
+        return commentRepository.count();
+    }
+
+    @Transactional(readOnly = true)
+    private Comment getOne(Long id) {
+        return commentRepository.findOne(id);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Comment> getAll() {
+        return commentRepository.findAll();
+    }
 }

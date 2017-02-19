@@ -1,6 +1,11 @@
 package com.kp.config;
 
-import com.couchbase.client.CouchbaseClient;
+import com.couchbase.client.java.Bucket;
+import com.couchbase.client.java.Cluster;
+import com.couchbase.client.java.CouchbaseCluster;
+import com.couchbase.client.java.env.DefaultCouchbaseEnvironment;
+import com.couchbase.client.spring.cache.CacheBuilder;
+import com.couchbase.client.spring.cache.CouchbaseCacheManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -8,16 +13,11 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.couchbase.cache.CouchbaseCacheManager;
-import org.springframework.data.couchbase.config.AbstractCouchbaseConfiguration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 
 import java.time.Instant;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by tcan on 07/02/16.
@@ -25,49 +25,39 @@ import java.util.List;
 @EnableScheduling
 @EnableCaching
 @Configuration
-public class CouchbaseConfiguration extends AbstractCouchbaseConfiguration {
+public class CouchbaseConfiguration {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CouchbaseConfiguration.class);
 
     public static final String KP_CACHE = "kpCache";
 
-    @Value("${couchbase.cluster.username}")
-    private String username;
-
-    @Value("${couchbase.cluster.password}")
-    private String password;
-
     @Value("${couchbase.cluster.ip}")
     private String ip;
 
-    @Value("${couchbase.cluster.bucket}")
-    private String bucketName;
+    @Value("${com.couchbase.connectTimeout}")
+    private long connectTimeout;
 
-    @Override
-    protected List<String> bootstrapHosts() {
-        return Arrays.asList(this.ip);
+    @Bean(destroyMethod = "disconnect")
+    public Cluster cluster() {
+        final DefaultCouchbaseEnvironment couchbaseEnvironment = DefaultCouchbaseEnvironment.builder()
+                .connectTimeout(connectTimeout).keepAliveInterval(connectTimeout)
+                .build();
+
+        return CouchbaseCluster.create(couchbaseEnvironment, ip);
     }
 
-    @Override
-    protected String getBucketName() {
-        return this.bucketName;
-    }
-
-    @Override
-    protected String getBucketPassword() {
-        return this.password;
-    }
-
-    protected String getUsername() {
-        return this.username;
+    @Bean(destroyMethod = "close")
+    public Bucket defaultBucket() {
+        return cluster().openBucket();
     }
 
     @Bean
-    public CouchbaseCacheManager kpCacheManager() throws Exception {
-        HashMap<String, CouchbaseClient> instances = new HashMap();
-        instances.put(
-                KP_CACHE, couchbaseClient());
-        return new CouchbaseCacheManager(instances);
+    public CouchbaseCacheManager cacheManager() {
+        final CacheBuilder cacheBuilder = CacheBuilder.newInstance(defaultBucket())
+                .withExpirationInMillis((int) connectTimeout);
+
+        return new CouchbaseCacheManager(cacheBuilder, KP_CACHE);
+
     }
 
     @CacheEvict(allEntries = true, value = {KP_CACHE})

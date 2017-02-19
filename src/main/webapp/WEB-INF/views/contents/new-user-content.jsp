@@ -6,7 +6,7 @@
 
         <div class="col-md-12">
 
-            <h2 class="heading">SignUp</h2>
+            <h2 class="heading">Üyelik Formu</h2>
 
             <div class="row">
 
@@ -16,7 +16,7 @@
 
                         <div class="panel-body">
 
-                            <form class="entry-form" action="<c:url value='/uye/kayit-ol' />" method="post" role="userModel">
+                            <form class="entry-form" action="<c:url value='/kayit-ol' />" method="post" role="userModel">
 
                                 <div class="form-group">
 
@@ -55,7 +55,8 @@
                                 </div>
 
                             </form>
-                            <div id="errors"> ${errors}</div>
+                            <div class="alert-danger"> ${errors}</div>
+                            <div class="alert-success"> ${success}</div>
 
                         </div>
 

@@ -27,30 +27,31 @@ public class DateUtils {
     }
 
     public LocalDateTime prevYear(Integer year) {
-        return initOfYear(year).minusYears(1).atStartOfDay(ZoneId.systemDefault()).toLocalDateTime();
+        return initOfYear(year).minusYears(1).atStartOfDay(getDefaultZone()).toLocalDateTime();
     }
 
+
     public LocalDateTime nextYear(Integer year) {
-        return initOfYear(year).plusYears(1).atStartOfDay(ZoneId.systemDefault()).toLocalDateTime();
+        return initOfYear(year).plusYears(1).atStartOfDay(getDefaultZone()).toLocalDateTime();
     }
 
     public Date dateOfPrevYear(Integer year) {
-        Instant instant = prevYear(year).atZone(ZoneId.systemDefault()).toInstant();
+        Instant instant = prevYear(year).atZone(getDefaultZone()).toInstant();
         return Date.from(instant);
     }
 
     public Date dateOfNextYear(Integer year) {
-        Instant instant = nextYear(year).atZone(ZoneId.systemDefault()).toInstant();
+        Instant instant = nextYear(year).atZone(getDefaultZone()).toInstant();
         return Date.from(instant);
     }
 
     public Date currentYear(Integer year) {
-        Instant instant = initOfYear(year).atStartOfDay(ZoneId.systemDefault()).toInstant();
+        Instant instant = initOfYear(year).atStartOfDay(getDefaultZone()).toInstant();
         return Date.from(instant);
     }
 
     public Date dateWithMonthAtStartDay(Integer year, Integer month) {
-        Instant instant = LocalDate.of(year, month - 1, 01).atStartOfDay(ZoneId.systemDefault()).toInstant();
+        Instant instant = LocalDate.of(year, month - 1, 01).atStartOfDay(getDefaultZone()).toInstant();
         return Date.from(instant);
     }
 
@@ -77,9 +78,9 @@ public class DateUtils {
     public DateRange dateWithMonthAtEndDay(Integer year, Integer month) {
         LocalDate initial = LocalDate.of(year, month - 1, 01);
 
-        Instant start = initial.withDayOfMonth(1).atStartOfDay(ZoneId.systemDefault()).toInstant();
+        Instant start = initial.withDayOfMonth(1).atStartOfDay(getDefaultZone()).toInstant();
         Date startDate = Date.from(start);
-        Instant end = initial.withDayOfMonth(initial.lengthOfMonth()).atStartOfDay(ZoneId.systemDefault()).toInstant();
+        Instant end = initial.withDayOfMonth(initial.lengthOfMonth()).atStartOfDay(getDefaultZone()).toInstant();
         Date endDate = Date.from(end);
 
         return new DateRange(startDate, endDate);
@@ -107,4 +108,7 @@ public class DateUtils {
         return possibleArchiveYears;
     }
 
+    private ZoneId getDefaultZone() {
+        return ZoneId.systemDefault();
+    }
 }

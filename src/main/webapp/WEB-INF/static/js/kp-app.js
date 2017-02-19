@@ -300,7 +300,6 @@ jQuery(function ($) {
             url: "/yorum/tekrar-yeni",
             data: replyCommentModel,
             error: function (data) {
-                alert(data);
                 if (data.status == 400) {
                     console.log('Bad Request');
                 }
@@ -346,7 +345,6 @@ function isNotValidEmail(email) {
 
 function showKpModal(commentId) {
     $(document).ready(function () {
-        //$('#kpModal').modal('show');
         $('#kpModal').modal('toggle');
         $('#commentId').val(commentId);
     });

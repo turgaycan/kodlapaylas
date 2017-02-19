@@ -1,9 +1,12 @@
 package com.kp.service.security;
 
 import com.kp.domain.User;
+import com.kp.service.user.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 /**
@@ -12,8 +15,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class AuthenticationService {
 
-//    @Autowired
-//    private SecurityExpressionOperations securityExpressionOperations;
+    @Autowired
+    private UserService userService;
 
     public boolean isKpAuthenticated() {
         return getKpAuthentication() != null && getKpAuthentication().isAuthenticated() &&
@@ -26,7 +29,11 @@ public class AuthenticationService {
     }
 
     public User getCurrentUser() {
-        return (User) getKpAuthentication().getPrincipal();
+        final UserDetails current = (UserDetails) getKpAuthentication().getPrincipal();
+        if(current == null){
+            return null;
+        }
+        return userService.getUserByEmail(current.getUsername());
     }
 
     public Authentication getKpAuthentication() {
@@ -41,4 +48,15 @@ public class AuthenticationService {
     public void logout() {
         SecurityContextHolder.clearContext();
     }
+
+    public UserDetails getLoggeduser() {
+        Object userDetails = SecurityContextHolder.getContext().getAuthentication().getDetails();
+        if (userDetails instanceof UserDetails) {
+            return ((UserDetails) userDetails);
+        }
+
+        return null;
+    }
+
+
 }

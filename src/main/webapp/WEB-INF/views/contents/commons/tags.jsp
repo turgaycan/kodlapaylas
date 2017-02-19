@@ -25,7 +25,6 @@
                             <li><a href="<c:out value='${tagUrl}'/>">${tag.name}</a></li>
                         </c:when>
                         <c:otherwise>
-
                             <li class="small"><a href="<c:out value='${tagUrl}'/>">${tag.name}</a></li>
                         </c:otherwise>
                     </c:choose>

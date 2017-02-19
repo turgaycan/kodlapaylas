@@ -1,10 +1,9 @@
 package com.kp.service.cache;
 
-import com.couchbase.client.CouchbaseClient;
-import net.spy.memcached.internal.OperationFuture;
-import net.spy.memcached.ops.OperationStatus;
+
+import com.couchbase.client.spring.cache.CouchbaseCache;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.couchbase.cache.CouchbaseCacheManager;
+import com.couchbase.client.spring.cache.CouchbaseCacheManager;
 import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
@@ -16,17 +15,15 @@ import java.io.Serializable;
 public class CacheService {
 
     @Autowired
-    private CouchbaseCacheManager kpCacheManager;
-
+    private CouchbaseCacheManager cacheManager;
 
     public boolean set(String key, Serializable object) {
-        final OperationFuture<Boolean> mergeObject = getCouchbaseClient().set(key, object);
-        final OperationStatus operationStatus = mergeObject.getStatus();
-        return operationStatus.isSuccess();
+        getKpCache().put(key, object);
+        return true;
     }
 
-    private CouchbaseClient getCouchbaseClient() {
-        final CouchbaseClient couchbaseClient = kpCacheManager.getClients().get("kpCache");
+    private CouchbaseCache getKpCache() {
+        final CouchbaseCache couchbaseClient = (CouchbaseCache) cacheManager.getCache("kpCache");
         return couchbaseClient;
     }
 

@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
  * Created by turgaycan on 9/28/15.
  */
 @RunWith(MockitoJUnitRunner.class)
-public class ArticleControllerTest {
+public class ArticleControllerTest  extends CommonControllerTest{
 
     @InjectMocks
     private ArticleController controller;

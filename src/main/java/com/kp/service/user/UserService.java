@@ -1,13 +1,18 @@
 package com.kp.service.user;
 
 import com.kp.domain.User;
+import com.kp.domain.model.Role;
 import com.kp.domain.model.UserStatus;
+import com.kp.domain.spec.PageSpec;
 import com.kp.dto.UserModel;
 import com.kp.repository.UserRepository;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -15,8 +20,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 /**
  * Created by turgaycan on 9/20/15.
@@ -39,6 +44,12 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
+    public User getOne(long id) {
+        LOGGER.debug("Getting user={}", id);
+        return userRepository.findOne(id);
+    }
+
+    @Transactional(readOnly = true)
     public Collection<User> getAllUsers() {
         LOGGER.debug("Getting all users");
         return userRepository.findAll(new Sort("email"));
@@ -48,19 +59,20 @@ public class UserService {
     public User create(UserModel userModel) {
         LOGGER.info("Create user={}", userModel.getEmail());
         User user = new User();
+        user.setUsername(userModel.getEmail());
         user.setEmail(userModel.getEmail());
         user.setCreatedate(new Date());
-//        user.setPasswordsalt(UUID.randomUUID().toString());
+        user.setRole(Role.USER);
         user.setPassword(passwordEncoder.encode(userModel.getPassword()));
         return userRepository.save(user);
     }
 
     @Transactional
     public User createGuest(String email) {
-        Optional<User> foundUser = getUserByEmail(email);
-        if (foundUser.isPresent()) {
+        User foundUser = getUserByEmail(email);
+        if (foundUser != null) {
             LOGGER.info("Founded user={}", email);
-            return foundUser.get();
+            return foundUser;
         }
         LOGGER.info("Create user={}", email);
         User user = new User();
@@ -68,27 +80,51 @@ public class UserService {
         user.setUsername(email.toLowerCase());
         user.setCreatedate(new Date());
         user.setUserStatus(UserStatus.GUEST);
-//        user.setPasswordsalt(UUID.randomUUID().toString());
-        user.setPassword(passwordEncoder.encode(RandomStringUtils.randomAlphanumeric(8)));
+        final String randomAlphanumeric = RandomStringUtils.randomAlphanumeric(8);
+        LOGGER.info("Password={}", randomAlphanumeric);
+        user.setPassword(passwordEncoder.encode(randomAlphanumeric));
+        return userRepository.save(user);
+    }
+
+    @Transactional
+    public User merge(User user) {
         return userRepository.save(user);
     }
 
     @Transactional(readOnly = true)
-    public User findAndAuthenticateUser(String email, String providedPassword) {
-        User user = userRepository.findOneByEmail(email);
-        if (user == null) {
-            return null;
-        }
-
-//        String saltedPassword = providedPassword + user.getPasswordsalt();
-//        if (passwordEncoder.matches(saltedPassword, user.getPassword())) {
-//            return user;
-//        }
-
-        return null;
+    public User getUserByEmail(String email) {
+        final User currentUser = userRepository.findOneByEmail(email.toLowerCase());
+        return currentUser;
     }
 
-    public Optional<User> getUserByEmail(String email) {
-        return Optional.ofNullable(userRepository.findOneByEmail(email.toLowerCase()));
+    public boolean isPasswordValid(String noneHashedPassword, String hashedPassword) {
+        return passwordEncoder.matches(noneHashedPassword, hashedPassword);
     }
+
+    @Transactional(readOnly = true)
+    public long countOfTotalUsers() {
+        return userRepository.count();
+    }
+
+    @Transactional(readOnly = true)
+    public User getUserByUsername(String username) {
+        return userRepository.findOneByUsername(username);
+    }
+
+    @Transactional(readOnly = true)
+    public List<User> getAll() {
+        return userRepository.findAll();
+    }
+
+    @Cacheable(value = "kpCache", key = "'pageable-' + #pageNum + '-' + #size", unless = "#result == null")
+    public Page<User> findUsersAsPageable(int pageNum, int size) {
+        return findUsersAsPageableNotCacheable(pageNum, size);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<User> findUsersAsPageableNotCacheable(int pageNum, int size) {
+        final Pageable page = PageSpec.buildPageSpecificationByFieldDesc(pageNum, size, "createdate");
+        return userRepository.findPageableOrderByCreatedateDesc(page);
+    }
+
 }

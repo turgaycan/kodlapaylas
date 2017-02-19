@@ -14,7 +14,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.3.2.RELEASE</version>
+        <version>1.5.1.RELEASE</version>
         <relativePath/>
     </parent>
 
@@ -39,8 +39,9 @@
         <commons-collections4.version>4.0</commons-collections4.version>
         <spring-context-support.version>4.1.7.RELEASE</spring-context-support.version>
         <spring-security-taglibs.version>3.2.7.RELEASE</spring-security-taglibs.version>
-        <spring-data-couchbase.version>1.4.2.RELEASE</spring-data-couchbase.version>
-        <spring-data-commons.version>1.11.2.RELEASE</spring-data-commons.version>
+
+        <unit-tests.skip>false</unit-tests.skip>
+        <integration-tests.skip>true</integration-tests.skip>
     </properties>
 
     <dependencies>
@@ -66,26 +67,28 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-couchbase</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-actuator</artifactId>
+            <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
+        <!--<dependency>-->
+        <!--<groupId>org.springframework.boot</groupId>-->
+        <!--<artifactId>spring-boot-actuator</artifactId>-->
+        <!--</dependency>-->
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>springloaded</artifactId>
-            <version>${spring-springloaded.version}</version>
+            <groupId>com.couchbase.client</groupId>
+            <artifactId>couchbase-spring-cache</artifactId>
         </dependency>
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>${postgresql.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hsqldb</groupId>
-            <artifactId>hsqldb</artifactId>
-            <version>${hsqldb.version}</version>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -148,33 +151,40 @@
             <version>${commons-collections4.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-commons</artifactId>
-            <version>${spring-data-commons.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-couchbase</artifactId>
-            <version>${spring-data-couchbase.version}</version>
-        </dependency>
-        <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context-support</artifactId>
-            <version>${spring-context-support.version}</version>
-        </dependency>
+        <!--<dependency>-->
+        <!--<groupId>org.springframework</groupId>-->
+        <!--<artifactId>spring-context-support</artifactId>-->
+        <!--<version>${spring-context-support.version}</version>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-taglibs</artifactId>
             <version>${spring-security-taglibs.version}</version>
         </dependency>
+        <!-- Runtime -->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.collections</groupId>
+            <artifactId>google-collections</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>16.0.1</version>
         </dependency>
     </dependencies>
 
@@ -201,16 +211,48 @@
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>
             </plugin>
+
+            <!--Test -->
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <skipTests>${unit-tests.skip}</skipTests>
+                    <excludes>
+                        <exclude>**/*RepositoryTest.java</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>integration-test</id>
+                        <goals>
+                            <goal>integration-test</goal>
+                        </goals>
+                        <configuration>
+                            <skipTests>${integration-tests.skip}</skipTests>
+                            <includes>
+                                <include>**/*RepositoryTest.class</include>
+                            </includes>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
+
     <profiles>
-        <!-- HSQLDB Integration test profile -->
         <profile>
-            <id>test</id>
+            <id>integration</id>
+            <properties>
+                <unit-tests.skip>false</unit-tests.skip>
+                <integration-tests.skip>false</integration-tests.skip>
+            </properties>
             <activation>
                 <property>
-                    <name>hsqldbIntegrationTest</name>
+                    <name>integration-test</name>
                     <value>true</value>
                 </property>
             </activation>
@@ -220,7 +262,7 @@
                         <targetPath>${project.build.outputDirectory}</targetPath>
                         <directory>src/test/resources</directory>
                         <includes>
-                            <include>application.properties</include>
+                            <include>application-test.properties</include>
                         </includes>
                     </resource>
                 </resources>

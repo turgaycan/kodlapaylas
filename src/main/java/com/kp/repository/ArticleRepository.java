@@ -36,11 +36,11 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
     @Query(value = "SELECT a From Article a LEFT JOIN a.user u LEFT JOIN a.articleType at ORDER BY a.createdate DESC")
     Page<Article> findPageableOrderByCreatedateDesc(Pageable page);
 
-    @Query(value = "select * from kp.article a left join kp.user u on u.id = a.user_id left join kp.article_type at on at.id = a.article_type_id where a.id = (:id)",
+    @Query(value = "select * from article a left join user u on u.id = a.user_id left join article_type at on at.id = a.article_type_id where a.id = (:id)",
             nativeQuery = true)
     Article findById(@Param("id") Long id);
 
-    @Query(value = "SELECT * FROM kp.article a left join kp.article_type at on at.id = a.article_type_id left join kp.user u on u.id = a.user_id WHERE  article_type_id IN (:article_type_id) order by view_number desc LIMIT 2",
+    @Query(value = "SELECT * FROM article a left join article_type at on at.id = a.article_type_id left join kp.user u on u.id = a.user_id WHERE  article_type_id IN (:article_type_id) order by view_number desc LIMIT 2",
             nativeQuery = true)
     List<Article> findByArticleTypeId(@Param("article_type_id") Long[] parentIds);
 

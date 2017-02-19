@@ -1,5 +1,6 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <nav class="navbar main-menu navbar-default navbar-fixed-top" role="navigation">
 
@@ -105,7 +106,7 @@
                                                     <input type="text" class="form-control"
                                                            placeholder="Search for...">
 
-                                                      <span class="input-group-btn">
+                                                    <span class="input-group-btn">
 
                                                         <button class="btn btn-default" type="submit"><i
                                                                 class="fa fa-search"></i></button>
@@ -138,9 +139,38 @@
 
             <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
 
-            <li><a href="https://www.twitter.com/Kodlapaylas" target="_blank" ><i class="fa fa-twitter"></i></a></li>
+            <li><a href="https://www.twitter.com/Kodlapaylas" target="_blank"><i class="fa fa-twitter"></i></a></li>
 
-            <li><a href="<c:url value="/giris-yap" /> "><i class="fa fa-user"></i></a></li>
+
+            <c:choose>
+                <c:when test="${userLoggedIn}">
+                    <li>
+                        <sec:authorize ifAnyGranted="ADMIN">
+                            <a href="<c:url value="/admin" /> ">
+                                Hoşgeldin <strong>${loggerUsername}</strong>
+                                <i class="fa fa-user"></i>
+                            </a>
+                        </sec:authorize>
+                        <sec:authorize ifAnyGranted="USER">
+                            <a href="<c:url value="/user" /> ">
+                                Hoşgeldin <strong>${loggerUsername}</strong>
+                                <i class="fa fa-user"></i>
+                            </a>
+                        </sec:authorize>
+                    </li>
+                    <li>
+                        <a href="<c:url value="/logout" />"><span class="glyphicon glyphicon-log-out"></span></a>
+                    </li>
+                </c:when>
+                <c:otherwise>
+                    <li>
+                        <a href="<c:url value="/giris-yap" /> ">
+                            <strong>Misafir üye</strong>
+                            <i class="fa fa-user"></i>
+                        </a>
+                    </li>
+                </c:otherwise>
+            </c:choose>
 
         </ul>
 

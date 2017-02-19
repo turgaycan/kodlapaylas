@@ -12,6 +12,7 @@ import org.apache.commons.collections4.ListUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -85,14 +86,14 @@ public class ArticleService {
         return subtractList;
     }
 
-    @Cacheable(value = "kpCache", key = "'articleType-'+#articleType.name")
+    @Cacheable(value = "kpCache", key = "'articleType-'+ #articleType.name + '-' + #pageNum + '-' + #size")
     @Transactional(readOnly = true)
     public Page<Article> findByArticleType(ArticleType articleType, int pageNum, int size) {
         return articleRepository.findByArticleType(articleType,
                 PageSpec.buildPageSpecificationByFieldDesc(pageNum, size, "createdate"));
     }
 
-    @Cacheable(value = "kpCache", key = "'articleTypes-'+#articleTypes.get(0).name")
+    @Cacheable(value = "kpCache", key = "'articleTypes-' + #articleTypes.get(0).name + '-' + #pageNum+ '-' +#size")
     @Transactional(readOnly = true)
     public Page<Article> findByArticleTypeIn(List<ArticleType> articleTypes, int pageNum, int size) {
         return articleRepository.findByArticleTypeIn(articleTypes,
@@ -112,6 +113,11 @@ public class ArticleService {
     @Transactional(readOnly = true)
     public Article findById(Long articleId) {
         return articleRepository.findById(articleId);
+    }
+
+    @Transactional(readOnly = true)
+    public Article getOne(Long id) {
+        return articleRepository.findOne(id);
     }
 
     @Cacheable(value = "kpCache", key = "'featureArticles'")
@@ -146,9 +152,13 @@ public class ArticleService {
         return articleRepository.findByArticleTypeId(articleTypeIds);
     }
 
-    @Cacheable(value = "kpCache", key = "'pageable-' + #pageNum + '-' + #size")
-    @Transactional(readOnly = true)
+    @Cacheable(value = "kpCache", key = "'pageable-' + #pageNum + '-' + #size", unless = "#result == null")
     public Page<Article> findArticlesAsPageable(int pageNum, int size) {
+        return findArticlesAsPageableNotCacheAble(pageNum, size);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<Article> findArticlesAsPageableNotCacheAble(int pageNum, int size) {
         final Pageable page = PageSpec.buildPageSpecificationByFieldDesc(pageNum, size, "createdate");
         return articleRepository.findPageableOrderByCreatedateDesc(page);
     }
@@ -160,4 +170,13 @@ public class ArticleService {
         return articleRepository.findByTagsContaining(tag, page);
     }
 
+    @Transactional(readOnly = true)
+    public long countOfTotalArticles() {
+        return articleRepository.count();
+    }
+
+    @Transactional(readOnly = true)
+    public List<Article> getAll() {
+        return articleRepository.findAll();
+    }
 }

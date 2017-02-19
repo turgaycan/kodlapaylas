@@ -46,4 +46,5 @@ public class DateUtilsTest {
         assertThat(currentDate.getMonth(), is(Month.JANUARY));
         assertThat(currentDate.getDayOfYear(), is(1));
     }
+
 }

@@ -1,5 +1,6 @@
 package com.kp.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.kp.domain.base.BaseEntity;
 
 import javax.persistence.*;
@@ -8,6 +9,7 @@ import java.util.Date;
 /**
  * Created by turgaycan on 9/22/15.
  */
+
 @Entity
 @Table(name = "article_type", schema = "kp")
 @SequenceGenerator(name = "article_type_id_seq", sequenceName = "article_type_id_seq", allocationSize = 1)
@@ -23,6 +25,7 @@ public class ArticleType extends BaseEntity {
     private String icon;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id", referencedColumnName = "id")
+    @JsonIgnore
     private ArticleType parent;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date createdate;

@@ -6,13 +6,12 @@ import org.springframework.context.annotation.Import;
 @SpringBootApplication
 @Import(value = {
         PropertyConfig.class,
+        CouchbaseConfiguration.class,
         AppConfig.class,
         MvcConfig.class,
         AppConfig.class,
         RepositoryConfig.class,
-        SecurityConfig.class,
-//        CacheConfig.class,
-        CouchbaseConfiguration.class
+        SecurityConfig.class
 })
 public class KodlapaylasApplication {
 }

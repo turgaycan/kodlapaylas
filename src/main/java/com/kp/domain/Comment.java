@@ -40,7 +40,7 @@ public class Comment extends BaseEntity {
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private User user;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "parent_id", referencedColumnName = "id", nullable = true)
+    @JoinColumn(name = "parent_id", referencedColumnName = "id")
     private Comment parent;
 
     public Comment() {

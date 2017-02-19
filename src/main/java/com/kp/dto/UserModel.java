@@ -1,6 +1,6 @@
 package com.kp.dto;
 
-import com.kp.repository.UserRepository;
+import com.kp.service.user.UserService;
 import com.kp.validator.validate.KpInfoValidator;
 import com.kp.validator.validate.Validateable;
 import org.hibernate.validator.constraints.Email;
@@ -19,8 +19,8 @@ public class UserModel implements Validateable<UserModel>, Serializable {
 
     private static final long serialVersionUID = -7683933371854136134L;
 
-    @Email(message = "Email formatı hatalı!")
-    @NotBlank(message = "Email adresini boş bırakmayınız..")
+    @Email(message = "E-Posta formatı hatalı!")
+    @NotBlank(message = "E-Posta adresini boş bırakmayınız..")
     private String email;
 
     @Size(min = 6, max = 50, message = "Şifrenin en az 6, en çok 50 karakterden oluşmalıdır.")
@@ -79,15 +79,16 @@ public class UserModel implements Validateable<UserModel>, Serializable {
     public KpInfoValidator<UserModel> validator() {
         return new KpInfoValidator<UserModel>() {
             @Autowired
-            UserRepository userRepository;
+            private UserService userService;
 
             @Override
             public void validate(UserModel target, Errors errors) {
                 if (!target.getPassword().equals(target.getPasswordRepeated())) {
                     errors.rejectValue("password", "", "Password must match password confirmation");
+                    return;
                 }
 
-                if (userRepository.findOneByEmail(target.getEmail()) != null) {
+                if (userService.getUserByEmail(target.getEmail()) != null) {
                     errors.rejectValue("email", "", "Email address is already taken");
                 }
             }

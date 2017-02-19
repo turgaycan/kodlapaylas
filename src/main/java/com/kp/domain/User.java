@@ -16,6 +16,7 @@ import java.util.List;
 /**
  * Created by turgaycan on 9/20/15.
  */
+
 @Entity
 @Table(name = "user", schema = "kp")
 @SequenceGenerator(name = "user_id_seq", sequenceName = "user_id_seq", allocationSize = 1)
@@ -41,7 +42,7 @@ public class User extends BaseEntity implements UserDetails {
     private String website;
     private String avatar;
     @Enumerated(EnumType.STRING)
-    private Role role = Role.USER;
+    private Role role = Role.GUEST;
 
     public User() {
     }
@@ -50,6 +51,12 @@ public class User extends BaseEntity implements UserDetails {
         this.id = id;
         this.email = email;
         this.password = password;
+    }
+
+    public User(String email, String password, String username) {
+        this.email = email;
+        this.password = password;
+        this.username =username;
     }
 
     public Long getId() {
@@ -133,10 +140,11 @@ public class User extends BaseEntity implements UserDetails {
         this.role = role;
     }
 
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorityList = new ArrayList<>();
-        authorityList.add(new SimpleGrantedAuthority(Role.USER.name()));
+        authorityList.add(new SimpleGrantedAuthority(role.name()));
         return authorityList;
     }
 
@@ -159,4 +167,9 @@ public class User extends BaseEntity implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    public boolean isAdmin() {
+        return role == Role.ADMIN;
+    }
+
 }

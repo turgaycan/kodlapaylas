@@ -26,4 +26,25 @@ public class ErrorController {
         return mav;
     }
 
+
+    @RequestMapping(value = "/403", method = RequestMethod.GET)
+    public ModelAndView accessDenied() {
+        ModelAndView mav = new ModelAndView("403");
+        mav.addObject("error", new KpErrorResponse(KpErrors.ACCESS_DENIED));
+        return mav;
+    }
+
+    @RequestMapping(value = "/404", method = RequestMethod.GET)
+    public ModelAndView notFound() {
+        ModelAndView mav = new ModelAndView("404");
+        mav.addObject("error", new KpErrorResponse(KpErrors.NOT_FOUND));
+        return mav;
+    }
+
+    @RequestMapping(value = "/500", method = RequestMethod.GET)
+    public ModelAndView serverError() {
+        ModelAndView mav = new ModelAndView("500");
+        mav.addObject("error", new KpErrorResponse(KpErrors.NOT_FOUND));
+        return mav;
+    }
 }

@@ -3,11 +3,15 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page isELIgnored="false" %>
+
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+
 <sec:authorize access="isAnonymous()">
     <c:set var="userLoggedIn" value="false"/>
 </sec:authorize>
 <sec:authorize access="isFullyAuthenticated()">
     <c:set var="userLoggedIn" value="true"/>
+    <c:set var="loggerUsername" value="${pageContext.request.getUserPrincipal().getName()}" />
 </sec:authorize>
 <c:set var="rootUrl" value="${pageContext.request.requestURL}"/>
 <c:set var="rootUri" value="${pageContext.request.requestURI}"/>

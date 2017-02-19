@@ -43,7 +43,7 @@ public class UserModelValidator implements Validator {
     }
 
     private boolean validateEmail(Errors errors, UserModel form) {
-        if (userService.getUserByEmail(form.getEmail()).isPresent()) {
+        if (userService.getUserByEmail(form.getEmail()) != null) {
             LOGGER.info("Validating {} email", form.getEmail());
             errors.reject("email.exists", "User with this email already exists");
             return true;
