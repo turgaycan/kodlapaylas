@@ -1,9 +1,11 @@
 package com.kp.service.seo;
 
 import com.kp.domain.model.seo.SeoMetaData;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
+import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.Map;
 
@@ -21,21 +23,21 @@ public class SeoMetaDataService {
     public static final String DESCRIPTION = "description";
     private static final String DOT_DESCRIPTION = DOT + DESCRIPTION;
 
-    @Resource(name = "seoProperty")
-    private Map<String, String> seoProperty;
+    @Autowired
+    private PropertiesFactoryBean seoProperty;
 
-    public SeoMetaData buildPageSeoMetaData(String page) {
-        String pageTitle = seoProperty.get(page + DOT_TITLE);
-        String pageKeywords = seoProperty.get(page + DOT_KEYWORDS);
-        String pageDescription = seoProperty.get(page + DOT_DESCRIPTION);
+    public SeoMetaData buildPageSeoMetaData(String page) throws IOException {
+        String pageTitle = (String) seoProperty.getObject().get(page + DOT_TITLE);
+        String pageKeywords = (String) seoProperty.getObject().get(page + DOT_KEYWORDS);
+        String pageDescription = (String) seoProperty.getObject().get(page + DOT_DESCRIPTION);
 
         return new SeoMetaData(pageTitle, pageKeywords, pageDescription);
     }
 
-    public SeoMetaData buildPageSeoMetaData(String page, Map<String, String[]> paramMap) {
-        String pageTitle = MessageFormat.format(seoProperty.get(page + DOT_TITLE), getValue(paramMap, TITLE));
-        String pageKeywords = MessageFormat.format(seoProperty.get(page + DOT_KEYWORDS), getValue(paramMap, KEYWORDS));
-        String pageDescription = MessageFormat.format(seoProperty.get(page + DOT_DESCRIPTION), getValue(paramMap, DESCRIPTION));
+    public SeoMetaData buildPageSeoMetaData(String page, Map<String, String[]> paramMap) throws IOException {
+        String pageTitle = MessageFormat.format((String) seoProperty.getObject().get(page + DOT_TITLE), getValue(paramMap, TITLE));
+        String pageKeywords = MessageFormat.format((String) seoProperty.getObject().get(page + DOT_KEYWORDS), getValue(paramMap, KEYWORDS));
+        String pageDescription = MessageFormat.format((String) seoProperty.getObject().get(page + DOT_DESCRIPTION), getValue(paramMap, DESCRIPTION));
 
         return new SeoMetaData(pageTitle, pageKeywords, pageDescription);
     }

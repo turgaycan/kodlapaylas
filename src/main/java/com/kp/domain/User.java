@@ -53,6 +53,11 @@ public class User extends BaseEntity implements UserDetails {
         this.password = password;
     }
 
+    public User(Long id, String email, String password, String username) {
+        this(id, email, password);
+        this.username = username;
+    }
+
     public User(String email, String password, String username) {
         this.email = email;
         this.password = password;

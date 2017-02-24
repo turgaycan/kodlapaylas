@@ -42,6 +42,21 @@ public class LongArrayType implements UserType {
         return x.hashCode();
     }
 
+//    @Override
+//    public Object nullSafeGet(ResultSet resultSet, String[] strings, SharedSessionContractImplementor sharedSessionContractImplementor, Object o) throws HibernateException, SQLException {
+//        Array array = resultSet.getArray(strings[0]);
+//        Long[] javaArray = (Long[]) array.getArray();
+//        return javaArray;
+//    }
+//
+//    @Override
+//    public void nullSafeSet(PreparedStatement preparedStatement, Object o, int i, SharedSessionContractImplementor sharedSessionContractImplementor) throws HibernateException, SQLException {
+//        Connection connection = preparedStatement.getConnection();
+//        Long[] castObject = (Long[]) o;
+//        Array array = connection.createArrayOf("bigint", castObject);
+//        preparedStatement.setArray(i, array);
+//    }
+
     @Override
     public boolean isMutable() {
         return true;

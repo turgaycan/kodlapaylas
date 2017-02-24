@@ -3,7 +3,6 @@ package com.kp.service.article;
 import com.google.common.collect.Lists;
 import com.kp.domain.ArticleType;
 import com.kp.repository.ArticleTypeRepository;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -29,18 +28,14 @@ public class ArticleTypeServiceTest {
     @Mock
     private ArticleTypeRepository articleTypeRepository;
 
-    @Ignore
     @Test
     public void testFindAll() throws Exception {
         ArticleType articleType1 = new ArticleType(1l, "type1", null);
-        ArticleType articleType12 = new ArticleType(1l, "type1", articleType1);
-        ArticleType articleType2 = new ArticleType(1l, "type1", null);
-        ArticleType articleType21 = new ArticleType(1l, "type1", articleType2);
-        ArticleType articleType3 = new ArticleType(1l, "type1", null);
-        ArticleType articleType4 = new ArticleType(1l, "type1", null);
-        ArticleType articleType41 = new ArticleType(1l, "type1", articleType4);
+        ArticleType articleType2 = new ArticleType(2l, "type1", null);
+        ArticleType articleType3 = new ArticleType(3l, "type1", null);
+        ArticleType articleType4 = new ArticleType(4l, "type1", null);
 
-        when(articleTypeRepository.findAll()).thenReturn(Lists.newArrayList(articleType1, articleType12, articleType2, articleType21, articleType3, articleType4, articleType41));
+        when(articleTypeRepository.findRootArticleTypes()).thenReturn(Lists.newArrayList(articleType1, articleType2, articleType3, articleType4));
 
         List<ArticleType> allRootTypes = service.findAllRootTypes();
 

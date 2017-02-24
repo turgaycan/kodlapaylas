@@ -14,20 +14,21 @@ import org.springframework.core.io.ClassPathResource;
 @Configuration
 @PropertySource(ignoreResourceNotFound = true,
         value = {"classpath:application.properties", "classpath:/messages/labels.properties",
-                "classpath:/messages/messages.properties", "classpath:/messages/validation.properties"})
+                "classpath:/messages/messages.properties", "classpath:/messages/validation.properties",
+                "classpath:/messages/seo.properties"})
 public class PropertyConfig {
 
     @Bean
-    public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
+    public PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
         PropertySourcesPlaceholderConfigurer configurer = new PropertySourcesPlaceholderConfigurer();
         configurer.setIgnoreUnresolvablePlaceholders(true);
         return configurer;
     }
 
     @Bean(name = "seoProperty")
-    public static PropertiesFactoryBean seoProperty() {
+    public PropertiesFactoryBean seoProperty() {
         PropertiesFactoryBean seoPropertiesBean = new PropertiesFactoryBean();
-        seoPropertiesBean.setLocation(new ClassPathResource("seo.properties"));
+        seoPropertiesBean.setLocation(new ClassPathResource("messages/seo.properties"));
 
         return seoPropertiesBean;
     }

@@ -57,6 +57,6 @@ public class ArticleModel extends Article implements Validateable<ArticleModel>,
     }
 
     private String createMainUrl() {
-        return getArticleType().getName() + ".png";
+        return getArticleType().getName().toLowerCase() + ".png";
     }
 }

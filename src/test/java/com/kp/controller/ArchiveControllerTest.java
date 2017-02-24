@@ -1,6 +1,5 @@
 package com.kp.controller;
 
-import com.google.common.collect.Lists;
 import com.kp.domain.Article;
 import com.kp.domain.model.dto.PagingDTO;
 import com.kp.dto.DateRange;
@@ -17,8 +16,7 @@ import java.util.List;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.*;
-import static org.mockito.Matchers.eq;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
 
 /**

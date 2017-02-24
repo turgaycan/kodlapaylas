@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -35,7 +36,7 @@ public class IndexController extends CommonController {
     private TagService tagService;
 
     @RequestMapping(value = {"/", "/index"}, method = RequestMethod.GET)
-    public ModelAndView index() {
+    public ModelAndView index() throws IOException {
         LOGGER.info("Getting home page");
         final ModelAndView mav = new ModelAndView("index");
         mav.addObject("lastArticle", articleService.findLastOne());

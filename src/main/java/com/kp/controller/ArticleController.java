@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -25,7 +26,7 @@ public class ArticleController extends CommonController {
 
     @RequestMapping(value = "/{title:[A-Za-z0-9-|_|.|~]+}-{articleId:\\d+$}", method = RequestMethod.GET)
     public ModelAndView article(@PathVariable("title") String title, @PathVariable("articleId") String articleId,
-                                HttpServletRequest request) {
+                                HttpServletRequest request) throws IOException {
         String url = "/error";
         if (!NumberUtils.isNumber(articleId)) {
             LOGGER.error("numeric failed..");

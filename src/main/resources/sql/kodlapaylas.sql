@@ -29,6 +29,20 @@ CREATE SCHEMA kp
 
 -- Table: kp.seo_stat
 
+-- Sequence: kp.seo_stat_id_seq
+
+-- DROP SEQUENCE kp.seo_stat_id_seq;
+
+CREATE SEQUENCE kp.seo_stat_id_seq
+INCREMENT 1
+MINVALUE 1
+MAXVALUE 9223372036854775807
+START 726
+CACHE 1;
+ALTER TABLE kp.seo_stat_id_seq
+  OWNER TO kpadmin;
+
+
 -- DROP TABLE kp.seo_stat;
 
 CREATE TABLE kp.seo_stat
@@ -54,20 +68,19 @@ WITH (
 ALTER TABLE kp.seo_stat
   OWNER TO kpadmin;
 
--- Sequence: kp.seo_stat_id_seq
 
--- DROP SEQUENCE kp.seo_stat_id_seq;
+-- Sequence: kp.tag_id_seq
 
-CREATE SEQUENCE kp.seo_stat_id_seq
+-- DROP SEQUENCE kp.tag_id_seq;
+
+CREATE SEQUENCE kp.tag_id_seq
 INCREMENT 1
 MINVALUE 1
 MAXVALUE 9223372036854775807
-START 726
+START 776
 CACHE 1;
-ALTER TABLE kp.seo_stat_id_seq
-OWNER TO kpadmin;
-
-
+ALTER TABLE kp.tag_id_seq
+  OWNER TO kpadmin;
 
 -- Table: kp.tag
 
@@ -89,20 +102,19 @@ WITH (
 ALTER TABLE kp.tag
   OWNER TO kpadmin;
 
--- Sequence: kp.tag_id_seq
 
--- DROP SEQUENCE kp.tag_id_seq;
+-- Sequence: kp.kp_statistic_id_seq
 
-CREATE SEQUENCE kp.tag_id_seq
+-- DROP SEQUENCE kp.kp_statistic_id_seq;
+
+CREATE SEQUENCE kp.kp_statistic_id_seq
 INCREMENT 1
 MINVALUE 1
 MAXVALUE 9223372036854775807
-START 776
+START 121902
 CACHE 1;
-ALTER TABLE kp.tag_id_seq
-OWNER TO kpadmin;
-
-
+ALTER TABLE kp.kp_statistic_id_seq
+  OWNER TO kpadmin;
 -- Table: kp.kp_statistic
 
 -- DROP TABLE kp.kp_statistic;
@@ -122,18 +134,18 @@ WITH (
 ALTER TABLE kp.kp_statistic
   OWNER TO kpadmin;
 
--- Sequence: kp.kp_statistic_id_seq
+-- Sequence: kp.user_id_seq
 
--- DROP SEQUENCE kp.kp_statistic_id_seq;
+-- DROP SEQUENCE kp.user_id_seq;
 
-CREATE SEQUENCE kp.kp_statistic_id_seq
+CREATE SEQUENCE kp.user_id_seq
 INCREMENT 1
 MINVALUE 1
 MAXVALUE 9223372036854775807
-START 121902
+START 46
 CACHE 1;
-ALTER TABLE kp.kp_statistic_id_seq
-OWNER TO kpadmin;
+ALTER TABLE kp.user_id_seq
+  OWNER TO kpadmin;
 
 -- Table: kp."user"
 
@@ -162,18 +174,6 @@ OIDS=FALSE
 ALTER TABLE kp."user"
 OWNER TO kpadmin;
 
--- Sequence: kp.user_id_seq
-
--- DROP SEQUENCE kp.user_id_seq;
-
-CREATE SEQUENCE kp.user_id_seq
-INCREMENT 1
-MINVALUE 1
-MAXVALUE 9223372036854775807
-START 46
-CACHE 1;
-ALTER TABLE kp.user_id_seq
-OWNER TO kpadmin;
 
 -- Column: role
 
@@ -181,6 +181,18 @@ OWNER TO kpadmin;
 
 ALTER TABLE kp."user" ADD COLUMN role character varying(20);
 
+-- Sequence: kp.article_type_id_seq
+
+-- DROP SEQUENCE kp.article_type_id_seq;
+
+CREATE SEQUENCE kp.article_type_id_seq
+INCREMENT 1
+MINVALUE 1
+MAXVALUE 9223372036854775807
+START 24
+CACHE 1;
+ALTER TABLE kp.article_type_id_seq
+  OWNER TO kpadmin;
 
 -- Table: kp.article_type
 
@@ -203,20 +215,19 @@ OIDS=FALSE
 ALTER TABLE kp.article_type
 OWNER TO kpadmin;
 
--- Sequence: kp.article_type_id_seq
 
--- DROP SEQUENCE kp.article_type_id_seq;
+-- Sequence: kp.article_id_seq
 
-CREATE SEQUENCE kp.article_type_id_seq
+-- DROP SEQUENCE kp.article_id_seq;
+
+CREATE SEQUENCE kp.article_id_seq
 INCREMENT 1
 MINVALUE 1
 MAXVALUE 9223372036854775807
-START 24
+START 488
 CACHE 1;
-ALTER TABLE kp.article_type_id_seq
-OWNER TO kpadmin;
-
-
+ALTER TABLE kp.article_id_seq
+  OWNER TO kpadmin;
 -- Table: kp.article
 
 -- DROP TABLE kp.article;
@@ -268,19 +279,19 @@ ON kp.article
 USING btree
 (user_id);
 
--- Sequence: kp.article_id_seq
 
--- DROP SEQUENCE kp.article_id_seq;
+-- Sequence: kp.comment_id_seq
 
-CREATE SEQUENCE kp.article_id_seq
+-- DROP SEQUENCE kp.comment_id_seq;
+
+CREATE SEQUENCE kp.comment_id_seq
 INCREMENT 1
 MINVALUE 1
 MAXVALUE 9223372036854775807
-START 488
+START 1
 CACHE 1;
-ALTER TABLE kp.article_id_seq
-OWNER TO kpadmin;
-
+ALTER TABLE kp.comment_id_seq
+  OWNER TO kpadmin;
 
 -- Table: kp.comment
 
@@ -327,18 +338,7 @@ ON kp.comment
 USING btree
 (user_id);
 
--- Sequence: kp.comment_id_seq
 
--- DROP SEQUENCE kp.comment_id_seq;
-
-CREATE SEQUENCE kp.comment_id_seq
-INCREMENT 1
-MINVALUE 1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-ALTER TABLE kp.comment_id_seq
-OWNER TO kpadmin;
 
 --URL from title--
 update kp.article set url = lower(regexp_replace(title, '\W+', '-', 'g') );

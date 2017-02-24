@@ -13,6 +13,7 @@ import com.kp.util.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -44,7 +45,7 @@ public abstract class CommonController {
 
     protected abstract List<Integer> addArchiveYearsToMav();
 
-    protected void populateCommonsForArticle(ModelAndView mav, Article article) {
+    protected void populateCommonsForArticle(ModelAndView mav, Article article) throws IOException {
         final List<Article> recentArticles = articleService.findRecentArticles(article, Article.RECENT_ARTICLE_LIMIT);
         final List<Article> relatedArticles = articleService.findRelatedArticles(recentArticles, article, Article.RECENT_ARTICLE_LIMIT);
         mav.addObject("relatedArticles", relatedArticles);
@@ -62,7 +63,7 @@ public abstract class CommonController {
         return propertyMap;
     }
 
-    protected void addSeoMetaDataToMav(ModelAndView mav) {
+    protected void addSeoMetaDataToMav(ModelAndView mav) throws IOException {
         mav.addObject("seoMetaData", seoMetaDataService.buildPageSeoMetaData(mav.getViewName()));
     }
 

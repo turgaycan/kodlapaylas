@@ -154,11 +154,6 @@
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
         </dependency>
-        <!--<dependency>-->
-        <!--<groupId>org.springframework</groupId>-->
-        <!--<artifactId>spring-context-support</artifactId>-->
-        <!--<version>${spring-context-support.version}</version>-->
-        <!--</dependency>-->
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-taglibs</artifactId>
@@ -230,7 +225,7 @@
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <executions>
                     <execution>
-                        <id>test</id>
+                        <id>integration-test</id>
                         <goals>
                             <goal>integration-test</goal>
                         </goals>
@@ -249,7 +244,7 @@
 
     <profiles>
         <profile>
-            <id>test</id>
+            <id>integration-test</id>
             <properties>
                 <unit-tests.skip>false</unit-tests.skip>
                 <integration-tests.skip>false</integration-tests.skip>
@@ -257,7 +252,7 @@
             <activation>
                 <property>
                     <name>integration-test</name>
-                    <value>true</value>
+                    <value>false</value>
                 </property>
             </activation>
             <build>
