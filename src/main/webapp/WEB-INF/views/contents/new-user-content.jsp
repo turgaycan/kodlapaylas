@@ -34,6 +34,13 @@
 
                                 <div class="form-group">
 
+                                    <input type="text" name="username" id="username" tabindex="1" class="form-control" required="true"
+                                           placeholder="Kullanıcı Ad" value="">
+
+                                </div>
+
+                                <div class="form-group">
+
                                     <input type="password" name="password" id="password" tabindex="2" required="true"
                                            class="form-control" placeholder="Şifre">
 

@@ -37,14 +37,14 @@
                                     <div class="form-group">
 
                                         <input type="text" autocomplete="off" name="username" id="username" tabindex="1"
-                                               class="form-control" placeholder="Username" value="">
+                                               class="form-control" placeholder="Kullanıcı Ad yada Email" value="">
 
                                     </div>
 
                                     <div class="form-group">
 
                                         <input type="password" name="password" id="password" tabindex="2"
-                                               class="form-control" placeholder="Password">
+                                               class="form-control" placeholder="Şifre">
 
                                     </div>
 

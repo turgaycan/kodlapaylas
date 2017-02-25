@@ -15,6 +15,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     User findOneByUsername(String username);
 
+    User findByUsernameOrEmail(String username, String email);
+
     @Query(value = "SELECT u From User u ORDER BY u.createdate DESC")
     Page<User> findPageableOrderByCreatedateDesc(Pageable page);
 }

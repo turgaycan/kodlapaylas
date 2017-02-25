@@ -59,7 +59,7 @@ public class UserService {
     public User create(UserModel userModel) {
         LOGGER.info("Create user={}", userModel.getEmail());
         User user = new User();
-        user.setUsername(userModel.getEmail());
+        user.setUsername(userModel.getUsername());
         user.setEmail(userModel.getEmail());
         user.setCreatedate(new Date());
         user.setRole(Role.USER);
@@ -109,6 +109,11 @@ public class UserService {
     @Transactional(readOnly = true)
     public User getUserByUsername(String username) {
         return userRepository.findOneByUsername(username);
+    }
+
+    @Transactional(readOnly = true)
+    public User getUserByUsernameOrEmail(String username) {
+        return userRepository.findByUsernameOrEmail(username, username);
     }
 
     @Transactional(readOnly = true)

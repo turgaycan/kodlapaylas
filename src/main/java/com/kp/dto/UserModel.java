@@ -23,6 +23,9 @@ public class UserModel implements Validateable<UserModel>, Serializable {
     @NotBlank(message = "E-Posta adresini boş bırakmayınız..")
     private String email;
 
+    @NotBlank(message = "Kullanıcı Ad alanını boş bırakmayınız..")
+    private String username;
+
     @Size(min = 6, max = 50, message = "Şifrenin en az 6, en çok 50 karakterden oluşmalıdır.")
     @NotBlank(message = "Şifre alanını boş bırakmayınız..")
     private String password;
@@ -39,6 +42,14 @@ public class UserModel implements Validateable<UserModel>, Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -74,12 +85,16 @@ public class UserModel implements Validateable<UserModel>, Serializable {
             @Override
             public void validate(UserModel target, Errors errors) {
                 if (!target.getPassword().equals(target.getPasswordRepeated())) {
-                    errors.rejectValue("password", "", "Password must match password confirmation");
+                    errors.rejectValue("password", "", "Şifreler uyuşmuyor!");
                     return;
                 }
 
                 if (userService.getUserByEmail(target.getEmail()) != null) {
-                    errors.rejectValue("email", "", "Email address is already taken");
+                    errors.rejectValue("email", "", "E-Posta farklı bir kullanıcı tarafından kullanılıyor.");
+                }
+
+                if (userService.getUserByUsername(target.getUsername()) != null) {
+                    errors.rejectValue("email", "", "Kullanıcı Ad farklı bir kullanıcı tarafından kullanılıyor.");
                 }
             }
 

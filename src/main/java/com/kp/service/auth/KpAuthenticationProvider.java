@@ -32,9 +32,8 @@ public class KpAuthenticationProvider implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
         try {
-            final User user = userService.getUserByEmail(username);
+            final User user = userService.getUserByUsernameOrEmail(username);
             if (user == null) {
                 LOGGER.debug("user not found with the provided username");
                 return null;

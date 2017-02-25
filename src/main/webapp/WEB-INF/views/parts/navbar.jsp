@@ -68,7 +68,7 @@
 
                 </li>
 
-                <li><a href="/hata">Hata :)</a></li>
+                <%--<li><a href="/hata">Hata :)</a></li>--%>
 
                 <li><a href="/hakkimda">Hakkımda</a></li>
 
