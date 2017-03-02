@@ -6,7 +6,6 @@ import com.kp.domain.User;
 import com.kp.dto.UserModel;
 import com.kp.dto.UserUpdateInfo;
 import com.kp.service.auth.KpAuthenticationProvider;
-import com.kp.service.security.AuthenticationService;
 import com.kp.service.user.UserService;
 import com.kp.util.KpUtil;
 import com.kp.validator.UserModelValidator;
@@ -41,9 +40,6 @@ public class UserController extends BaseUserController {
     private UserModelValidator userModelValidator;
 
     @Autowired
-    private AuthenticationService authenticationService;
-
-    @Autowired
     private KpAuthenticationProvider kpAuthenticationProvider;
 
     @InitBinder("form")
@@ -52,13 +48,13 @@ public class UserController extends BaseUserController {
     }
 
     @PreAuthorize("hasAuthority('USER') or hasAuthority('ADMIN')")
-    @RequestMapping(value = {"/user", "/user/index"})
+    @RequestMapping(value = {"/user", "/user/index"}, method = RequestMethod.GET)
     public ModelAndView index() {
         return super.index("/user/index");
     }
 
     @PreAuthorize("hasAuthority('USER') or hasAuthority('ADMIN')")
-    @RequestMapping(value = "/user/info-update")
+    @RequestMapping(value = "/user/info-update", method = RequestMethod.POST)
     public ModelAndView updateUserInfo(@Valid @ModelAttribute("userUpdateInfo") UserUpdateInfo userUpdateInfo, BindingResult bindingResult) {
         final ModelAndView modelAndView = super.index("/user/index");
         final User currentUser = (User) modelAndView.getModel().get("currentUser");
@@ -66,10 +62,12 @@ public class UserController extends BaseUserController {
             return KpControllerUtil.buildErrorMav(bindingResult, modelAndView);
         }
         currentUser.setFullname(userUpdateInfo.getFullname());
+        currentUser.setUsername(userUpdateInfo.getUsername());
         currentUser.setWebsite(userUpdateInfo.getWebsite());
         final User mergedUser = userService.merge(currentUser);
         modelAndView.addObject("currentUser", mergedUser);
         modelAndView.addObject("success", "Başarılı şekilde güncellendi!");
+        kpAuthenticationProvider.login(mergedUser, mergedUser.getPassword());
         return KpUtil.redirectToMAV("/user");
     }
 
@@ -110,7 +108,7 @@ public class UserController extends BaseUserController {
         }
         LOGGER.info("Successfully registered");
         redirectAttributes.addFlashAttribute("success", "Başarılı şekilde üyeliğiniz oluştu!");
-        kpAuthenticationProvider.login(persistedUser, persistedUser.getEmail(), userModel.getPasswordRepeated());
+        kpAuthenticationProvider.login(persistedUser, userModel.getPasswordRepeated());
         return KpUtil.redirectToMAV("/index");
     }
 

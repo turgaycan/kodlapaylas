@@ -12,7 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 public abstract class BaseUserController {
 
     @Autowired
-    private AuthenticationService authenticationService;
+    protected AuthenticationService authenticationService;
 
     protected ModelAndView index(String viewName){
         final boolean isNotAuthenticated = authenticationService.isKpNotAuthenticated();

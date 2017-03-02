@@ -347,6 +347,21 @@
                 </ul>
             </div>
         </sec:authorize>
+        <sec:authorize ifAnyGranted="USER">
+            <div class="sidebar-nav navbar-collapse">
+                <ul class="nav" id="side-menu">
+                    <li>
+                        <a href="<c:url value="/change-password" />"><i class="fa fa-dashboard fa-fw"></i> Şifre değiştir</a>
+                    </li>
+                    <li>
+                        <a href="tables.html"><i class="fa fa-table fa-fw"></i> Tables</a>
+                    </li>
+                    <li>
+                        <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Forms</a>
+                    </li>
+                </ul>
+            </div>
+        </sec:authorize>
         <!-- /.sidebar-collapse -->
     </div>
     <!-- /.navbar-static-side -->

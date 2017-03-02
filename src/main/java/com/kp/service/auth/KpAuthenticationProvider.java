@@ -47,14 +47,14 @@ public class KpAuthenticationProvider implements UserDetailsService {
     }
 
 
-    public void login(UserDetails userDetails, String username, String password) {
+    public void login(UserDetails userDetails, String password) {
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getAuthorities());
 
         authenticationManager.authenticate(usernamePasswordAuthenticationToken);
 
         if (usernamePasswordAuthenticationToken.isAuthenticated()) {
             SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-            LOGGER.debug(String.format("Auto login %s successfully!", username));
+            LOGGER.debug(String.format("Auto login %s successfully!", userDetails.getUsername()));
         }
     }
 

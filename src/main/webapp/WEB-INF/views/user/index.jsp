@@ -15,7 +15,7 @@
 </head>
 <body>
 
-<%@include file="user-content.jsp" %>
+<%@include file="contents/user-content.jsp" %>
 
 <%@include file="../admin/contents/footer.jsp" %>
 

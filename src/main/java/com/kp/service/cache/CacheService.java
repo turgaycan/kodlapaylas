@@ -22,6 +22,10 @@ public class CacheService {
         return true;
     }
 
+    public Object get(String key) {
+        return getKpCache().get(key).get();
+    }
+
     private CouchbaseCache getKpCache() {
         final CouchbaseCache couchbaseClient = (CouchbaseCache) cacheManager.getCache("kpCache");
         return couchbaseClient;

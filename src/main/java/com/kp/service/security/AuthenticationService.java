@@ -20,7 +20,6 @@ public class AuthenticationService {
 
     public boolean isKpAuthenticated() {
         return getKpAuthentication() != null && getKpAuthentication().isAuthenticated() &&
-//                securityExpressionOperations.isFullyAuthenticated()
                 !getKpAuthentication().getName().equals("anonymousUser");
     }
 
@@ -33,7 +32,7 @@ public class AuthenticationService {
         if(current == null){
             return null;
         }
-        return userService.getUserByEmail(current.getUsername());
+        return userService.getUserByUsernameOrEmail(current.getUsername());
     }
 
     public Authentication getKpAuthentication() {

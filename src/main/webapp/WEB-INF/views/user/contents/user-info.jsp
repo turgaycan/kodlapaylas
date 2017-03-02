@@ -20,19 +20,19 @@
                         <div class="col-lg-6">
                             <form action="<c:url value='/user/info-update' />" method="post" role="userUpdateInfo">
 
-                                <input type="hidden" id="username" name="username" value="${currentUser.username}"/>
-                                <input type="hidden" id="email" name="email" value="${currentUser.username}"/>
+                                <%--<input type="hidden" id="username" name="username" value="${currentUser.username}"/>--%>
+                                <%--<input type="hidden" id="email" name="email" value="${currentUser.email}"/>--%>
 
                                 <div class="form-group">
                                     <label for="disabledSelect">E-Posta</label>
-                                    <input class="form-control" id="email2" name="email2" type="text"
+                                    <input class="form-control" id="email" name="email" type="text" value="${currentUser.email}"
                                            placeholder="${currentUser.email}" disabled>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="disabledSelect">Kullanıcı Ad</label>
-                                    <input class="form-control" id="username2" name="username2" type="text"
-                                           placeholder="${currentUser.username}" disabled>
+                                    <label f>Kullanıcı Ad</label>
+                                    <input class="form-control" id="username" name="username" type="text" value="${currentUser.username}"
+                                           placeholder="${currentUser.username}">
                                 </div>
 
                                 <div class="form-group">

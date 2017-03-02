@@ -87,6 +87,14 @@ public class UserService {
     }
 
     @Transactional
+    public User mergeWithPassword(User user) {
+        LOGGER.info("Password={}", user.getPassword());
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        return userRepository.save(user);
+    }
+
+
+    @Transactional
     public User merge(User user) {
         return userRepository.save(user);
     }

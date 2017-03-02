@@ -51,10 +51,18 @@ public class CustomAuthenticationManager implements AuthenticationManager {
             throw new BadCredentialsException("Username not found.");
         }
 
+        boolean isPasswordValid = password.equals(user.getPassword());
+        if (isPasswordValid) {
+            return getAuthentication(password, user);
+        }
         if (!userService.isPasswordValid(password, user.getPassword())) {
             throw new BadCredentialsException("Wrong password.");
         }
 
+        return getAuthentication(password, user);
+    }
+
+    private Authentication getAuthentication(String password, UserDetails user) {
         Collection<? extends GrantedAuthority> authorities = user.getAuthorities();
 
         return new UsernamePasswordAuthenticationToken(user, password, authorities);
