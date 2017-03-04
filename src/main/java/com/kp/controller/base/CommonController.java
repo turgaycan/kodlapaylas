@@ -46,8 +46,8 @@ public abstract class CommonController {
     protected abstract List<Integer> addArchiveYearsToMav();
 
     protected void populateCommonsForArticle(ModelAndView mav, Article article) throws IOException {
-        final List<Article> recentArticles = articleService.findRecentArticles(article, Article.RECENT_ARTICLE_LIMIT);
-        final List<Article> relatedArticles = articleService.findRelatedArticles(recentArticles, article, Article.RECENT_ARTICLE_LIMIT);
+        final List<Article> recentArticles = articleService.getRecentArticles(article, Article.RECENT_ARTICLE_LIMIT);
+        final List<Article> relatedArticles = articleService.getRelatedArticles(recentArticles, article, Article.RECENT_ARTICLE_LIMIT);
         mav.addObject("relatedArticles", relatedArticles);
         mav.addObject("commentBaseModel", commentService.buildCommentModel(article));
         mav.addObject("seoMetaData", seoMetaDataService.buildPageSeoMetaData(mav.getViewName(), buildPropertyMap(article)));
@@ -73,16 +73,16 @@ public abstract class CommonController {
 
 
     protected List<Tag> tagsByArticleType(ArticleType articleType) {
-        return tagService.findByArticleType(articleType);
+        return tagService.getByArticleType(articleType);
     }
 
     private List<ArticleType> getAllRootTypes() {
-        return articleTypeService.findAllRootTypes();
+        return articleTypeService.getAllRootTypes();
     }
 
     protected void populateCommons(ModelAndView mav) {
         List<CategoryUIModel> categoryUIModels = new ArrayList<>();
-        final List<ArticleType> allCategories = articleTypeService.findAll();
+        final List<ArticleType> allCategories = articleTypeService.getAll();
         for (ArticleType category : getAllRootTypes()) {
             List<ArticleType> subCategories = allCategories
                     .stream()

@@ -52,7 +52,7 @@ public class CommentManagementController {
 
     @RequestMapping(value = "/comment/{id}", method = RequestMethod.GET)
     public ModelAndView listOneById(Long id) {
-        final Comment comment = commentService.findById(id).get();
+        final Comment comment = commentService.getById(id).get();
         ModelAndView mav = new ModelAndView("/admin/comment");
         mav.addObject("comments", comment);
         return mav;

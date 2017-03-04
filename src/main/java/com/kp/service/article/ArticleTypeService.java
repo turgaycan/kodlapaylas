@@ -20,25 +20,25 @@ public class ArticleTypeService {
 
     @Cacheable(value = "kpCache", key = "'allRootTypes'")
     @Transactional(readOnly = true)
-    public List<ArticleType> findAllRootTypes() {
+    public List<ArticleType> getAllRootTypes() {
         return articleTypeRepository.findRootArticleTypes();
     }
 
     @Cacheable(value = "kpCache", key = "'articleType-'.concat(#name)", condition = "#this != null")
     @Transactional(readOnly = true)
-    public ArticleType findByName(String name) {
+    public ArticleType getByName(String name) {
         return articleTypeRepository.findByName(name).get();
     }
 
     @Cacheable(value = "kpCache", key = "'allCategories'")
     @Transactional(readOnly = true)
-    public List<ArticleType> findAll() {
+    public List<ArticleType> getAll() {
         return articleTypeRepository.findAll();
     }
 
     @Cacheable(value = "kpCache", key = "'articleType-'.concat(#parentId)")
     @Transactional(readOnly = true)
-    public List<ArticleType> findByParentId(Long parentId) {
+    public List<ArticleType> getByParentId(Long parentId) {
         return articleTypeRepository.findByParentId(parentId);
     }
 }

@@ -48,9 +48,9 @@ public class ChangePasswordController extends BaseUserController {
         }
         final User currentUser = (User) modelAndView.getModel().get("currentUser");
         currentUser.setPassword(changePasswordModel.getNewPasswordRepeated());
-        final User mergedUser = userService.merge(currentUser);
+        final User mergedUser = userService.mergeWithPassword(currentUser);
         modelAndView.addObject("currentUser", mergedUser);
         modelAndView.addObject("success", "Başarılı şekilde şifre değişikliği yapıldı!");
-        return KpUtil.redirectToMAV("/user");
+        return modelAndView;
     }
 }

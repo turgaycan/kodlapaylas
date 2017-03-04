@@ -28,6 +28,22 @@ public class Tag extends BaseEntity {
     public Tag() {
     }
 
+    public Tag(Long id, int count) {
+        this.id = id;
+        this.count = count;
+    }
+
+    public Tag(Long id, String name, int count, ArticleType articleType) {
+        this(name, count, articleType);
+        this.id = id;
+    }
+
+    public Tag(String name, int count, ArticleType articleType) {
+        this.name = name;
+        this.count = count;
+        this.articleType = articleType;
+    }
+
     public Long getId() {
         return id;
     }
@@ -60,7 +76,7 @@ public class Tag extends BaseEntity {
         this.articleType = articleType;
     }
 
-    public String tagUrl(){
+    public String tagUrl() {
         return KpUrlPaths.TAG_WITH_SLASH + name.toLowerCase();
     }
 }

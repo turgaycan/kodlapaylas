@@ -23,7 +23,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -53,7 +52,7 @@ public class CommentController {
     public ModelAndView listComments(@PathVariable Long articleId) {
         LOGGER.info("article id {}", articleId);
         ModelAndView mav = new ModelAndView("/contents/comments");
-        final Article article = articleService.findById(articleId);
+        final Article article = articleService.getById(articleId);
         if (article == null) {
             return mav;
         }
@@ -77,7 +76,7 @@ public class CommentController {
             return mav;
         }
 
-        final Article article = articleService.findById(Long.parseLong(articleId));
+        final Article article = articleService.getById(Long.parseLong(articleId));
 
         if (article == null) {
             commentModel.setErrorResponse(new KpErrorResponse(KpErrors.NOT_FOUND));
@@ -102,7 +101,7 @@ public class CommentController {
             replyCommentModel.setErrorResponse(new KpErrorResponse(bindingResult));
             return replyCommentModel;
         }
-        final Optional<Comment> persistedComment = commentService.findById(Long.valueOf(replyCommentModel.getCommentId()));
+        final Optional<Comment> persistedComment = commentService.getById(Long.valueOf(replyCommentModel.getCommentId()));
         if (persistedComment.isPresent()) {
             LOGGER.info("reply comment model {}", replyCommentModel.getMessage());
             Comment parentComment = persistedComment.get();

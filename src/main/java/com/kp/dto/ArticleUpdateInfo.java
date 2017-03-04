@@ -22,7 +22,7 @@ public class ArticleUpdateInfo extends Article implements Validateable<ArticleUp
 
             @Override
             public void validate(ArticleUpdateInfo target, Errors errors) {
-                final Article article = articleService.findById(target.getId());
+                final Article article = articleService.getById(target.getId());
 
                 if (article == null) {
                     errors.rejectValue("article", "Makale bulunamadı!");

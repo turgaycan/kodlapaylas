@@ -12,7 +12,6 @@ import com.kp.service.article.CommentService;
 import com.kp.service.security.AuthenticationService;
 import com.kp.util.DateUtils;
 import com.kp.util.KpUtil;
-import com.kp.util.TurkishCharUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -70,7 +69,7 @@ public class ArticleManagementController {
             pageSize = DEFAULT_PAGESIZE;
         }
 
-        final Page<Article> articles = articleService.findArticlesAsPageable(pageIndex - 1, pageSize);
+        final Page<Article> articles = articleService.getArticlesAsPageable(pageIndex - 1, pageSize);
         ModelAndView mav = new ModelAndView("/admin/articles");
         mav.addObject("articles", articles.getContent());
         return mav;
@@ -81,7 +80,7 @@ public class ArticleManagementController {
         ModelAndView mav = new ModelAndView("/admin/article");
         final Article article = articleService.getOne(id);
         mav.addObject("article", article);
-        final List<Comment> comments = commentService.findCommentsByArticleId(id);
+        final List<Comment> comments = commentService.getCommentsByArticleId(id);
         mav.addObject("commentsCount", comments.size());
         return mav;
     }
@@ -91,7 +90,7 @@ public class ArticleManagementController {
         ModelAndView mav = new ModelAndView("/admin/article-edit");
         final Article article = articleService.getOne(id);
         mav.addObject("article", article);
-        mav.addObject("articleTypes", articleTypeService.findAll());
+        mav.addObject("articleTypes", articleTypeService.getAll());
         return mav;
     }
 
@@ -101,7 +100,7 @@ public class ArticleManagementController {
             return KpControllerUtil.buildErrorMav(bindingResult, new ModelAndView("/admin/article-edit"));
         }
 
-        final Article article = articleService.findById(articleUpdateInfo.getId());
+        final Article article = articleService.getById(articleUpdateInfo.getId());
 
         article.setTitle(articleUpdateInfo.getTitle());
         article.setContent(articleUpdateInfo.getContent());
@@ -120,7 +119,7 @@ public class ArticleManagementController {
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public ModelAndView newOne() {
         final ModelAndView modelAndView = new ModelAndView("/admin/new-article");
-        modelAndView.addObject("articleTypes", articleTypeService.findAll());
+        modelAndView.addObject("articleTypes", articleTypeService.getAll());
         modelAndView.addObject("article", new ArticleModel());
         return modelAndView;
     }

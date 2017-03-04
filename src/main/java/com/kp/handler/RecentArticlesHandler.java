@@ -39,12 +39,12 @@ public class RecentArticlesHandler {
             LOGGER.info("currentArticle1 : ", articleId);
             return mav;
         }
-        final Article currentArticle = articleService.findById(Long.valueOf(articleId));
+        final Article currentArticle = articleService.getById(Long.valueOf(articleId));
         if (currentArticle == null) {
             LOGGER.info("currentArticle2 : ", articleId);
             return mav;
         }
-        final List<Article> recentArticles = articleService.findRecentArticles(currentArticle, Article.RECENT_ARTICLE_LIMIT);
+        final List<Article> recentArticles = articleService.getRecentArticles(currentArticle, Article.RECENT_ARTICLE_LIMIT);
         mav.addObject("recentArticles", recentArticles);
         return mav;
     }
@@ -54,7 +54,7 @@ public class RecentArticlesHandler {
     @ResponseBody
     ModelAndView listRecentArticlesForIndex() {
         ModelAndView mav = new ModelAndView("/contents/commons/recent-articles");
-        final List<Article> articles = articleService.findArticlesAsPageable(0, 4).getContent();
+        final List<Article> articles = articleService.getArticlesAsPageable(0, 4).getContent();
         final List<Article> recentArticles = ListUtil.defensiveSubList(articles, 1, 4);
         mav.addObject("recentArticles", recentArticles);
         return mav;

@@ -47,7 +47,7 @@ public class TagController extends PageController {
 
     @Override
     protected ModelAndView getModelAndView(String tagName, Integer pageNum) {
-        final Page<Article> articlePages = articleService.findArticlesByTagAsPageable(tagName, pageNum, PagingDTO.DEFAULT_PAGE_SIZE);
+        final Page<Article> articlePages = articleService.getArticlesByTagAsPageable(tagName, pageNum, PagingDTO.DEFAULT_PAGE_SIZE);
         LOGGER.info("articlePages {} ", articlePages.getTotalElements());
         return pageModelAndView(KpUrlPaths.CATEGORY_VIEW, articlePages, tagName);
     }

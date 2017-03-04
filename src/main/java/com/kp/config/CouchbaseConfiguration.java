@@ -6,6 +6,7 @@ import com.couchbase.client.java.CouchbaseCluster;
 import com.couchbase.client.java.env.DefaultCouchbaseEnvironment;
 import com.couchbase.client.spring.cache.CacheBuilder;
 import com.couchbase.client.spring.cache.CouchbaseCacheManager;
+import com.kp.controller.util.KpControllerUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,6 +31,7 @@ public class CouchbaseConfiguration {
     private static final Logger LOGGER = LoggerFactory.getLogger(CouchbaseConfiguration.class);
 
     public static final String KP_CACHE = "kpCache";
+    public static final int KP_TTL = 2 * 60 * 60 * 1000; //Two hours
 
     @Value("${couchbase.cluster.ip}")
     private String ip;
@@ -54,7 +56,7 @@ public class CouchbaseConfiguration {
     @Bean
     public CouchbaseCacheManager cacheManager() {
         final CacheBuilder cacheBuilder = CacheBuilder.newInstance(defaultBucket())
-                .withExpirationInMillis((int) connectTimeout);
+                .withExpirationInMillis((int) connectTimeout).withExpirationInMillis(KP_TTL);
 
         return new CouchbaseCacheManager(cacheBuilder, KP_CACHE);
 

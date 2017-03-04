@@ -60,7 +60,7 @@ public class ArchiveControllerTest extends CommonControllerTest {
         final DateRange dateRange = new DateRange(startDate, endDate);
 
         when(dateUtils.prepareDateRange(Integer.valueOf("2012"))).thenReturn(dateRange);
-        when(articleService.findByCreatedateAfterAndCreatedateBefore(dateRange, 0, PagingDTO.DEFAULT_PAGE_SIZE)).thenReturn(new PageImpl<>(newArrayList(new Article(), new Article())));
+        when(articleService.getByCreatedateAfterAndCreatedateBefore(dateRange, 0, PagingDTO.DEFAULT_PAGE_SIZE)).thenReturn(new PageImpl<>(newArrayList(new Article(), new Article())));
 
         final ModelAndView modelAndView = controller.listArchiveArticles("2012");
     }

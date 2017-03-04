@@ -39,12 +39,12 @@ public class IndexController extends CommonController {
     public ModelAndView index() throws IOException {
         LOGGER.info("Getting home page");
         final ModelAndView mav = new ModelAndView("index");
-        mav.addObject("lastArticle", articleService.findLastOne());
+        mav.addObject("lastArticle", articleService.getLastOne());
         final ArticleType activities = new ArticleType(19l, ACTIVITIES);
-        mav.addObject("latestEvents", articleService.findByArticleType(activities, PAGENUM, PAGESIZE).getContent());
-        mav.addObject("mostViewsOfProgramming", articleService.findByArticleTypeOrderByViewNumber(PROGRAMMING_ID));
-        mav.addObject("mostViewsOfDatabase", articleService.findByArticleTypeOrderByViewNumber(DATABASE_ID));
-        mav.addObject("tags", tagService.findByOrderCountDesc());
+        mav.addObject("latestEvents", articleService.getByArticleType(activities, PAGENUM, PAGESIZE).getContent());
+        mav.addObject("mostViewsOfProgramming", articleService.getByArticleTypeOrderByViewNumber(PROGRAMMING_ID));
+        mav.addObject("mostViewsOfDatabase", articleService.getByArticleTypeOrderByViewNumber(DATABASE_ID));
+        mav.addObject("tags", tagService.getByOrderCountDesc());
         addSeoMetaDataToMav(mav);
         addArchiveYearsToMav(mav);
         return mav;

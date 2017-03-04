@@ -17,9 +17,8 @@ public class CacheService {
     @Autowired
     private CouchbaseCacheManager cacheManager;
 
-    public boolean set(String key, Serializable object) {
+    public void set(String key, Serializable object) {
         getKpCache().put(key, object);
-        return true;
     }
 
     public Object get(String key) {

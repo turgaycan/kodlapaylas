@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
     <include resource="org/springframework/boot/logging/logback/base.xml"/>
-    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <appender name="STDERR" class="ch.qos.logback.core.ConsoleAppender" >
         <!-- Log message format -->
+
         <encoder>
             <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
         </encoder>
     </appender>
 
     <!-- Setting the logging level to WARN for code in net.javabeat.service -->
-    <logger name="com.kp" level="WARN"/>
+    <logger name="com.kp" level="ERROR"/>
 
     <!-- Setting the root level of logging to INFO -->
     <root level="error">
-        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="STDERR"/>
     </root>
 
     <!--<springProfile name="staging">-->

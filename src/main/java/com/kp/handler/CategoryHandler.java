@@ -38,7 +38,7 @@ public class CategoryHandler {
     }
 
     private List<ArticleType> getAllRootTypes() {
-        return articleTypeService.findAllRootTypes();
+        return articleTypeService.getAllRootTypes();
     }
 
     @RequestMapping(value = "/all-categories", method = RequestMethod.GET)
@@ -48,7 +48,7 @@ public class CategoryHandler {
         ModelAndView mav = new ModelAndView("contents/commons/all-categories");
         LOGGER.info("Root Categories page..");
         List<CategoryUIModel> categoryUIModels = new ArrayList<>();
-        final List<ArticleType> allCategories = articleTypeService.findAll();
+        final List<ArticleType> allCategories = articleTypeService.getAll();
         for (ArticleType category : getAllRootTypes()) {
 
             List<ArticleType> subCategories = allCategories

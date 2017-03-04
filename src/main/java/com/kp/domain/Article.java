@@ -61,6 +61,10 @@ public class Article extends BaseEntity {
     public Article() {
     }
 
+    public Article(Long id) {
+        this.id = id;
+    }
+
     public Article(Long id, String content, String title, String tags, Date createdate, ArticleType articleType, User user) {
         this.id = id;
         this.content = content;

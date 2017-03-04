@@ -29,7 +29,7 @@ public class FeatureArticlesHandler {
     ModelAndView listFeatureArticles() {
         ModelAndView mav = new ModelAndView("/contents/commons/feature-articles");
         LOGGER.info("Feature Articles page");
-        mav.addObject("featureArticles", articleService.findFeatureArticles());
+        mav.addObject("featureArticles", articleService.getFeatureArticles());
         return mav;
     }
 }

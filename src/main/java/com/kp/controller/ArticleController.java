@@ -33,7 +33,7 @@ public class ArticleController extends CommonController {
             return KpUtil.redirectToMAV(url);
         }
 
-        Article currentArticle = articleService.findById(Long.valueOf(articleId));
+        Article currentArticle = articleService.getById(Long.valueOf(articleId));
         if (currentArticle == null) {
             return KpUtil.redirectToMAV(url);
         }

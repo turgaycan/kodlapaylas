@@ -20,8 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static com.google.common.collect.Lists.newArrayList;
-
 
 /**
  * Created by tcan on 05/10/15.
@@ -46,12 +44,7 @@ public class CommentService {
     }
 
     @Transactional(readOnly = true)
-    public List<Comment> findComments(Article article) {
-        return commentRepository.findByArticleOrderByCreatedateAsc(article);
-    }
-
-    @Transactional(readOnly = true)
-    public List<Comment> findCommentsByArticleId(Long articleId) {
+    public List<Comment> getCommentsByArticleId(Long articleId) {
         return commentRepository.findByArticleIdOrderByCreatedateDesc(articleId);
     }
 
@@ -67,7 +60,7 @@ public class CommentService {
     public CommentBaseModel buildCommentModel(Article article) {
         List<CommentUIModel> commentUIModels = new ArrayList<>();
 
-        for (Comment comment : findCommentsByArticleId(article.getId())) {
+        for (Comment comment : getCommentsByArticleId(article.getId())) {
             CommentUIModel commentUIModel = new CommentUIModel();
             commentUIModel.setComment(comment);
 
@@ -76,26 +69,9 @@ public class CommentService {
         return new CommentBaseModel(commentUIModels.size(), commentUIModels);
     }
 
-    private List<Comment> getChildComments(CommentTree commentTree, List<CommentTree> childs) {
-        List<Comment> childComments = newArrayList();
-        for (CommentTree replyCommentTree : childs) {
-            if (commentTree.getId().equals(replyCommentTree.getParentId())) {
-                CommentUIModel commentUIModel = new CommentUIModel();
-                commentUIModel.setComment(getOne(replyCommentTree.getId()));
-
-            }
-        }
-        return childComments;
-    }
-
     @Transactional(readOnly = true)
-    public Optional<Comment> findById(Long id) {
+    public Optional<Comment> getById(Long id) {
         return Optional.ofNullable(getOne(id));
-    }
-
-    @Transactional(readOnly = true)
-    public Optional<Comment> findByParent(Comment comment) {
-        return Optional.ofNullable(commentRepository.findByParent(comment));
     }
 
     @Transactional(readOnly = true)
@@ -109,7 +85,7 @@ public class CommentService {
     }
 
     @Transactional(readOnly = true)
-    private Comment getOne(Long id) {
+    public Comment getOne(Long id) {
         return commentRepository.findOne(id);
     }
 

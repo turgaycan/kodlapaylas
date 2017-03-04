@@ -47,13 +47,13 @@ public class CategoryController extends PageController {
     @RequestMapping(value = "/kp/p{pageNum:\\d+$}", method = RequestMethod.GET)
     public ModelAndView listAllCategoryArticles(@PathVariable Integer pageNum) {
         int pageIndex = pageIndex(pageNum);
-        final Page<Article> articlePages = articleService.findArticlesAsPageable(pageIndex, PagingDTO.DEFAULT_PAGE_SIZE);
+        final Page<Article> articlePages = articleService.getArticlesAsPageable(pageIndex, PagingDTO.DEFAULT_PAGE_SIZE);
         return pageModelAndView(KpUrlPaths.CATEGORY_VIEW, articlePages, "kp");
     }
 
     @Override
     protected ModelAndView getModelAndView(String categoryName, Integer page) {
-        final ArticleType rootArticleType = articleTypeService.findByName(categoryName);
+        final ArticleType rootArticleType = articleTypeService.getByName(categoryName);
         if (rootArticleType == null) {
             LOGGER.info("Category not found : {}  ", categoryName);
             return KpUtil.redirectToMAV("/error");
@@ -63,10 +63,10 @@ public class CategoryController extends PageController {
 
         if (rootArticleType.isRoot() && !rootArticleType.isChild()) {
             articleTypeList.remove(rootArticleType);
-            articleTypeList.addAll(articleTypeService.findByParentId(rootArticleType.getId()));
+            articleTypeList.addAll(articleTypeService.getByParentId(rootArticleType.getId()));
         }
 
-        final Page<Article> articlePages = articleService.findByArticleTypeIn(articleTypeList, page, PagingDTO.DEFAULT_PAGE_SIZE);
+        final Page<Article> articlePages = articleService.getByArticleTypeIn(articleTypeList, page, PagingDTO.DEFAULT_PAGE_SIZE);
         return pageModelAndView(KpUrlPaths.CATEGORY_VIEW, articlePages, categoryName);
     }
 

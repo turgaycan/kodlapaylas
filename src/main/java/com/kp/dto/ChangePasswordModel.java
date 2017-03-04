@@ -82,12 +82,16 @@ public class ChangePasswordModel implements Validateable<ChangePasswordModel>, S
                     if (cacheValue > MAX_RETRY_COUNT) {
                         errors.rejectValue("logout", "", "Giriş yapınız!");
                     } else {
-                        errors.rejectValue("password", "", String.format("Şifreniz hatalı! Son {0} defa deneme hakkınız kaldı! Şifrenizi unuttuysanız, çıkış yapıp, şifremi unuttum işlemlerinizi yapınız! ", MAX_RETRY_COUNT - cacheValue));
+                        final int retryCountDiff = MAX_RETRY_COUNT - cacheValue;
+                        if (retryCountDiff <= 0) {
+                            errors.rejectValue("password", "", "Şifrenizi 3 defadan fazla hatalı denediğiniz için, 2 saat hesabınız bloklandı!!");
+                            return;
+                        }
+                        errors.rejectValue("password", "", String.format("Şifreniz hatalı! Son {0} defa deneme hakkınız kaldı!", retryCountDiff));
                     }
                     return;
                 }
             }
-
 
             private int getCacheValue(long userId) {
                 String cacheKey = getCacheKey(userId);

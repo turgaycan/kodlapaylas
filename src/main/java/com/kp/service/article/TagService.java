@@ -22,7 +22,7 @@ public class TagService {
 
     @Cacheable(value = "kpCache", key = "'tags-'.concat(#articleType.name)")
     @Transactional(readOnly = true)
-    public List<Tag> findByArticleType(ArticleType articleType) {
+    public List<Tag> getByArticleType(ArticleType articleType) {
         final ArticleType rootArticleType = articleType.getRoot();
         return tagRepository.findByArticleType(rootArticleType,
                 PageSpec.buildPageSpecificationByFieldDesc(1, 15, "count")).getContent();
@@ -30,8 +30,8 @@ public class TagService {
 
     @Cacheable(value = "kpCache", key = "'tags-count'")
     @Transactional(readOnly = true)
-    public List<Tag> findByOrderCountDesc() {
-        return tagRepository.OrderByCountDesc(PageSpec.buildPageSpecificationByFieldDesc(0, 15, "count"));
+    public List<Tag> getByOrderCountDesc() {
+        return tagRepository.orderByCountDesc(PageSpec.buildPageSpecificationByFieldDesc(0, 15, "count"));
     }
 
 }

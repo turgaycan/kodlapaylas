@@ -79,7 +79,7 @@ public class ArchiveController extends PageController {
     }
 
     private ModelAndView getModelAndView(String year, Integer pageNum, DateRange dateRange) {
-        final Page<Article> archiveArticlePages = articleService.findByCreatedateAfterAndCreatedateBefore(dateRange, pageNum, PagingDTO.DEFAULT_PAGE_SIZE);
+        final Page<Article> archiveArticlePages = articleService.getByCreatedateAfterAndCreatedateBefore(dateRange, pageNum, PagingDTO.DEFAULT_PAGE_SIZE);
         ModelAndView mav = pageModelAndView(KpUrlPaths.ARCHIVE_VIEW, archiveArticlePages, year);
         populateMonths(mav);
         return mav;
