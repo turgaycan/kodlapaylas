@@ -3,6 +3,7 @@ package com.kp.service.notification;
 import com.kp.domain.Notification;
 import com.kp.repository.NotificationRepository;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -46,6 +47,7 @@ public class NotificationServiceTest {
         assertNotNull(one);
     }
 
+    @Ignore
     @Test
     public void shouldSendMail() throws Exception {
         Notification notification = new Notification();
