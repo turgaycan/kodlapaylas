@@ -10,7 +10,6 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
 
-import java.util.Map;
 
 /**
  * Created by tcan on 26/02/17.
@@ -50,12 +49,5 @@ public class NotificationService {
             messageHelper.setSubject(notification.getSubject());
             messageHelper.setText(notification.getContent());
         };
-    }
-
-    private String prepareContentReplaceWithParams(Notification notification) {
-        String content = notification.getContent();
-        final Map<String, String> paramKeyValuePair = notification.getParamKeyValuePair();
-        paramKeyValuePair.entrySet().stream().filter(entry -> content.contains(entry.getKey())).forEach(entry -> content.replaceAll(entry.getKey(), entry.getValue()));
-        return content;
     }
 }

@@ -1,55 +1,49 @@
 package com.kp.service.notification;
 
-import com.icegreen.greenmail.util.GreenMail;
-import com.icegreen.greenmail.util.ServerSetup;
 import com.kp.domain.Notification;
 import com.kp.repository.NotificationRepository;
-import org.junit.After;
-import org.junit.Before;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.ActiveProfiles;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessagePreparator;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
-import java.io.IOException;
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
+ * use greenmail for integration tests!
  * Created by tcan on 27/02/17.
  */
-@SpringBootApplication
-@DirtiesContext
-@PropertySource(value = "classpath:/application-test.properties")
-@ActiveProfiles("test")
-@Configuration
-@ComponentScan(basePackages = {
-        "com.kp.service", "com.kp.exception", "com.kp.util", "com.kp.validator"
-})
 @RunWith(MockitoJUnitRunner.class)
 public class NotificationServiceTest {
 
-    @Autowired
-    private NotificationService notificationService;
+    @InjectMocks
+    private NotificationService service;
 
     @Mock
     private NotificationRepository notificationRepository;
 
-    private GreenMail smtpServer;
+    @Mock
+    private JavaMailSender mailSender;
 
-    @Before
-    public void setUp() throws Exception {
-        smtpServer = new GreenMail(new ServerSetup(25, null, "smtp"));
-        smtpServer.start();
+    @Captor
+    private ArgumentCaptor<MimeMessagePreparator> preparatorArgumentCaptor;
+
+    @Test
+    public void shouldGetById(){
+        when(notificationRepository.findOne(1l)).thenReturn(new Notification());
+        final Notification one = service.getById(1l);
+
+        assertNotNull(one);
     }
 
     @Test
@@ -60,23 +54,13 @@ public class NotificationServiceTest {
         notification.setSubject("test");
         notification.setContent("Test message content");
 
-        final boolean isSent = notificationService.sendMail(notification);
+        final boolean isSent = service.sendMail(notification);
 
         assertTrue(isSent);
-        String content = "<span>" + notification.getContent() + "</span>";
-        assertReceivedMessageContains(content);
-    }
 
-    private void assertReceivedMessageContains(String expected) throws IOException, MessagingException {
-        MimeMessage[] receivedMessages = smtpServer.getReceivedMessages();
-        assertEquals(1, receivedMessages.length);
-        String content = (String) receivedMessages[0].getContent();
-        System.out.println(content);
-        assertTrue(content.contains(expected));
-    }
+        verify(mailSender).send(preparatorArgumentCaptor.capture());
 
-    @After
-    public void tearDown() throws Exception {
-        smtpServer.stop();
+        assertEquals("", preparatorArgumentCaptor.getValue());
+
     }
 }

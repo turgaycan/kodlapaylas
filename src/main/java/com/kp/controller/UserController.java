@@ -71,14 +71,6 @@ public class UserController extends BaseUserController {
         return KpUtil.redirectToMAV("/user");
     }
 
-    @PreAuthorize("@currentUserService.canAccessUser(principal, #id)")
-    @RequestMapping(value = "/user/{id}")
-    public ModelAndView getUserPage(@PathVariable Long id) {
-        LOGGER.debug("Getting user page for user={}", id);
-        return new ModelAndView("user", "user", userService.getUserById(id)
-                .orElseThrow(() -> new NoSuchElementException(String.format("User=%s not found", id))));
-    }
-
     @RequestMapping(value = "/kayit-ol", method = RequestMethod.GET)
     public ModelAndView newUser() {
         final boolean isAuthenticatedUser = authenticationService.isKpAuthenticated();
