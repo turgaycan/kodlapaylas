@@ -42,7 +42,7 @@ public class LoginController {
 
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
     public String logout(Model model) {
-        final UserDetails loggeduser = authenticationService.getLoggeduser();
+        final UserDetails loggeduser = authenticationService.getLoggedUser();
         if (loggeduser != null) {
             model.addAttribute("message", "You have been logged out successfully.");
             authenticationService.logout();

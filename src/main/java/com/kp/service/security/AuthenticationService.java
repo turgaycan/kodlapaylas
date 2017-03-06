@@ -19,8 +19,11 @@ public class AuthenticationService {
     private UserService userService;
 
     public boolean isKpAuthenticated() {
-        return getKpAuthentication() != null && getKpAuthentication().isAuthenticated() &&
-                !getKpAuthentication().getName().equals("anonymousUser");
+        final Authentication kpAuthentication = getKpAuthentication();
+
+        return kpAuthentication != null &&
+                kpAuthentication.isAuthenticated() &&
+                !kpAuthentication.getName().equals("anonymousUser");
     }
 
     public boolean isKpNotAuthenticated() {
@@ -29,26 +32,17 @@ public class AuthenticationService {
 
     public User getCurrentUser() {
         final UserDetails current = (UserDetails) getKpAuthentication().getPrincipal();
-        if(current == null){
+        if (current == null) {
             return null;
         }
         return userService.getUserByUsernameOrEmail(current.getUsername());
-    }
-
-    public Authentication getKpAuthentication() {
-        return getContext()
-                .getAuthentication();
-    }
-
-    private SecurityContext getContext() {
-        return SecurityContextHolder.getContext();
     }
 
     public void logout() {
         SecurityContextHolder.clearContext();
     }
 
-    public UserDetails getLoggeduser() {
+    public UserDetails getLoggedUser() {
         Object userDetails = SecurityContextHolder.getContext().getAuthentication().getDetails();
         if (userDetails instanceof UserDetails) {
             return ((UserDetails) userDetails);
@@ -57,5 +51,12 @@ public class AuthenticationService {
         return null;
     }
 
+    private Authentication getKpAuthentication() {
+        return getContext()
+                .getAuthentication();
+    }
 
+    private SecurityContext getContext() {
+        return SecurityContextHolder.getContext();
+    }
 }
