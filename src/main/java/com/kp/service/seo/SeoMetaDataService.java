@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.Map;
+import java.util.Properties;
 
 /**
  * Created by tcan on 03/10/15.
@@ -27,19 +28,25 @@ public class SeoMetaDataService {
     private PropertiesFactoryBean seoProperty;
 
     public SeoMetaData buildPageSeoMetaData(String page) throws IOException {
-        String pageTitle = (String) seoProperty.getObject().get(page + DOT_TITLE);
-        String pageKeywords = (String) seoProperty.getObject().get(page + DOT_KEYWORDS);
-        String pageDescription = (String) seoProperty.getObject().get(page + DOT_DESCRIPTION);
+        final Properties properties = seoProperty.getObject();
+        String pageTitle = (String) properties.get(page + DOT_TITLE);
+        String pageKeywords = (String) properties.get(page + DOT_KEYWORDS);
+        String pageDescription = (String) properties.get(page + DOT_DESCRIPTION);
 
         return new SeoMetaData(pageTitle, pageKeywords, pageDescription);
     }
 
     public SeoMetaData buildPageSeoMetaData(String page, Map<String, String[]> paramMap) throws IOException {
-        String pageTitle = MessageFormat.format((String) seoProperty.getObject().get(page + DOT_TITLE), getValue(paramMap, TITLE));
-        String pageKeywords = MessageFormat.format((String) seoProperty.getObject().get(page + DOT_KEYWORDS), getValue(paramMap, KEYWORDS));
-        String pageDescription = MessageFormat.format((String) seoProperty.getObject().get(page + DOT_DESCRIPTION), getValue(paramMap, DESCRIPTION));
+        final Properties properties = seoProperty.getObject();
+        String pageTitle = getFormattedMessage((String) properties.get(page + DOT_TITLE), getValue(paramMap, TITLE));
+        String pageKeywords = getFormattedMessage((String) properties.get(page + DOT_KEYWORDS), getValue(paramMap, KEYWORDS));
+        String pageDescription = getFormattedMessage((String) properties.get(page + DOT_DESCRIPTION), getValue(paramMap, DESCRIPTION));
 
         return new SeoMetaData(pageTitle, pageKeywords, pageDescription);
+    }
+
+    private String getFormattedMessage(String pattern, String[] value) throws IOException {
+        return MessageFormat.format(pattern, value);
     }
 
     private String[] getValue(Map<String, String[]> paramMap, String title) {

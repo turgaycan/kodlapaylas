@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class ForgotMyPasswordService {
 
     private static final long FORGOT_MAIL_TEMPLATE_ID = 1;
+    private static final int PASSWORD_LENGTH = 8;
 
     @Autowired
     private UserService userService;
@@ -24,10 +25,10 @@ public class ForgotMyPasswordService {
     @Autowired
     private NotificationService notificationService;
 
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional(rollbackFor = KPException.class)
     public void execute(String username) {
         final User currentUser = userService.getUserByUsernameOrEmail(username);
-        final String randomAlphanumeric = RandomStringUtils.randomAlphanumeric(8);
+        final String randomAlphanumeric = RandomStringUtils.randomAlphanumeric(PASSWORD_LENGTH);
         currentUser.setPassword(randomAlphanumeric);
         userService.mergeWithPassword(currentUser);
 
@@ -44,7 +45,6 @@ public class ForgotMyPasswordService {
 
     private String prepare(User currentUser, String content) {
         content.replaceAll("$adsoyad$", StringUtils.isNotBlank(currentUser.getFullname()) ? currentUser.getFullname() : currentUser.getEmail());
-        content.replaceAll("$email$", currentUser.getEmail());
         content.replaceAll("$password$", currentUser.getPassword());
         return content;
     }
