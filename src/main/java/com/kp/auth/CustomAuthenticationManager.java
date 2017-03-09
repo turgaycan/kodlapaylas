@@ -48,7 +48,7 @@ public class CustomAuthenticationManager implements AuthenticationManager {
         UserDetails user = userDetailsService.loadUserByUsername(persisted.getUsername().toLowerCase());
 
         if (user == null) {
-            throw new BadCredentialsException("Username not found.");
+            throw new BadCredentialsException("User not found.");
         }
 
         boolean isPasswordValid = password.equals(user.getPassword());
