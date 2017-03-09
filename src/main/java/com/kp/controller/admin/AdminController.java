@@ -29,9 +29,9 @@ public class AdminController extends BaseUserController {
     @RequestMapping(value = {"/admin", "/admin/index"})
     public ModelAndView index() {
         final ModelAndView mav = super.index("/admin/index");
-        mav.addObject("totalCommentCount",commentService.countOfTotalComments());
-        mav.addObject("totalArticleCount",articleService.countOfTotalArticles());
-        mav.addObject("totalUserCount",userService.countOfTotalUsers());
+        mav.addObject("totalCommentCount", commentService.countOfTotalComments());
+        mav.addObject("totalArticleCount", articleService.countOfTotalArticles());
+        mav.addObject("totalUserCount", userService.countOfTotalUsers());
         return mav;
     }
 }
