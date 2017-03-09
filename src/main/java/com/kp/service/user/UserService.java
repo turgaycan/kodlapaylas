@@ -13,15 +13,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Created by turgaycan on 9/20/15.
@@ -38,21 +35,9 @@ public class UserService {
     private PasswordEncoder passwordEncoder;
 
     @Transactional(readOnly = true)
-    public Optional<User> getUserById(long id) {
-        LOGGER.debug("Getting user={}", id);
-        return Optional.ofNullable(userRepository.findOne(id));
-    }
-
-    @Transactional(readOnly = true)
     public User getOne(long id) {
         LOGGER.debug("Getting user={}", id);
         return userRepository.findOne(id);
-    }
-
-    @Transactional(readOnly = true)
-    public Collection<User> getAllUsers() {
-        LOGGER.debug("Getting all users");
-        return userRepository.findAll(new Sort("email"));
     }
 
     @Transactional
@@ -60,7 +45,8 @@ public class UserService {
         LOGGER.info("Create user={}", userModel.getEmail());
         User user = new User();
         user.setUsername(userModel.getUsername());
-        user.setEmail(userModel.getEmail());
+        user.setEmail(userModel.getEmail().toLowerCase());
+        user.setFullname(userModel.getFullname());
         user.setCreatedate(new Date());
         user.setRole(Role.USER);
         user.setPassword(passwordEncoder.encode(userModel.getPassword()));
@@ -130,12 +116,12 @@ public class UserService {
     }
 
     @Cacheable(value = "kpCache", key = "'pageable-' + #pageNum + '-' + #size", unless = "#result == null")
-    public Page<User> findUsersAsPageable(int pageNum, int size) {
-        return findUsersAsPageableNotCacheable(pageNum, size);
+    public Page<User> getUsersAsPageable(int pageNum, int size) {
+        return getUsersAsPageableNotCacheable(pageNum, size);
     }
 
     @Transactional(readOnly = true)
-    public Page<User> findUsersAsPageableNotCacheable(int pageNum, int size) {
+    public Page<User> getUsersAsPageableNotCacheable(int pageNum, int size) {
         final Pageable page = PageSpec.buildPageSpecificationByFieldDesc(pageNum, size, "createdate");
         return userRepository.findPageableOrderByCreatedateDesc(page);
     }

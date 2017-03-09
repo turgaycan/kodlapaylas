@@ -23,6 +23,6 @@ public class SubscriberService {
 
     @Transactional(readOnly = true)
     public boolean isExists(String email){
-        return subscriberRepository.findByEmail(email).isPresent();
+        return subscriberRepository.findByEmail(email) != null;
     }
 }

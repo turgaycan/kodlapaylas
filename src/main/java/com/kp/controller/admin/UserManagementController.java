@@ -50,7 +50,7 @@ public class UserManagementController {
             pageSize = DEFAULT_PAGESIZE;
         }
 
-        final Page<User> users = userService.findUsersAsPageable(pageIndex - 1, pageSize);
+        final Page<User> users = userService.getUsersAsPageable(pageIndex - 1, pageSize);
         ModelAndView mav = new ModelAndView("/admin/users");
         mav.addObject("users", users.getContent());
         return mav;

@@ -39,13 +39,13 @@ public class CustomAuthenticationManager implements AuthenticationManager {
             throw new BadCredentialsException("Password is not empty/blank");
         }
 
-        final User persisted = userService.getUserByUsernameOrEmail(username);
+        final User persisted = userService.getUserByUsernameOrEmail(username.toLowerCase());
 
         if (persisted == null) {
             throw new BadCredentialsException("Username/Email not found.");
         }
 
-        UserDetails user = userDetailsService.loadUserByUsername(persisted.getUsername());
+        UserDetails user = userDetailsService.loadUserByUsername(persisted.getUsername().toLowerCase());
 
         if (user == null) {
             throw new BadCredentialsException("Username not found.");
