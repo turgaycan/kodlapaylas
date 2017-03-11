@@ -16,7 +16,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 
 import java.util.List;
-import java.util.Optional;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static org.hamcrest.Matchers.hasItems;
@@ -106,16 +105,6 @@ public class CommentServiceTest {
         assertThat(commentUIModels.get(0).getComment(), is(comment5));
         assertThat(commentUIModels.get(1).getComment(), is(comment6));
         assertThat(commentUIModels.get(2).getComment(), is(comment7));
-    }
-
-    @Test
-    public void shouldGetById() {
-        when(commentRepository.findOne(1l)).thenReturn(root);
-
-        final Optional<Comment> actual = service.getById(1l);
-
-        assertNotNull(actual.get());
-        assertEquals(Long.valueOf(1l), actual.get().getId());
     }
 
     @Test

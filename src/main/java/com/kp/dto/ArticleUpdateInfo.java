@@ -8,11 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Created by tcan on 08/02/17.
  */
 public class ArticleUpdateInfo extends Article implements Validateable<ArticleUpdateInfo>, Serializable {
+
     @Override
     public KpInfoValidator<ArticleUpdateInfo> validator() {
         return new KpInfoValidator<ArticleUpdateInfo>() {
@@ -27,12 +29,12 @@ public class ArticleUpdateInfo extends Article implements Validateable<ArticleUp
                     return;
                 }
 
-                if (target.getTitle().length() > Article.MAX_CONTENT_SIZE) {
+                if (target.getContent().length() > Article.MAX_CONTENT_SIZE) {
                     errors.rejectValue("article", "Makale içeriği 100000 karakterden fazla olamaz!");
                     return;
                 }
 
-                if (target.getTags().length() < 3) {
+                if (target.getTags().length() < Article.MIN_TAG_LENGTH) {
                     errors.rejectValue("article", "Makale etiketleri 3 karakterden küçük olamaz!");
                     return;
                 }
@@ -49,5 +51,17 @@ public class ArticleUpdateInfo extends Article implements Validateable<ArticleUp
                 }
             }
         };
+    }
+
+    public Article decorateArticle(Article article, Date now) {
+        article.setTitle(getTitle());
+        article.setContent(getContent());
+        article.setTags(getTags());
+        article.setArticleStatus(getArticleStatus());
+        article.setCategory(getCategory());
+        article.setModifydate(now);
+        article.setUrl(article.createUrl());
+
+        return article;
     }
 }

@@ -42,4 +42,13 @@ public class UserUpdateInfo extends User implements Validateable<UserUpdateInfo>
             }
         };
     }
+
+    public User decorateUser(User persisted) {
+        persisted.setUserStatus(getUserStatus());
+        persisted.setWebsite(getWebsite());
+        persisted.setRole(getRole());
+        persisted.setFullname(getFullname());
+
+        return persisted;
+    }
 }

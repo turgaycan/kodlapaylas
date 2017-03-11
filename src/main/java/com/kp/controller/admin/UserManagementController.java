@@ -66,7 +66,7 @@ public class UserManagementController {
 
     @RequestMapping(value = "/update/user", method = RequestMethod.POST)
     public ModelAndView updateOne(@Valid @ModelAttribute("userUpdateInfo") UserUpdateInfo userUpdateInfo, BindingResult bindingResult) {
-        final User persisted = userService.getOne(userUpdateInfo.getId());
+        User persisted = userService.getOne(userUpdateInfo.getId());
 
         if (bindingResult.hasErrors()) {
             final ModelAndView mav = new ModelAndView("/admin/user");
@@ -74,14 +74,11 @@ public class UserManagementController {
             return KpControllerUtil.buildErrorMav(bindingResult, mav);
         }
 
-        persisted.setUserStatus(userUpdateInfo.getUserStatus());
-        persisted.setWebsite(userUpdateInfo.getWebsite());
-        persisted.setRole(userUpdateInfo.getRole());
-        persisted.setFullname(userUpdateInfo.getFullname());
+        persisted = userUpdateInfo.decorateUser(persisted);
 
-        userService.merge(persisted);
+        final User mergedUser = userService.merge(persisted);
 
-        final String showArticleUrl = "/show/user/" + userUpdateInfo.getId();
+        final String showArticleUrl = "/show/user/" + mergedUser.getId();
         return KpUtil.redirectToMAV(showArticleUrl);
     }
 }

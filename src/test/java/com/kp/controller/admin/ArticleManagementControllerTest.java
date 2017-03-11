@@ -3,6 +3,9 @@ package com.kp.controller.admin;
 import com.kp.domain.Article;
 import com.kp.domain.Category;
 import com.kp.domain.Comment;
+import com.kp.domain.User;
+import com.kp.dto.ArticleModel;
+import com.kp.dto.ArticleUpdateInfo;
 import com.kp.service.article.ArticleService;
 import com.kp.service.article.CategoryService;
 import com.kp.service.article.CommentService;
@@ -15,13 +18,17 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.validation.MapBindingResult;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 
 
@@ -126,4 +133,80 @@ public class ArticleManagementControllerTest {
         assertEquals(5, categories.size());
     }
 
+    @Test
+    public void shouldNotUpdateOneIfHasAnyErrorsWhenValidate() {
+        final MapBindingResult errors = new MapBindingResult(new HashMap<String, String>(), "");
+        errors.reject("article", "errorMessage");
+
+        final ModelAndView mav = controller.updateOne(new ArticleUpdateInfo(), errors);
+
+        assertEquals("/admin/article-edit", mav.getViewName());
+
+        final String errorMessage = (String) mav.getModel().get("errors");
+        assertEquals("errorMessage<br />", errorMessage);
+    }
+
+    @Test
+    public void shouldUpdateOne() {
+        ArticleUpdateInfo articleUpdateInfo = new ArticleUpdateInfo();
+        articleUpdateInfo.setId(1l);
+        articleUpdateInfo.setTitle("title");
+        articleUpdateInfo.setContent("content");
+        articleUpdateInfo.setTags("tag");
+        articleUpdateInfo.setCategory(new Category());
+
+        final MapBindingResult errors = new MapBindingResult(new HashMap<String, String>(), "");
+        final Article persisted = new Article();
+        when(articleService.getById(1l)).thenReturn(persisted);
+        final Date now = new Date();
+        when(dateUtils.now()).thenReturn(now);
+        when(articleService.save(articleUpdateInfo.decorateArticle(persisted, now))).thenReturn(new Article(1l));
+
+        final ModelAndView mav = controller.updateOne(articleUpdateInfo, errors);
+
+        assertEquals("redirect:/show/article/1", mav.getViewName());
+    }
+
+    @Test
+    public void shouldPrepareNewOne() {
+        when(categoryService.getAll()).thenReturn(categoryList);
+        final ModelAndView mav = controller.newOne();
+
+        assertEquals("/admin/new-article", mav.getViewName());
+        assertEquals(categoryList, mav.getModel().get("articleTypes"));
+        assertTrue(mav.getModel().get("article") instanceof ArticleModel);
+    }
+
+    @Test
+    public void shouldNotCreateOneIfNotValidate() {
+        final MapBindingResult errors = new MapBindingResult(new HashMap<String, String>(), "");
+        errors.reject("article", "errorMessage");
+
+        final ModelAndView mav = controller.create(new ArticleModel(), errors);
+
+        assertEquals("/admin/new-article", mav.getViewName());
+
+        final String errorMessage = (String) mav.getModel().get("errors");
+        assertEquals("errorMessage<br />", errorMessage);
+    }
+
+    @Test
+    public void shouldCreateOne() {
+        ArticleModel articleModel = new ArticleModel();
+        articleModel.setId(1l);
+        articleModel.setTitle("title");
+        articleModel.setContent("content");
+        articleModel.setTags("tag");
+        articleModel.setCategory(new Category(1l, "category"));
+        final MapBindingResult errors = new MapBindingResult(new HashMap<String, String>(), "");
+
+        final User user = new User(1l, "email", "pass", "username");
+        when(authenticationService.getCurrentUser()).thenReturn(user);
+        when(articleService.save(any(Article.class))).thenReturn(new Article(1l));
+
+        final ModelAndView mav = controller.create(articleModel, errors);
+
+        assertEquals("redirect:/show/article/1", mav.getViewName());
+
+    }
 }

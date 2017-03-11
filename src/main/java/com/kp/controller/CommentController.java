@@ -101,10 +101,9 @@ public class CommentController {
             replyCommentModel.setErrorResponse(new KpErrorResponse(bindingResult));
             return replyCommentModel;
         }
-        final Optional<Comment> persistedComment = commentService.getById(Long.valueOf(replyCommentModel.getCommentId()));
-        if (persistedComment.isPresent()) {
+        final Comment parentComment = commentService.getOne(Long.valueOf(replyCommentModel.getCommentId()));
+        if (parentComment != null) {
             LOGGER.info("reply comment model {}", replyCommentModel.getMessage());
-            Comment parentComment = persistedComment.get();
             createNewComment(replyCommentModel, parentComment.getArticle(), parentComment);
             return replyCommentModel;
         }

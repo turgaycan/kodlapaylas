@@ -70,11 +70,6 @@ public class CommentService {
     }
 
     @Transactional(readOnly = true)
-    public Optional<Comment> getById(Long id) {
-        return Optional.ofNullable(getOne(id));
-    }
-
-    @Transactional(readOnly = true)
     public long getArticleCommentCount(Article article) {
         return commentRepository.getArticleCount(article);
     }

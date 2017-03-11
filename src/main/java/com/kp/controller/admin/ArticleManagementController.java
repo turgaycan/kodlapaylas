@@ -100,19 +100,10 @@ public class ArticleManagementController {
             return KpControllerUtil.buildErrorMav(bindingResult, new ModelAndView("/admin/article-edit"));
         }
 
-        final Article article = articleService.getById(articleUpdateInfo.getId());
-
-        article.setTitle(articleUpdateInfo.getTitle());
-        article.setContent(articleUpdateInfo.getContent());
-        article.setTags(articleUpdateInfo.getTags());
-        article.setArticleStatus(articleUpdateInfo.getArticleStatus());
-        article.setCategory(articleUpdateInfo.getCategory());
-        article.setModifydate(dateUtils.now());
-        article.setUrl(article.createUrl());
-
-        articleService.save(article);
-
-        final String showArticleUrl = "/show/article/" + articleUpdateInfo.getId();
+        Article article = articleService.getById(articleUpdateInfo.getId());
+        article = articleUpdateInfo.decorateArticle(article, dateUtils.now());
+        final Article mergedOne = articleService.save(article);
+        final String showArticleUrl = "/show/article/" + mergedOne.getId();
         return KpUtil.redirectToMAV(showArticleUrl);
     }
 
