@@ -23,7 +23,7 @@ public class Tag extends BaseEntity {
     private int count;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "article_type_id")
-    private ArticleType articleType;
+    private Category category;
 
     public Tag() {
     }
@@ -33,15 +33,15 @@ public class Tag extends BaseEntity {
         this.count = count;
     }
 
-    public Tag(Long id, String name, int count, ArticleType articleType) {
-        this(name, count, articleType);
+    public Tag(Long id, String name, int count, Category category) {
+        this(name, count, category);
         this.id = id;
     }
 
-    public Tag(String name, int count, ArticleType articleType) {
+    public Tag(String name, int count, Category category) {
         this.name = name;
         this.count = count;
-        this.articleType = articleType;
+        this.category = category;
     }
 
     public Long getId() {
@@ -68,12 +68,12 @@ public class Tag extends BaseEntity {
         this.count = count;
     }
 
-    public ArticleType getArticleType() {
-        return articleType;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setArticleType(ArticleType articleType) {
-        this.articleType = articleType;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public String tagUrl() {

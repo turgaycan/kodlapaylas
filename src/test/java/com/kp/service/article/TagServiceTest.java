@@ -1,6 +1,6 @@
 package com.kp.service.article;
 
-import com.kp.domain.ArticleType;
+import com.kp.domain.Category;
 import com.kp.domain.Tag;
 import com.kp.domain.spec.PageSpec;
 import com.kp.repository.TagRepository;
@@ -44,8 +44,8 @@ public class TagServiceTest {
 
     @Test
     public void shouldGetByArticleType() {
-        ArticleType root = new ArticleType(1l, "root");
-        ArticleType child = new ArticleType(2l, "child", root);
+        Category root = new Category(1l, "root");
+        Category child = new Category(2l, "child", root);
         when(tagRepository.findByArticleType(root,
                 PageSpec.buildPageSpecificationByFieldDesc(1, 15, "count"))).thenReturn(new PageImpl<>(newArrayList(tag1, tag2, tag3)));
 

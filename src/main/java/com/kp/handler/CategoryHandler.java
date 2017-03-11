@@ -1,8 +1,8 @@
 package com.kp.handler;
 
-import com.kp.domain.ArticleType;
+import com.kp.domain.Category;
 import com.kp.dto.CategoryUIModel;
-import com.kp.service.article.ArticleTypeService;
+import com.kp.service.article.CategoryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ public class CategoryHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(CategoryHandler.class);
 
     @Autowired
-    private ArticleTypeService articleTypeService;
+    private CategoryService categoryService;
 
     @RequestMapping(value = "/root-categories", method = RequestMethod.GET)
     public
@@ -37,8 +37,8 @@ public class CategoryHandler {
         return mav;
     }
 
-    private List<ArticleType> getAllRootTypes() {
-        return articleTypeService.getAllRootTypes();
+    private List<Category> getAllRootTypes() {
+        return categoryService.getAllRootTypes();
     }
 
     @RequestMapping(value = "/all-categories", method = RequestMethod.GET)
@@ -48,10 +48,10 @@ public class CategoryHandler {
         ModelAndView mav = new ModelAndView("contents/commons/all-categories");
         LOGGER.info("Root Categories page..");
         List<CategoryUIModel> categoryUIModels = new ArrayList<>();
-        final List<ArticleType> allCategories = articleTypeService.getAll();
-        for (ArticleType category : getAllRootTypes()) {
+        final List<Category> allCategories = categoryService.getAll();
+        for (Category category : getAllRootTypes()) {
 
-            List<ArticleType> subCategories = allCategories
+            List<Category> subCategories = allCategories
                     .stream()
                     .filter(eachCategory -> isValidCategory(category, eachCategory))
                     .collect(Collectors.toList());
@@ -65,7 +65,7 @@ public class CategoryHandler {
         return mav;
     }
 
-    private boolean isValidCategory(ArticleType category, ArticleType eachCategory) {
+    private boolean isValidCategory(Category category, Category eachCategory) {
         return eachCategory.isChildCategory() && eachCategory.getParent().getId().equals(category.getId());
     }
 }

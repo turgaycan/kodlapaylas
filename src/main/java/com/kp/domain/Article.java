@@ -48,9 +48,9 @@ public class Article extends BaseEntity {
     @OneToOne(fetch = FetchType.EAGER, targetEntity = User.class)
     @JoinColumn(name = "user_id")
     private User user;
-    @OneToOne(fetch = FetchType.EAGER, targetEntity = ArticleType.class)
+    @OneToOne(fetch = FetchType.EAGER, targetEntity = Category.class)
     @JoinColumn(name = "article_type_id")
-    private ArticleType articleType;
+    private Category category;
     @Column(length = 500, nullable = false)
     private String url;
     @Column(name = "main_image_url")
@@ -65,13 +65,13 @@ public class Article extends BaseEntity {
         this.id = id;
     }
 
-    public Article(Long id, String content, String title, String tags, Date createdate, ArticleType articleType, User user) {
+    public Article(Long id, String content, String title, String tags, Date createdate, Category category, User user) {
         this.id = id;
         this.content = content;
         this.title = title;
         this.tags = tags;
         this.createdate = createdate;
-        this.articleType = articleType;
+        this.category = category;
         this.user = user;
     }
 
@@ -163,12 +163,12 @@ public class Article extends BaseEntity {
         this.user = user;
     }
 
-    public ArticleType getArticleType() {
-        return articleType;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setArticleType(ArticleType articleType) {
-        this.articleType = articleType;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public String getUrl() {
@@ -204,7 +204,7 @@ public class Article extends BaseEntity {
     }
 
     public String getCategoryName() {
-        return getArticleType().getName();
+        return getCategory().getName();
     }
 
     public String getUserFullname() {

@@ -1,6 +1,6 @@
 package com.kp.dto;
 
-import com.kp.domain.ArticleType;
+import com.kp.domain.Category;
 
 import java.io.Serializable;
 import java.util.List;
@@ -11,31 +11,31 @@ import java.util.List;
 public class CategoryUIModel implements Serializable {
     private static final long serialVersionUID = -3200520401801462887L;
 
-    private ArticleType category;
-    private List<ArticleType> subCategories;
+    private Category category;
+    private List<Category> subCategories;
 
     public CategoryUIModel() {
     }
 
-    public CategoryUIModel(ArticleType category, List<ArticleType> subCategories) {
+    public CategoryUIModel(Category category, List<Category> subCategories) {
         this.category = category;
         this.subCategories = subCategories;
     }
 
 
-    public ArticleType getCategory() {
+    public Category getCategory() {
         return category;
     }
 
-    public void setCategory(ArticleType category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 
-    public List<ArticleType> getSubCategories() {
+    public List<Category> getSubCategories() {
         return subCategories;
     }
 
-    public void setSubCategories(List<ArticleType> subCategories) {
+    public void setSubCategories(List<Category> subCategories) {
         this.subCategories = subCategories;
     }
 }

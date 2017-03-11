@@ -1,9 +1,7 @@
 package com.kp.dto;
 
-import com.google.common.base.Joiner;
 import com.kp.domain.Article;
 import com.kp.domain.User;
-import com.kp.util.TurkishCharUtil;
 import com.kp.validator.validate.KpInfoValidator;
 import com.kp.validator.validate.Validateable;
 
@@ -33,7 +31,7 @@ public class ArticleModel extends Article implements Validateable<ArticleModel>,
                 return;
             }
 
-            if (target.getArticleType() == null) {
+            if (target.getCategory() == null) {
                 errors.rejectValue("article", "Makale kategorisi seçiniz!");
                 return;
             }
@@ -48,7 +46,7 @@ public class ArticleModel extends Article implements Validateable<ArticleModel>,
         article.setContent(getContent());
         article.setTags(getTags());
         article.setArticleStatus(getArticleStatus());
-        article.setArticleType(getArticleType());
+        article.setCategory(getCategory());
         article.setCreatedate(new Date());
         article.setUrl(createUrl());
         article.setMainImageUrl(createMainUrl());
@@ -57,6 +55,6 @@ public class ArticleModel extends Article implements Validateable<ArticleModel>,
     }
 
     private String createMainUrl() {
-        return getArticleType().getName().toLowerCase() + ".png";
+        return getCategory().getName().toLowerCase() + ".png";
     }
 }

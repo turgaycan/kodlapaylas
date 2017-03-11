@@ -1,7 +1,7 @@
 package com.kp.controller;
 
 import com.kp.controller.base.CommonController;
-import com.kp.domain.ArticleType;
+import com.kp.domain.Category;
 import com.kp.service.article.ArticleService;
 import com.kp.service.article.TagService;
 import org.slf4j.Logger;
@@ -40,7 +40,7 @@ public class IndexController extends CommonController {
         LOGGER.info("Getting home page");
         final ModelAndView mav = new ModelAndView("index");
         mav.addObject("lastArticle", articleService.getLastOne());
-        final ArticleType activities = new ArticleType(19l, ACTIVITIES);
+        final Category activities = new Category(19l, ACTIVITIES);
         mav.addObject("latestEvents", articleService.getByArticleType(activities, PAGENUM, PAGESIZE).getContent());
         mav.addObject("mostViewsOfProgramming", articleService.getByArticleTypeOrderByViewNumber(PROGRAMMING_ID));
         mav.addObject("mostViewsOfDatabase", articleService.getByArticleTypeOrderByViewNumber(DATABASE_ID));

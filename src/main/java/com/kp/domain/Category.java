@@ -12,7 +12,7 @@ import java.util.Date;
 @Entity
 @Table(name = "article_type", schema = "kp")
 @SequenceGenerator(name = "article_type_id_seq", sequenceName = "article_type_id_seq", allocationSize = 1)
-public class ArticleType extends BaseEntity {
+public class Category extends BaseEntity {
     private static final long serialVersionUID = -723818945422023439L;
 
     @Id
@@ -24,20 +24,20 @@ public class ArticleType extends BaseEntity {
     private String icon;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id", referencedColumnName = "id")
-    private ArticleType parent;
+    private Category parent;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date createdate;
     private boolean child;
 
-    public ArticleType() {
+    public Category() {
     }
 
-    public ArticleType(Long id, String name) {
+    public Category(Long id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public ArticleType(Long id, String name, ArticleType parent) {
+    public Category(Long id, String name, Category parent) {
         this(id, name);
         this.parent = parent;
     }
@@ -66,11 +66,11 @@ public class ArticleType extends BaseEntity {
         this.icon = icon;
     }
 
-    public ArticleType getParent() {
+    public Category getParent() {
         return parent;
     }
 
-    public void setParent(ArticleType parent) {
+    public void setParent(Category parent) {
         this.parent = parent;
     }
 
@@ -90,7 +90,7 @@ public class ArticleType extends BaseEntity {
         this.child = child;
     }
 
-    public ArticleType getRoot() {
+    public Category getRoot() {
         while (getParent() != null) {
             return getParent().getRoot();
         }

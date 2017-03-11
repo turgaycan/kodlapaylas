@@ -1,11 +1,11 @@
 package com.kp.controller.base;
 
 import com.kp.domain.Article;
-import com.kp.domain.ArticleType;
+import com.kp.domain.Category;
 import com.kp.domain.Tag;
 import com.kp.dto.CategoryUIModel;
 import com.kp.service.article.ArticleService;
-import com.kp.service.article.ArticleTypeService;
+import com.kp.service.article.CategoryService;
 import com.kp.service.article.CommentService;
 import com.kp.service.article.TagService;
 import com.kp.service.seo.SeoMetaDataService;
@@ -29,7 +29,7 @@ public abstract class CommonController {
     protected ArticleService articleService;
 
     @Autowired
-    protected ArticleTypeService articleTypeService;
+    protected CategoryService categoryService;
 
     @Autowired
     protected CommentService commentService;
@@ -51,7 +51,7 @@ public abstract class CommonController {
         mav.addObject("relatedArticles", relatedArticles);
         mav.addObject("commentBaseModel", commentService.buildCommentModel(article));
         mav.addObject("seoMetaData", seoMetaDataService.buildPageSeoMetaData(mav.getViewName(), buildPropertyMap(article)));
-        populateTags(mav, tagsByArticleType(article.getArticleType()));
+        populateTags(mav, tagsByArticleType(article.getCategory()));
     }
 
     private Map<String, String[]> buildPropertyMap(Article article) {
@@ -72,19 +72,19 @@ public abstract class CommonController {
     }
 
 
-    protected List<Tag> tagsByArticleType(ArticleType articleType) {
-        return tagService.getByArticleType(articleType);
+    protected List<Tag> tagsByArticleType(Category category) {
+        return tagService.getByArticleType(category);
     }
 
-    private List<ArticleType> getAllRootTypes() {
-        return articleTypeService.getAllRootTypes();
+    private List<Category> getAllRootTypes() {
+        return categoryService.getAllRootTypes();
     }
 
     protected void populateCommons(ModelAndView mav) {
         List<CategoryUIModel> categoryUIModels = new ArrayList<>();
-        final List<ArticleType> allCategories = articleTypeService.getAll();
-        for (ArticleType category : getAllRootTypes()) {
-            List<ArticleType> subCategories = allCategories
+        final List<Category> allCategories = categoryService.getAll();
+        for (Category category : getAllRootTypes()) {
+            List<Category> subCategories = allCategories
                     .stream()
                     .filter(eachCategory -> isValidCategory(category, eachCategory))
                     .collect(Collectors.toList());
@@ -97,14 +97,14 @@ public abstract class CommonController {
             populateTags(mav, new ArrayList<>());
             return;
         }
-        populateTags(mav, tagsByArticleType(articles.get(0).getArticleType()));
+        populateTags(mav, tagsByArticleType(articles.get(0).getCategory()));
     }
 
     private void populateTags(ModelAndView mav, List<Tag> attributeValue) {
         mav.addObject("tags", attributeValue);
     }
 
-    private boolean isValidCategory(ArticleType category, ArticleType eachCategory) {
+    private boolean isValidCategory(Category category, Category eachCategory) {
         return eachCategory.isChildCategory() && eachCategory.getParent().equals(category);
     }
 }

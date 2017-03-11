@@ -1,7 +1,7 @@
 package com.kp.service.article;
 
 import com.kp.domain.Article;
-import com.kp.domain.ArticleType;
+import com.kp.domain.Category;
 import com.kp.domain.spec.PageSpec;
 import com.kp.dto.DateRange;
 import com.kp.repository.ArticleRepository;
@@ -32,7 +32,7 @@ public class ArticleService {
     private ArticleRepository articleRepository;
 
     @Autowired
-    private ArticleTypeService articleTypeService;
+    private CategoryService categoryService;
 
     @Autowired
     private CommentService commentService;
@@ -48,14 +48,14 @@ public class ArticleService {
         return updatedArticle;
     }
 
-    @Cacheable(value = "kpCache", key = "'article-recent'+#article.articleType.name+ '-'+#recent")
+    @Cacheable(value = "kpCache", key = "'article-recent'+#article.category.name+ '-'+#recent")
     @Transactional(readOnly = false)
     public List<Article> getRecentArticles(Article article, int recent) {
-        final ArticleType articleType = article.getArticleType();
+        final Category category = article.getCategory();
 
         final Pageable pageable = new PageRequest(0, 10);
 
-        List<Article> recentArticles = articleRepository.findByArticleTypePageable(articleType.getId(), pageable).getContent();
+        List<Article> recentArticles = articleRepository.findByArticleTypePageable(category.getId(), pageable).getContent();
 
         final Collection<Article> elements = CollectionUtils.select(recentArticles, each -> each != article);
 
@@ -67,7 +67,7 @@ public class ArticleService {
     public List<Article> getRelatedArticles(List<Article> recentArticles, Article article, int recent) {
         final Pageable pageable = PageSpec.buildPageSpecificationByFieldDesc(0, 10, "createdate");
 
-        List<Article> relatedArticles = articleRepository.findByArticleTypeOrTitleLike(article.getArticleType(), article.getTitle(), pageable).getContent();
+        List<Article> relatedArticles = articleRepository.findByArticleTypeOrTitleLike(article.getCategory(), article.getTitle(), pageable).getContent();
 
         List<Article> subtractList = getSubtractArticles(recentArticles, article);
         relatedArticles = ListUtils.subtract(relatedArticles, subtractList);
@@ -81,17 +81,17 @@ public class ArticleService {
         return subtractList;
     }
 
-    @Cacheable(value = "kpCache", key = "'articleType-'+ #articleType.name + '-' + #pageNum + '-' + #size")
+    @Cacheable(value = "kpCache", key = "category+ #category.name + '-' + #pageNum + '-' + #size")
     @Transactional(readOnly = true)
-    public Page<Article> getByArticleType(ArticleType articleType, int pageNum, int size) {
-        return articleRepository.findByArticleType(articleType,
+    public Page<Article> getByArticleType(Category category, int pageNum, int size) {
+        return articleRepository.findByArticleType(category,
                 PageSpec.buildPageSpecificationByFieldDesc(pageNum, size, "createdate"));
     }
 
-    @Cacheable(value = "kpCache", key = "'articleTypes-' + #articleTypes.get(0).name + '-' + #pageNum+ '-' +#size")
+    @Cacheable(value = "kpCache", key = "categories + #categories.get(0).name + '-' + #pageNum+ '-' +#size")
     @Transactional(readOnly = true)
-    public Page<Article> getByArticleTypeIn(List<ArticleType> articleTypes, int pageNum, int size) {
-        return articleRepository.findByArticleTypeIn(articleTypes,
+    public Page<Article> getByArticleTypeIn(List<Category> categories, int pageNum, int size) {
+        return articleRepository.findByArticleTypeIn(categories,
                 PageSpec.buildPageSpecificationByFieldDesc(pageNum, size, "createdate"));
     }
 
@@ -135,12 +135,12 @@ public class ArticleService {
     @Cacheable(value = "kpCache", key = "'articletype-' + #articleTypeParentId")
     @Transactional(readOnly = true)
     public List<Article> getByArticleTypeOrderByViewNumber(Long articleTypeParentId) {
-        List<ArticleType> articleTypes = articleTypeService.getByParentId(articleTypeParentId);
-        Long[] articleTypeIds = new Long[articleTypes.size()];
+        List<Category> categories = categoryService.getByParentId(articleTypeParentId);
+        Long[] articleTypeIds = new Long[categories.size()];
         int index = 0;
-        for (ArticleType articleType : articleTypes) {
-            if (articleType.isChildCategory()) {
-                articleTypeIds[index++] = articleType.getId();
+        for (Category category : categories) {
+            if (category.isChildCategory()) {
+                articleTypeIds[index++] = category.getId();
             }
         }
 

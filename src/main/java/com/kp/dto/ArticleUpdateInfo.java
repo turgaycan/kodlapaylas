@@ -22,13 +22,6 @@ public class ArticleUpdateInfo extends Article implements Validateable<ArticleUp
 
             @Override
             public void validate(ArticleUpdateInfo target, Errors errors) {
-                final Article article = articleService.getById(target.getId());
-
-                if (article == null) {
-                    errors.rejectValue("article", "Makale bulunamadı!");
-                    return;
-                }
-
                 if (target.getTitle().length() > Article.MAX_TITLE_SIZE) {
                     errors.rejectValue("article", "Makale başlığı 100 karakterden fazla olamaz!");
                     return;
@@ -44,8 +37,14 @@ public class ArticleUpdateInfo extends Article implements Validateable<ArticleUp
                     return;
                 }
 
-                if(target.getArticleType() == null){
+                if (target.getCategory() == null) {
                     errors.rejectValue("article", "Makale kategorisi seçiniz!");
+                    return;
+                }
+                final Article article = articleService.getById(target.getId());
+
+                if (article == null) {
+                    errors.rejectValue("article", "Makale bulunamadı!");
                     return;
                 }
             }

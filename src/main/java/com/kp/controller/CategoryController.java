@@ -2,7 +2,7 @@ package com.kp.controller;
 
 import com.kp.controller.base.PageController;
 import com.kp.domain.Article;
-import com.kp.domain.ArticleType;
+import com.kp.domain.Category;
 import com.kp.domain.model.dto.PagingDTO;
 import com.kp.util.KpUrlPaths;
 import com.kp.util.KpUtil;
@@ -53,20 +53,20 @@ public class CategoryController extends PageController {
 
     @Override
     protected ModelAndView getModelAndView(String categoryName, Integer page) {
-        final ArticleType rootArticleType = articleTypeService.getByName(categoryName);
-        if (rootArticleType == null) {
+        final Category rootCategory = categoryService.getByName(categoryName);
+        if (rootCategory == null) {
             LOGGER.info("Category not found : {}  ", categoryName);
             return KpUtil.redirectToMAV("/error");
         }
 
-        List<ArticleType> articleTypeList = newArrayList(rootArticleType);
+        List<Category> categoryList = newArrayList(rootCategory);
 
-        if (rootArticleType.isRoot() && !rootArticleType.isChild()) {
-            articleTypeList.remove(rootArticleType);
-            articleTypeList.addAll(articleTypeService.getByParentId(rootArticleType.getId()));
+        if (rootCategory.isRoot() && !rootCategory.isChild()) {
+            categoryList.remove(rootCategory);
+            categoryList.addAll(categoryService.getByParentId(rootCategory.getId()));
         }
 
-        final Page<Article> articlePages = articleService.getByArticleTypeIn(articleTypeList, page, PagingDTO.DEFAULT_PAGE_SIZE);
+        final Page<Article> articlePages = articleService.getByArticleTypeIn(categoryList, page, PagingDTO.DEFAULT_PAGE_SIZE);
         return pageModelAndView(KpUrlPaths.CATEGORY_VIEW, articlePages, categoryName);
     }
 

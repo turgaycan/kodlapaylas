@@ -1,7 +1,7 @@
 package com.kp.controller;
 
 import com.kp.service.article.ArticleService;
-import com.kp.service.article.ArticleTypeService;
+import com.kp.service.article.CategoryService;
 import com.kp.service.article.CommentService;
 import com.kp.service.article.TagService;
 import com.kp.service.seo.SeoMetaDataService;
@@ -17,7 +17,7 @@ public class CommonControllerTest {
     protected ArticleService articleService;
 
     @Mock
-    protected ArticleTypeService articleTypeService;
+    protected CategoryService categoryService;
 
     @Mock
     protected CommentService commentService;

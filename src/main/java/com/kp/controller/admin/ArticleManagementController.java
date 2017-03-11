@@ -7,7 +7,7 @@ import com.kp.domain.User;
 import com.kp.dto.ArticleModel;
 import com.kp.dto.ArticleUpdateInfo;
 import com.kp.service.article.ArticleService;
-import com.kp.service.article.ArticleTypeService;
+import com.kp.service.article.CategoryService;
 import com.kp.service.article.CommentService;
 import com.kp.service.security.AuthenticationService;
 import com.kp.util.DateUtils;
@@ -40,7 +40,7 @@ public class ArticleManagementController {
     private ArticleService articleService;
 
     @Autowired
-    private ArticleTypeService articleTypeService;
+    private CategoryService categoryService;
 
     @Autowired
     private CommentService commentService;
@@ -90,7 +90,7 @@ public class ArticleManagementController {
         ModelAndView mav = new ModelAndView("/admin/article-edit");
         final Article article = articleService.getOne(id);
         mav.addObject("article", article);
-        mav.addObject("articleTypes", articleTypeService.getAll());
+        mav.addObject("articleTypes", categoryService.getAll());
         return mav;
     }
 
@@ -106,7 +106,7 @@ public class ArticleManagementController {
         article.setContent(articleUpdateInfo.getContent());
         article.setTags(articleUpdateInfo.getTags());
         article.setArticleStatus(articleUpdateInfo.getArticleStatus());
-        article.setArticleType(articleUpdateInfo.getArticleType());
+        article.setCategory(articleUpdateInfo.getCategory());
         article.setModifydate(dateUtils.now());
         article.setUrl(article.createUrl());
 
@@ -119,7 +119,7 @@ public class ArticleManagementController {
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public ModelAndView newOne() {
         final ModelAndView modelAndView = new ModelAndView("/admin/new-article");
-        modelAndView.addObject("articleTypes", articleTypeService.getAll());
+        modelAndView.addObject("articleTypes", categoryService.getAll());
         modelAndView.addObject("article", new ArticleModel());
         return modelAndView;
     }

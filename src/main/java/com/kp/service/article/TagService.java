@@ -1,6 +1,6 @@
 package com.kp.service.article;
 
-import com.kp.domain.ArticleType;
+import com.kp.domain.Category;
 import com.kp.domain.Tag;
 import com.kp.domain.spec.PageSpec;
 import com.kp.repository.TagRepository;
@@ -20,11 +20,11 @@ public class TagService {
     @Autowired
     private TagRepository tagRepository;
 
-    @Cacheable(value = "kpCache", key = "'tags-'.concat(#articleType.name)")
+    @Cacheable(value = "kpCache", key = "'tags-'.concat(#category.name)")
     @Transactional(readOnly = true)
-    public List<Tag> getByArticleType(ArticleType articleType) {
-        final ArticleType rootArticleType = articleType.getRoot();
-        return tagRepository.findByArticleType(rootArticleType,
+    public List<Tag> getByArticleType(Category category) {
+        final Category rootCategory = category.getRoot();
+        return tagRepository.findByArticleType(rootCategory,
                 PageSpec.buildPageSpecificationByFieldDesc(1, 15, "count")).getContent();
     }
 

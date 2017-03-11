@@ -1,7 +1,7 @@
 package com.kp.repository;
 
 import com.kp.domain.Article;
-import com.kp.domain.ArticleType;
+import com.kp.domain.Category;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -24,11 +24,11 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
             countQuery = "SELECT count(a) FROM Article a LEFT JOIN a.user u LEFT JOIN a.articleType at WHERE a.articleType.id = (:articleTypeId)")
     Page<Article> findByArticleTypePageable(@Param("articleTypeId") long articleTypeId, Pageable page);
 
-    Page<Article> findByArticleTypeOrTitleLike(ArticleType articleType, String title, Pageable page);
+    Page<Article> findByArticleTypeOrTitleLike(Category category, String title, Pageable page);
 
-    Page<Article> findByArticleType(ArticleType articleType, Pageable page);
+    Page<Article> findByArticleType(Category category, Pageable page);
 
-    Page<Article> findByArticleTypeIn(List<ArticleType> articleType, Pageable page);
+    Page<Article> findByArticleTypeIn(List<Category> category, Pageable page);
 
 
     Page<Article> findByCreatedateAfterAndCreatedateBefore(Date startDate, Date endDate, Pageable page);

@@ -89,12 +89,12 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="articleType">Kategori</label>
-                                    <select id="articleType" name="articleType" class="form-control selectpicker col-xs-3">
-                                        <option value="${article.articleType.id}">${article.articleType.name}</option>
-                                        <c:forEach var="articleType" items="${articleTypes}">
-                                            <c:if test="${articleType.name ne article.articleType.name}">
-                                                <option value="${articleType.id}">${articleType.name}</option>
+                                    <label for="category">Kategori</label>
+                                    <select id="category" name="category" class="form-control selectpicker col-xs-3">
+                                        <option value="${article.category.id}">${article.category.name}</option>
+                                        <c:forEach var="category" items="${categories}">
+                                            <c:if test="${category.name ne article.category.name}">
+                                                <option value="${category.id}">${category.name}</option>
                                             </c:if>
                                         </c:forEach>
                                     </select>

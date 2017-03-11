@@ -54,7 +54,7 @@
                                     <td>${article.modifydate}</td>
                                     <td>${article.articleStatus}</td>
                                     <td>${article.user.email}</td>
-                                    <td>${article.articleType.name}</td>
+                                    <td>${article.category.name}</td>
                                 </tr>
                             </c:forEach>
                             </tbody>
