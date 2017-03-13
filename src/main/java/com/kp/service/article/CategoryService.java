@@ -20,8 +20,8 @@ public class CategoryService {
 
     @Cacheable(value = "kpCache", key = "'allRootTypes'")
     @Transactional(readOnly = true)
-    public List<Category> getAllRootTypes() {
-        return categoryRepository.findRootArticleTypes();
+    public List<Category> getAllRootCategories() {
+        return categoryRepository.findRootCategories();
     }
 
     @Cacheable(value = "kpCache", key = "'articleType-'.concat(#name)", condition = "#this != null")

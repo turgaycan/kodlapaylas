@@ -38,7 +38,7 @@ public abstract class CommonController {
     protected TagService tagService;
 
     @Autowired
-    private SeoMetaDataService seoMetaDataService;
+    protected SeoMetaDataService seoMetaDataService;
 
     @Autowired
     protected DateUtils dateUtils;
@@ -51,7 +51,7 @@ public abstract class CommonController {
         mav.addObject("relatedArticles", relatedArticles);
         mav.addObject("commentBaseModel", commentService.buildCommentModel(article));
         mav.addObject("seoMetaData", seoMetaDataService.buildPageSeoMetaData(mav.getViewName(), buildPropertyMap(article)));
-        populateTags(mav, tagsByArticleType(article.getCategory()));
+        populateTags(mav, tagsByCategory(article.getCategory()));
     }
 
     private Map<String, String[]> buildPropertyMap(Article article) {
@@ -71,19 +71,10 @@ public abstract class CommonController {
         mav.addObject("years", addArchiveYearsToMav());
     }
 
-
-    protected List<Tag> tagsByArticleType(Category category) {
-        return tagService.getByArticleType(category);
-    }
-
-    private List<Category> getAllRootTypes() {
-        return categoryService.getAllRootTypes();
-    }
-
     protected void populateCommons(ModelAndView mav) {
         List<CategoryUIModel> categoryUIModels = new ArrayList<>();
         final List<Category> allCategories = categoryService.getAll();
-        for (Category category : getAllRootTypes()) {
+        for (Category category : getRootCategories()) {
             List<Category> subCategories = allCategories
                     .stream()
                     .filter(eachCategory -> isValidCategory(category, eachCategory))
@@ -97,7 +88,15 @@ public abstract class CommonController {
             populateTags(mav, new ArrayList<>());
             return;
         }
-        populateTags(mav, tagsByArticleType(articles.get(0).getCategory()));
+        populateTags(mav, tagsByCategory(articles.get(0).getCategory()));
+    }
+
+    protected List<Tag> tagsByCategory(Category category) {
+        return tagService.getByCategory(category);
+    }
+
+    private List<Category> getRootCategories() {
+        return categoryService.getAllRootCategories();
     }
 
     private void populateTags(ModelAndView mav, List<Tag> attributeValue) {

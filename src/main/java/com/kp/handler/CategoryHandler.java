@@ -38,7 +38,7 @@ public class CategoryHandler {
     }
 
     private List<Category> getAllRootTypes() {
-        return categoryService.getAllRootTypes();
+        return categoryService.getAllRootCategories();
     }
 
     @RequestMapping(value = "/all-categories", method = RequestMethod.GET)

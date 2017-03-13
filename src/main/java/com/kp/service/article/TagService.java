@@ -22,9 +22,9 @@ public class TagService {
 
     @Cacheable(value = "kpCache", key = "'tags-'.concat(#category.name)")
     @Transactional(readOnly = true)
-    public List<Tag> getByArticleType(Category category) {
+    public List<Tag> getByCategory(Category category) {
         final Category rootCategory = category.getRoot();
-        return tagRepository.findByArticleType(rootCategory,
+        return tagRepository.findByCategory(rootCategory,
                 PageSpec.buildPageSpecificationByFieldDesc(1, 15, "count")).getContent();
     }
 

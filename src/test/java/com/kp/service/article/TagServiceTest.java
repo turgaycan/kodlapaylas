@@ -46,10 +46,10 @@ public class TagServiceTest {
     public void shouldGetByArticleType() {
         Category root = new Category(1l, "root");
         Category child = new Category(2l, "child", root);
-        when(tagRepository.findByArticleType(root,
+        when(tagRepository.findByCategory(root,
                 PageSpec.buildPageSpecificationByFieldDesc(1, 15, "count"))).thenReturn(new PageImpl<>(newArrayList(tag1, tag2, tag3)));
 
-        final List<Tag> tagList = service.getByArticleType(child);
+        final List<Tag> tagList = service.getByCategory(child);
 
         assertEquals(3, tagList.size());
         assertArrayEquals(newArrayList(tag1, tag2, tag3).toArray(), tagList.toArray());

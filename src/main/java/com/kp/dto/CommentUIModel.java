@@ -14,6 +14,13 @@ public class CommentUIModel implements Serializable {
     private Comment comment;
     private List<Comment> replyComments;
 
+    public CommentUIModel(){}
+
+    public CommentUIModel(Comment comment, List<Comment> replyComments) {
+        this.comment = comment;
+        this.replyComments = replyComments;
+    }
+
     public Comment getComment() {
         return comment;
     }

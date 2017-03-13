@@ -39,9 +39,11 @@ public class ChangePasswordController extends BaseUserController {
         final ModelAndView modelAndView = super.index("/user/change-password");
         if (bindingResult.hasErrors()) {
             for (ObjectError objectError : bindingResult.getAllErrors()) {
-                if (objectError.getObjectName().contains("logout")) {
-                    authenticationService.logout();
-                    return KpUtil.redirectToMAV("/login");
+                for (String code : objectError.getCodes()) {
+                    if (code.contains("logout")) {
+                        authenticationService.logout();
+                        return KpUtil.redirectToMAV("/login");
+                    }
                 }
             }
             return KpControllerUtil.buildErrorMav(bindingResult, modelAndView);

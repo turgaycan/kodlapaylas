@@ -48,9 +48,9 @@ public class CategoryServiceTest {
 
     @Test
     public void shouldFindAll() {
-        when(categoryRepository.findRootArticleTypes()).thenReturn(newArrayList(category1, category2, category3, category4));
+        when(categoryRepository.findRootCategories()).thenReturn(newArrayList(category1, category2, category3, category4));
 
-        List<Category> allRootTypes = service.getAllRootTypes();
+        List<Category> allRootTypes = service.getAllRootCategories();
 
         assertThat(allRootTypes.size(), is(4));
         assertThat(allRootTypes, hasItems(category1, category2, category3, category4));

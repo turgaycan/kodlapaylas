@@ -46,13 +46,6 @@ public class ArticleController extends CommonController {
         return mav;
     }
 
-
-    @RequestMapping(value = "/kp/articles/{page:\\d+$}", method = RequestMethod.GET)
-    public ModelAndView articles(@PathVariable("page") Long page) {
-
-        return new ModelAndView("/kp/articles");
-    }
-
     @Override
     protected List<Integer> addArchiveYearsToMav() {
         return dateUtils.possibleArchiveYears();

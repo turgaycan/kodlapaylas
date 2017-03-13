@@ -33,7 +33,7 @@ public class CategoryRepositoryTest {
         repository.save(Lists.newArrayList(category1, category12));
         repository.flush();
 
-        List<Category> rootCategories = repository.findRootArticleTypes();
+        List<Category> rootCategories = repository.findRootCategories();
 
         assertThat(rootCategories.size(), is(1));
         assertThat(rootCategories.get(0).getId(), is(1l));

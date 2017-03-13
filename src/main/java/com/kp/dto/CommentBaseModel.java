@@ -12,6 +12,13 @@ public class CommentBaseModel implements Serializable {
     private int commentSize;
     private List<CommentUIModel> commentUIModels;
 
+    public CommentBaseModel(){}
+
+    public CommentBaseModel(int commentSize, List<CommentUIModel> commentUIModels) {
+        this.commentSize = commentSize;
+        this.commentUIModels = commentUIModels;
+    }
+
     public int getCommentSize() {
         return commentSize;
     }
@@ -28,8 +35,4 @@ public class CommentBaseModel implements Serializable {
         this.commentUIModels = commentUIModels;
     }
 
-    public CommentBaseModel(int commentSize, List<CommentUIModel> commentUIModels) {
-        this.commentSize = commentSize;
-        this.commentUIModels = commentUIModels;
-    }
 }

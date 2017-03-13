@@ -15,7 +15,7 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
 
     @Query(value = "SELECT * FROM kp.article_type at WHERE at.parent_id is null order by at.id asc",
             nativeQuery = true)
-    List<Category> findRootArticleTypes();
+    List<Category> findRootCategories();
 
     @Query(value = "SELECT * FROM kp.article_type at WHERE lower(at.name) = lower(:name)",
             nativeQuery = true)

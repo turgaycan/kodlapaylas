@@ -43,7 +43,6 @@ public class ArchiveController extends PageController {
     @RequestMapping(value = "/{year:\\d+}/p{pageNum:\\d+$}", method = RequestMethod.GET)
     public ModelAndView listArchiveArticlesByYear(@PathVariable("year") String year,
                                                   @PathVariable("pageNum") String pageNum) {
-
         return getModelAndView(year, Integer.valueOf(pageNum));
     }
 

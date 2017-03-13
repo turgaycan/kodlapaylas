@@ -1,6 +1,6 @@
 package com.kp.controller;
 
-import com.kp.domain.Article;
+import com.kp.domain.Tag;
 import com.kp.domain.model.dto.PagingDTO;
 import com.kp.dto.DateRange;
 import com.kp.dto.MonthUIModel;
@@ -16,6 +16,7 @@ import java.util.List;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
 
@@ -54,30 +55,105 @@ public class ArchiveControllerTest extends CommonControllerTest {
 
     @Test
     public void shouldListArchiveArticlesBySelectedMonth() {
-        final Date startDate = new Date(2012,1,1);
-        final Date endDate = new Date(2013,1,1);
+        final Date startDate = new Date(2012, 1, 1);
+        final Date endDate = new Date(2013, 1, 1);
 
         final DateRange dateRange = new DateRange(startDate, endDate);
 
         when(dateUtils.prepareDateRange(Integer.valueOf("2012"))).thenReturn(dateRange);
-        when(articleService.getByCreatedateAfterAndCreatedateBefore(dateRange, 0, PagingDTO.DEFAULT_PAGE_SIZE)).thenReturn(new PageImpl<>(newArrayList(new Article(), new Article())));
+        when(dateUtils.isNotValidYear(2012)).thenReturn(true);
+        when(dateUtils.currentYear()).thenReturn(2012);
+        when(articleService.getByCreatedateAfterAndCreatedateBefore(dateRange, 0, PagingDTO.DEFAULT_PAGE_SIZE)).thenReturn(new PageImpl<>(articleList));
+        when(categoryService.getAll()).thenReturn(categoryList);
+        when(tagService.getByCategory(categoryList.get(0))).thenReturn(tagList);
 
-        final ModelAndView modelAndView = controller.listArchiveArticles("2012");
+        final ModelAndView mav = controller.listArchiveArticles("2012");
+
+        assertThat(articleList, is(mav.getModel().get("pageArticles")));
+
+        assertThat(1, is(((PagingDTO) mav.getModel().get("pagingDTO")).getFirst()));
+        assertThat(1, is(((PagingDTO) mav.getModel().get("pagingDTO")).getBegin()));
+        assertThat(1, is(((PagingDTO) mav.getModel().get("pagingDTO")).getPrev()));
+        assertThat(0, is(((PagingDTO) mav.getModel().get("pagingDTO")).getCurrent()));
+        assertThat(1, is(((PagingDTO) mav.getModel().get("pagingDTO")).getNext()));
+        assertThat(1, is(((PagingDTO) mav.getModel().get("pagingDTO")).getEnd()));
+        assertThat(1, is(((PagingDTO) mav.getModel().get("pagingDTO")).getTotalPages()));
+
+        assertThat("/arsiv/2012", is(mav.getModel().get("pageUrl")));
+        assertThat(0, is(((List<Integer>) mav.getModel().get("years")).size()));
+        assertThat(tagList, is((List<Tag>) mav.getModel().get("tags")));
     }
 
     @Test
-    public void listArchiveArticlesByYear() {
+    public void shouldlistArchiveArticlesByYear() {
+        final Date startDate = new Date(2012, 1, 1);
+        final Date endDate = new Date(2013, 1, 1);
 
+        final DateRange dateRange = new DateRange(startDate, endDate);
+
+        when(dateUtils.prepareDateRange(Integer.valueOf("2012"))).thenReturn(dateRange);
+        when(dateUtils.isNotValidYear(2012)).thenReturn(true);
+        when(dateUtils.currentYear()).thenReturn(2012);
+        when(articleService.getByCreatedateAfterAndCreatedateBefore(dateRange, 0, PagingDTO.DEFAULT_PAGE_SIZE)).thenReturn(new PageImpl<>(articleList));
+        when(categoryService.getAll()).thenReturn(categoryList);
+        when(tagService.getByCategory(categoryList.get(0))).thenReturn(tagList);
+
+        final ModelAndView mav = controller.listArchiveArticlesByYear("2012", "1");
+
+        assertThat(articleList, is(mav.getModel().get("pageArticles")));
+
+        assertThat(1, is(((PagingDTO) mav.getModel().get("pagingDTO")).getFirst()));
+        assertThat(1, is(((PagingDTO) mav.getModel().get("pagingDTO")).getBegin()));
+        assertThat(1, is(((PagingDTO) mav.getModel().get("pagingDTO")).getPrev()));
+        assertThat(0, is(((PagingDTO) mav.getModel().get("pagingDTO")).getCurrent()));
+        assertThat(1, is(((PagingDTO) mav.getModel().get("pagingDTO")).getNext()));
+        assertThat(1, is(((PagingDTO) mav.getModel().get("pagingDTO")).getEnd()));
+        assertThat(1, is(((PagingDTO) mav.getModel().get("pagingDTO")).getTotalPages()));
+
+        assertThat("/arsiv/2012", is(mav.getModel().get("pageUrl")));
+        assertThat(0, is(((List<Integer>) mav.getModel().get("years")).size()));
+        assertThat(tagList, is((List<Tag>) mav.getModel().get("tags")));
     }
 
     @Test
-    public void listArchiveArticlesByYearAndMonth() {
+    public void shouldNotListArchiveArticlesByYearAndMonthIfGivenParamNotValid() {
+        final ModelAndView mav = controller.listArchiveArticlesByYearAndMonth("2012", "month");
 
+        assertEquals("redirect:/error", mav.getViewName());
     }
 
     @Test
-    public void listArchiveArticlesByYear1() {
+    public void shouldListArchiveArticlesByYearAndMonth() {
+        final Date startDate = new Date(2012, 10, 1);
+        final Date endDate = new Date(2012, 11, 1);
 
+        final DateRange dateRange = new DateRange(startDate, endDate);
+
+        when(dateUtils.dateWithMonthAtEndDay(Integer.valueOf("2012"), 11)).thenReturn(dateRange);
+        when(dateUtils.isNotValidYear(2012)).thenReturn(true);
+        when(dateUtils.currentYear()).thenReturn(2012);
+
+        when(articleService.getByCreatedateAfterAndCreatedateBefore(dateRange, 10, PagingDTO.DEFAULT_PAGE_SIZE)).thenReturn(new PageImpl<>(articleList));
+        when(categoryService.getAll()).thenReturn(categoryList);
+        when(tagService.getByCategory(categoryList.get(0))).thenReturn(tagList);
+        when(dateUtils.monthUiModels()).thenReturn(monthUIModels);
+
+        final ModelAndView mav = controller.listArchiveArticlesByYearAndMonth("2012", "10");
+
+        assertThat(articleList, is(mav.getModel().get("pageArticles")));
+
+        assertThat(1, is(((PagingDTO) mav.getModel().get("pagingDTO")).getFirst()));
+        assertThat(1, is(((PagingDTO) mav.getModel().get("pagingDTO")).getBegin()));
+        assertThat(1, is(((PagingDTO) mav.getModel().get("pagingDTO")).getPrev()));
+        assertThat(0, is(((PagingDTO) mav.getModel().get("pagingDTO")).getCurrent()));
+        assertThat(1, is(((PagingDTO) mav.getModel().get("pagingDTO")).getNext()));
+        assertThat(1, is(((PagingDTO) mav.getModel().get("pagingDTO")).getEnd()));
+        assertThat(1, is(((PagingDTO) mav.getModel().get("pagingDTO")).getTotalPages()));
+
+        assertThat("/arsiv/2012", is(mav.getModel().get("pageUrl")));
+        assertThat(0, is(((List<Integer>) mav.getModel().get("years")).size()));
+        assertThat(tagList, is((List<Tag>) mav.getModel().get("tags")));
+        assertThat(monthUIModels, is((List<MonthUIModel>) mav.getModel().get("months")));
     }
 
 }

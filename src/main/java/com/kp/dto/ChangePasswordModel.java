@@ -18,6 +18,8 @@ import java.io.Serializable;
  */
 public class ChangePasswordModel implements Validateable<ChangePasswordModel>, Serializable {
 
+    private static final String MAX_RETRY_MSG = "Şifrenizi 3 defadan fazla hatalı denediğiniz için, 2 saat hesabınız bloklandı!!";
+
     private static final int MAX_RETRY_COUNT = 3;
 
     @NotBlank(message = "Eski şifre alanını boş bırakmayınız..")
@@ -84,7 +86,7 @@ public class ChangePasswordModel implements Validateable<ChangePasswordModel>, S
                     } else {
                         final int retryCountDiff = MAX_RETRY_COUNT - cacheValue;
                         if (retryCountDiff <= 0) {
-                            errors.rejectValue("password", "", "Şifrenizi 3 defadan fazla hatalı denediğiniz için, 2 saat hesabınız bloklandı!!");
+                            errors.rejectValue("password", "", MAX_RETRY_MSG);
                             return;
                         }
                         errors.rejectValue("password", "", String.format("Şifreniz hatalı! Son {0} defa deneme hakkınız kaldı!", retryCountDiff));
