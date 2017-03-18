@@ -41,9 +41,9 @@ public class IndexController extends CommonController {
         final ModelAndView mav = new ModelAndView("index");
         mav.addObject("lastArticle", articleService.getLastOne());
         final Category activities = new Category(19l, ACTIVITIES);
-        mav.addObject("latestEvents", articleService.getByArticleType(activities, PAGENUM, PAGESIZE).getContent());
-        mav.addObject("mostViewsOfProgramming", articleService.getByArticleTypeOrderByViewNumber(PROGRAMMING_ID));
-        mav.addObject("mostViewsOfDatabase", articleService.getByArticleTypeOrderByViewNumber(DATABASE_ID));
+        mav.addObject("latestEvents", articleService.getByCategory(activities, PAGENUM, PAGESIZE).getContent());
+        mav.addObject("mostViewsOfProgramming", articleService.getByCategoryOrderByViewNumber(PROGRAMMING_ID));
+        mav.addObject("mostViewsOfDatabase", articleService.getByCategoryOrderByViewNumber(DATABASE_ID));
         mav.addObject("tags", tagService.getByOrderCountDesc());
         addSeoMetaDataToMav(mav);
         addArchiveYearsToMav(mav);

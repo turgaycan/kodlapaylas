@@ -50,7 +50,7 @@ public class Article extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User user;
     @OneToOne(fetch = FetchType.EAGER, targetEntity = Category.class)
-    @JoinColumn(name = "article_type_id")
+    @JoinColumn(name = "category_id")
     private Category category;
     @Column(length = 500, nullable = false)
     private String url;

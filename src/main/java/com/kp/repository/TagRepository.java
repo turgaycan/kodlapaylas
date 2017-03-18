@@ -16,6 +16,6 @@ public interface TagRepository extends JpaRepository<Tag, Long> {
 
     public Page<Tag> findByCategory(Category category, Pageable page);
 
-    public List<Tag> orderByCountDesc(Pageable page);
+    public List<Tag> findAllByOrderByCountDesc(Pageable page);
 
 }

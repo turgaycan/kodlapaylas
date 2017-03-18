@@ -1,6 +1,7 @@
 package com.kp.dto;
 
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -15,6 +16,7 @@ import java.util.HashMap;
 public class ChangePasswordModelTest {
 
 
+    @Ignore
     @Test
     public void should(){
         ChangePasswordModel model = new ChangePasswordModel();

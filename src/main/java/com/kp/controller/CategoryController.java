@@ -66,7 +66,7 @@ public class CategoryController extends PageController {
             categoryList.addAll(categoryService.getByParentId(rootCategory.getId()));
         }
 
-        final Page<Article> articlePages = articleService.getByArticleTypeIn(categoryList, page, PagingDTO.DEFAULT_PAGE_SIZE);
+        final Page<Article> articlePages = articleService.getByCategoryIn(categoryList, page, PagingDTO.DEFAULT_PAGE_SIZE);
         return pageModelAndView(KpUrlPaths.CATEGORY_VIEW, articlePages, categoryName);
     }
 

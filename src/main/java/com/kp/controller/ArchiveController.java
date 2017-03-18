@@ -87,7 +87,7 @@ public class ArchiveController extends PageController {
     private ModelAndView checkIfFailRedirect(String... params) {
         for (String eachParam : params) {
             if (!NumberUtils.isNumber(eachParam)) {
-                return KpUtil.redirectToMAV(new ModelAndView("error"), "/error");
+                return KpUtil.redirectToMAV(new ModelAndView("error"), "error");
             }
         }
         return null;

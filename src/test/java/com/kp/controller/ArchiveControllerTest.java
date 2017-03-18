@@ -94,7 +94,7 @@ public class ArchiveControllerTest extends CommonControllerTest {
         when(dateUtils.prepareDateRange(Integer.valueOf("2012"))).thenReturn(dateRange);
         when(dateUtils.isNotValidYear(2012)).thenReturn(true);
         when(dateUtils.currentYear()).thenReturn(2012);
-        when(articleService.getByCreatedateAfterAndCreatedateBefore(dateRange, 0, PagingDTO.DEFAULT_PAGE_SIZE)).thenReturn(new PageImpl<>(articleList));
+        when(articleService.getByCreatedateAfterAndCreatedateBefore(dateRange, 1, PagingDTO.DEFAULT_PAGE_SIZE)).thenReturn(new PageImpl<>(articleList));
         when(categoryService.getAll()).thenReturn(categoryList);
         when(tagService.getByCategory(categoryList.get(0))).thenReturn(tagList);
 

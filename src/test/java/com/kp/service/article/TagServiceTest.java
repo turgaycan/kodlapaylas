@@ -57,7 +57,7 @@ public class TagServiceTest {
 
     @Test
     public void shouldGetByOrderCountDesc() {
-        when(tagRepository.orderByCountDesc(PageSpec.buildPageSpecificationByFieldDesc(0, 15, "count"))).thenReturn(newArrayList(tag1, tag3, tag2));
+        when(tagRepository.findAllByOrderByCountDesc(PageSpec.buildPageSpecificationByFieldDesc(0, 15, "count"))).thenReturn(newArrayList(tag1, tag3, tag2));
 
         final List<Tag> tagList = service.getByOrderCountDesc();
 

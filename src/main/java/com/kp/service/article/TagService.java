@@ -31,7 +31,7 @@ public class TagService {
     @Cacheable(value = "kpCache", key = "'tags-count'")
     @Transactional(readOnly = true)
     public List<Tag> getByOrderCountDesc() {
-        return tagRepository.orderByCountDesc(PageSpec.buildPageSpecificationByFieldDesc(0, 15, "count"));
+        return tagRepository.findAllByOrderByCountDesc(PageSpec.buildPageSpecificationByFieldDesc(0, 15, "count"));
     }
 
 }

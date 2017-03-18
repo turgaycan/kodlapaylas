@@ -10,14 +10,14 @@ import java.util.Date;
  */
 
 @Entity
-@Table(name = "article_type", schema = "kp")
-@SequenceGenerator(name = "article_type_id_seq", sequenceName = "article_type_id_seq", allocationSize = 1)
+@Table(name = "category", schema = "kp")
+@SequenceGenerator(name = "category_id_seq", sequenceName = "category_id_seq", allocationSize = 1)
 public class Category extends BaseEntity {
     private static final long serialVersionUID = -723818945422023439L;
 
     @Id
     @Column(name = "id", nullable = false, unique = true, updatable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "article_type_id_seq")
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "category_id_seq")
     private Long id;
     @Column(nullable = false)
     private String name;

@@ -101,7 +101,7 @@ public class ArticleServiceTest {
 
     @Test
     public void shouldGetRecentArticles() {
-        when(articleRepository.findByArticleTypePageable(category.getId(), pageable)).thenReturn(new PageImpl<>(articles));
+        when(articleRepository.findByCategoryPageable(category.getId(), pageable)).thenReturn(new PageImpl<>(articles));
 
         final List<Article> recentArticles = service.getRecentArticles(article, 5);
 
@@ -114,7 +114,7 @@ public class ArticleServiceTest {
     public void shouldGetRelatedArticles() {
         final List<Article> recentArticles = ListUtil.defensiveArrayList(articles, 5);
 
-        when(articleRepository.findByArticleTypeOrTitleLike(article.getCategory(), article.getTitle(), PageSpec.buildPageSpecificationByFieldDesc(0, 10, "createdate"))).thenReturn(new PageImpl<>(articles));
+        when(articleRepository.findByCategoryOrTitleLike(article.getCategory(), article.getTitle(), PageSpec.buildPageSpecificationByFieldDesc(0, 10, "createdate"))).thenReturn(new PageImpl<>(articles));
 
         final List<Article> relatedArticles = service.getRelatedArticles(recentArticles, article, 5);
 
@@ -124,21 +124,21 @@ public class ArticleServiceTest {
     }
 
     @Test
-    public void shouldGetByArticleType() {
+    public void shouldGetByCategory() {
 
-        when(articleRepository.findByArticleType(category, PageSpec.buildPageSpecificationByFieldDesc(1, 10, "createdate"))).thenReturn(new PageImpl<>(articles));
+        when(articleRepository.findByCategory(category, PageSpec.buildPageSpecificationByFieldDesc(1, 10, "createdate"))).thenReturn(new PageImpl<>(articles));
 
-        final Page<Article> articleList = service.getByArticleType(category, 1, 10);
+        final Page<Article> articleList = service.getByCategory(category, 1, 10);
 
         assertEquals(9, articleList.getNumberOfElements());
     }
 
     @Test
-    public void shouldGetByArticleTypeIn() {
+    public void shouldGetByCategoryIn() {
 
-        when(articleRepository.findByArticleTypeIn(newArrayList(category), PageSpec.buildPageSpecificationByFieldDesc(1, 10, "createdate"))).thenReturn(new PageImpl<>(articles));
+        when(articleRepository.findByCategoryIn(newArrayList(category), PageSpec.buildPageSpecificationByFieldDesc(1, 10, "createdate"))).thenReturn(new PageImpl<>(articles));
 
-        final Page<Article> articleList = service.getByArticleTypeIn(newArrayList(category), 1, 10);
+        final Page<Article> articleList = service.getByCategoryIn(newArrayList(category), 1, 10);
 
         assertEquals(9, articleList.getNumberOfElements());
     }
@@ -196,11 +196,11 @@ public class ArticleServiceTest {
     }
 
     @Test
-    public void shouldGetByArticleTypeOrderByViewNumber() {
+    public void shouldGetByCategoryOrderByViewNumber() {
         when(categoryService.getByParentId(0l)).thenReturn(newArrayList(category));
-        when(articleRepository.findByArticleTypeId(new Long[]{1l})).thenReturn(articles);
+        when(articleRepository.findByCategoryId(new Long[]{1l})).thenReturn(articles);
 
-        final List<Article> articleList = service.getByArticleTypeOrderByViewNumber(0l);
+        final List<Article> articleList = service.getByCategoryOrderByViewNumber(0l);
 
         assertNotNull(articleList);
         assertEquals(9, articleList.size());

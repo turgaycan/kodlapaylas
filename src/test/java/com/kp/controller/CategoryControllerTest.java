@@ -41,7 +41,7 @@ public class CategoryControllerTest extends CommonControllerTest {
     public void shouldListCategoryArticlesByCategoryName() {
         final Category category = categoryList.get(0);
         when(categoryService.getByName("cat1")).thenReturn(category);
-        when(articleService.getByArticleTypeIn(any(List.class), eq(0), eq(PagingDTO.DEFAULT_PAGE_SIZE))).thenReturn(new PageImpl(articleList));
+        when(articleService.getByCategoryIn(any(List.class), eq(0), eq(PagingDTO.DEFAULT_PAGE_SIZE))).thenReturn(new PageImpl(articleList));
         final List<Integer> years = newArrayList(2012, 2013, 2014, 2015);
         when(dateUtils.possibleArchiveYears()).thenReturn(years);
         when(categoryService.getAll()).thenReturn(categoryList);
