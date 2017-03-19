@@ -115,7 +115,7 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    @Cacheable(value = "kpCache", key = "'pageable-' + #pageNum + '-' + #size", unless = "#result == null")
+    @Cacheable(cacheNames = "kpCache", value = "kpCache", key = "'pageable-' + #pageNum + '-' + #size", unless = "#result == null")
     public Page<User> getUsersAsPageable(int pageNum, int size) {
         return getUsersAsPageableNotCacheable(pageNum, size);
     }

@@ -20,7 +20,7 @@ public class TagService {
     @Autowired
     private TagRepository tagRepository;
 
-    @Cacheable(value = "kpCache", key = "'tags-'.concat(#category.name)")
+    @Cacheable(cacheNames = "kpCache", value = "kpCache", key = "'tags-'.concat(#category.name)")
     @Transactional(readOnly = true)
     public List<Tag> getByCategory(Category category) {
         final Category rootCategory = category.getRoot();
@@ -28,7 +28,7 @@ public class TagService {
                 PageSpec.buildPageSpecificationByFieldDesc(1, 15, "count")).getContent();
     }
 
-    @Cacheable(value = "kpCache", key = "'tags-count'")
+    @Cacheable(cacheNames = "kpCache", value = "kpCache", key = "'tags-count'")
     @Transactional(readOnly = true)
     public List<Tag> getByOrderCountDesc() {
         return tagRepository.findAllByOrderByCountDesc(PageSpec.buildPageSpecificationByFieldDesc(0, 15, "count"));

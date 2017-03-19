@@ -5,10 +5,13 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.core.Ordered;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.validation.Validator;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
@@ -83,10 +86,9 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
     }
 
 
-//    @Bean
-//    ServletRegistrationBean h2servletRegistration(){
-//        ServletRegistrationBean registrationBean = new ServletRegistrationBean(new WebServlet());
-//        registrationBean.addUrlMappings("/console/*");
-//        return registrationBean;
-//    }
+    @Bean
+    @Primary
+    public Validator localValidatorFactoryBean() {
+        return new LocalValidatorFactoryBean();
+    }
 }

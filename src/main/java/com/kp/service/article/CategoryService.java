@@ -18,25 +18,25 @@ public class CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
 
-    @Cacheable(value = "kpCache", key = "'allRootTypes'")
+    @Cacheable(cacheNames = "kpCache", value = "kpCache", key = "'allRootTypes'")
     @Transactional(readOnly = true)
     public List<Category> getAllRootCategories() {
         return categoryRepository.findRootCategories();
     }
 
-    @Cacheable(value = "kpCache", key = "'articleType-'.concat(#name)", condition = "#this != null")
+    @Cacheable(cacheNames = "kpCache", value = "kpCache", key = "'articleType-'.concat(#name)", condition = "#this != null")
     @Transactional(readOnly = true)
     public Category getByName(String name) {
         return categoryRepository.findByName(name).get();
     }
 
-    @Cacheable(value = "kpCache", key = "'allCategories'")
+    @Cacheable(cacheNames = "kpCache", value = "kpCache", key = "'allCategories'")
     @Transactional(readOnly = true)
     public List<Category> getAll() {
         return categoryRepository.findAll();
     }
 
-    @Cacheable(value = "kpCache", key = "'articleType-'.concat(#parentId)")
+    @Cacheable(cacheNames = "kpCache", value = "kpCache", key = "'articleType-'.concat(#parentId)")
     @Transactional(readOnly = true)
     public List<Category> getByParentId(Long parentId) {
         return categoryRepository.findByParentId(parentId);

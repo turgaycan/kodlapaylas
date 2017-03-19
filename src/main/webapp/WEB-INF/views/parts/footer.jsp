@@ -5,15 +5,17 @@
 
         <div class="col-sm-4 footer-box">
 
-            <h4>Hakkımda</h4>
-
             <div class="footer-box-text">
+                <h4>Skype ingilizce</h4>
+                <a href="http://www.skypeingilizce.com/" target="_blank" ><div class="col-sm-4 footer-box">
 
-                <p>
-                    İlgili detay linkte mevcuttur.
-                </p>
+                    <div class="footer-box-text">
+                        <img src="/resources/static/img/skypeingilizce.banner2.jpg" height="130px" width="700px">
 
-                <p><a href="<c:url value="/hakkimda" /> ">Hakkımda..</a></p>
+                    </div>
+
+                </div>
+                </a>
 
             </div>
 

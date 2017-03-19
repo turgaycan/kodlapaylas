@@ -5,20 +5,26 @@ import com.couchbase.client.java.Cluster;
 import com.couchbase.client.java.CouchbaseCluster;
 import com.couchbase.client.java.env.DefaultCouchbaseEnvironment;
 import com.couchbase.client.spring.cache.CacheBuilder;
+import com.couchbase.client.spring.cache.CouchbaseCache;
 import com.couchbase.client.spring.cache.CouchbaseCacheManager;
-import com.kp.controller.util.KpControllerUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cache.support.SimpleCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 
 import java.time.Instant;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by tcan on 07/02/16.
@@ -30,6 +36,8 @@ public class CouchbaseConfiguration {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CouchbaseConfiguration.class);
 
+    public static final String KP_SIMPLE_CACHE = "kpSimpleCache";
+    public static final String KP_BUCKET_NAME = "kp";
     public static final String KP_CACHE = "kpCache";
     public static final int KP_TTL = 2 * 60 * 60 * 1000; //Two hours
 
@@ -53,19 +61,28 @@ public class CouchbaseConfiguration {
         return cluster().openBucket();
     }
 
-    @Bean
-    public CouchbaseCacheManager cacheManager() {
-        final CacheBuilder cacheBuilder = CacheBuilder.newInstance(defaultBucket())
-                .withExpirationInMillis((int) connectTimeout).withExpirationInMillis(KP_TTL);
-
-        return new CouchbaseCacheManager(cacheBuilder, KP_CACHE);
-
+    @Bean(destroyMethod = "close")
+    public Bucket kpBucket() {
+        return cluster().openBucket(KP_BUCKET_NAME);
     }
 
-    @CacheEvict(allEntries = true, value = {KP_CACHE})
+    @Bean
+    @Primary
+    public CacheManager cacheManager() {
+        Map<String, CacheBuilder> mapping = new HashMap<>();
+        mapping.put(KP_CACHE, getCacheBuilder(defaultBucket()));
+        mapping.put(KP_SIMPLE_CACHE, getCacheBuilder(kpBucket()));
+        return new CouchbaseCacheManager(mapping);
+    }
+
+    @CacheEvict(allEntries = true, value = {KP_CACHE, KP_SIMPLE_CACHE})
     @Scheduled(fixedDelay = 2 * 60 * 60 * 1000, initialDelay = 500)
     public void reportCacheEvict() {
         LOGGER.info("Flush Cache " + Date.from(Instant.now()));
+    }
+
+    private CacheBuilder getCacheBuilder(Bucket bucket) {
+        return CacheBuilder.newInstance(bucket).withExpiration(KP_TTL);
     }
 
 }
