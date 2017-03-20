@@ -1,5 +1,6 @@
 package com.kp.service.cache;
 
+import com.couchbase.client.spring.cache.CouchbaseCache;
 import com.couchbase.client.spring.cache.CouchbaseCacheManager;
 import org.junit.Test;
 import org.junit.runner.RunWith;

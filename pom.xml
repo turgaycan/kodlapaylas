@@ -24,7 +24,6 @@
         <spring.remote.version>2.0.8</spring.remote.version>
         <servlet-api.version>3.1.0</servlet-api.version>
         <jstl.version>1.2</jstl.version>
-        <spring-springloaded.version>1.2.4.RELEASE</spring-springloaded.version>
         <postgresql.version>9.2-1003-jdbc4</postgresql.version>
         <hsqldb.version>2.3.2</hsqldb.version>
         <bootstrap.version>3.3.4</bootstrap.version>
@@ -37,9 +36,7 @@
         <underscorejs.version>1.8.3</underscorejs.version>
         <commons-lang3.version>3.3.2</commons-lang3.version>
         <commons-collections4.version>4.0</commons-collections4.version>
-        <spring-context-support.version>4.1.7.RELEASE</spring-context-support.version>
         <spring-security-taglibs.version>3.2.7.RELEASE</spring-security-taglibs.version>
-
         <unit-tests.skip>false</unit-tests.skip>
         <integration-tests.skip>true</integration-tests.skip>
     </properties>
@@ -79,11 +76,11 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-mail</artifactId>
+            <artifactId>spring-boot-starter-cache</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-actuator</artifactId>
+            <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
         <dependency>
             <groupId>com.couchbase.client</groupId>

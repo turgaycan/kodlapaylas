@@ -1,9 +1,9 @@
 package com.kp.service.cache;
 
+import com.couchbase.client.spring.cache.CouchbaseCacheManager;
 import com.kp.config.CouchbaseConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
-import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
@@ -15,7 +15,7 @@ import java.io.Serializable;
 public class CacheService {
 
     @Autowired
-    private CacheManager cacheManager;
+    private CouchbaseCacheManager cacheManager;
 
     public void set(String key, Serializable object) {
         getCache(CouchbaseConfiguration.KP_CACHE).put(key, object);

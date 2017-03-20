@@ -5,15 +5,12 @@ import com.couchbase.client.java.Cluster;
 import com.couchbase.client.java.CouchbaseCluster;
 import com.couchbase.client.java.env.DefaultCouchbaseEnvironment;
 import com.couchbase.client.spring.cache.CacheBuilder;
-import com.couchbase.client.spring.cache.CouchbaseCache;
 import com.couchbase.client.spring.cache.CouchbaseCacheManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.cache.support.SimpleCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -21,7 +18,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 
 import java.time.Instant;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -68,11 +64,15 @@ public class CouchbaseConfiguration {
 
     @Bean
     @Primary
-    public CacheManager cacheManager() {
+    public CouchbaseCacheManager cacheManager() {
         Map<String, CacheBuilder> mapping = new HashMap<>();
-        mapping.put(KP_CACHE, getCacheBuilder(defaultBucket()));
-        mapping.put(KP_SIMPLE_CACHE, getCacheBuilder(kpBucket()));
-        return new CouchbaseCacheManager(mapping);
+        final CacheBuilder kpCacheBuilder = getCacheBuilder(kpBucket());
+        mapping.put(KP_SIMPLE_CACHE, kpCacheBuilder);
+        final CacheBuilder defaultCacheBuilder = getCacheBuilder(defaultBucket());
+        mapping.put(KP_CACHE, defaultCacheBuilder);
+        final CouchbaseCacheManager couchbaseCacheManager = new CouchbaseCacheManager(mapping);
+        couchbaseCacheManager.setDefaultCacheBuilder(defaultCacheBuilder);
+        return couchbaseCacheManager;
     }
 
     @CacheEvict(allEntries = true, value = {KP_CACHE, KP_SIMPLE_CACHE})
@@ -82,7 +82,7 @@ public class CouchbaseConfiguration {
     }
 
     private CacheBuilder getCacheBuilder(Bucket bucket) {
-        return CacheBuilder.newInstance(bucket).withExpiration(KP_TTL);
+        return CacheBuilder.newInstance(bucket).withExpirationInMillis((int) connectTimeout).withExpirationInMillis(KP_TTL);
     }
 
 }
