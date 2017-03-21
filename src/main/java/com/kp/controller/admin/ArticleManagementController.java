@@ -90,7 +90,7 @@ public class ArticleManagementController {
         ModelAndView mav = new ModelAndView("/admin/article-edit");
         final Article article = articleService.getOne(id);
         mav.addObject("article", article);
-        mav.addObject("articleTypes", categoryService.getAll());
+        mav.addObject("categories", categoryService.getAll());
         return mav;
     }
 
@@ -110,7 +110,7 @@ public class ArticleManagementController {
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public ModelAndView newOne() {
         final ModelAndView modelAndView = new ModelAndView("/admin/new-article");
-        modelAndView.addObject("articleTypes", categoryService.getAll());
+        modelAndView.addObject("categories", categoryService.getAll());
         modelAndView.addObject("article", new ArticleModel());
         return modelAndView;
     }

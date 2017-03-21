@@ -127,7 +127,7 @@ public class ArticleManagementControllerTest {
 
         assertEquals("/admin/article-edit", mav.getViewName());
         final Article actual = (Article) mav.getModel().get("article");
-        final List<Category> categories = (List<Category>) mav.getModel().get("articleTypes");
+        final List<Category> categories = (List<Category>) mav.getModel().get("categories");
         assertEquals(one, actual);
         assertEquals(Long.valueOf(1), actual.getId());
         assertEquals(5, categories.size());
@@ -173,7 +173,7 @@ public class ArticleManagementControllerTest {
         final ModelAndView mav = controller.newOne();
 
         assertEquals("/admin/new-article", mav.getViewName());
-        assertEquals(categoryList, mav.getModel().get("articleTypes"));
+        assertEquals(categoryList, mav.getModel().get("categories"));
         assertTrue(mav.getModel().get("article") instanceof ArticleModel);
     }
 
