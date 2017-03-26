@@ -1,28 +1,40 @@
 package com.kp.handler;
 
-import org.junit.After;
-import org.junit.Before;
+import com.kp.domain.Article;
+import com.kp.service.article.ArticleService;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.web.servlet.ModelAndView;
 
-import static org.junit.Assert.*;
+import java.util.List;
+
+import static com.google.common.collect.Lists.newArrayList;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.when;
 
 /**
  * Created by tcan on 20/10/15.
  */
+@RunWith(MockitoJUnitRunner.class)
 public class FeatureArticlesHandlerTest {
 
-    @Before
-    public void setUp() throws Exception {
+    @InjectMocks
+    private FeatureArticlesHandler handler;
 
-    }
-
-    @After
-    public void tearDown() throws Exception {
-
-    }
+    @Mock
+    private ArticleService articleService;
 
     @Test
-    public void testHandleRequest() throws Exception {
+    public void shouldListFeatureArticles() {
+        when(articleService.getFeatureArticles()).thenReturn(newArrayList(new Article()));
+        final ModelAndView mav = handler.listFeatureArticles();
 
+        assertEquals("/contents/commons/feature-articles", mav.getViewName());
+        final List<Article> featureArticles = (List<Article>) mav.getModel().get("featureArticles");
+
+        assertEquals(1, featureArticles.size());
     }
 }

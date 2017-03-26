@@ -1,6 +1,5 @@
 package com.kp.config;
 
-import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -16,7 +15,6 @@ import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
-import javax.servlet.annotation.WebServlet;
 import java.nio.charset.Charset;
 
 /**
@@ -27,8 +25,6 @@ import java.nio.charset.Charset;
 @Configuration
 @ComponentScan(basePackages = {"com.kp.controller", "com.kp.handler"})
 public class MvcConfig extends WebMvcConfigurerAdapter {
-
-    private static final int CACHE_PERIOD = 24 * 60 * 60 * 1000;
 
     @Override
     public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {

@@ -19,7 +19,7 @@ import java.util.List;
 public class ArchiveHandler {
 
     @Autowired
-    protected DateUtils dateUtils;
+    private DateUtils dateUtils;
 
     @RequestMapping(value = "/archive-years", method = RequestMethod.GET)
     public

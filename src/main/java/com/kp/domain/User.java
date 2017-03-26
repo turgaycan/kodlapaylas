@@ -47,15 +47,15 @@ public class User extends BaseEntity implements UserDetails {
     public User() {
     }
 
+    public User(Long id, String email, String password, String username) {
+        this(id, email, password);
+        this.username = username;
+    }
+
     public User(Long id, String email, String password) {
         this.id = id;
         this.email = email;
         this.password = password;
-    }
-
-    public User(Long id, String email, String password, String username) {
-        this(id, email, password);
-        this.username = username;
     }
 
     public User(String email, String password, String username) {
@@ -144,7 +144,6 @@ public class User extends BaseEntity implements UserDetails {
     public void setRole(Role role) {
         this.role = role;
     }
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

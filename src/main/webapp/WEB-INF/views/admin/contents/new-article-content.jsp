@@ -90,7 +90,6 @@
                                 <div class="form-group">
                                     <label for="category">Kategori</label>
                                     <select id="category" name="category" class="form-control selectpicker col-xs-3">
-                                        <%--<option value="${article.category.id}">${article.category.name}</option>--%>
                                         <c:forEach var="category" items="${categories}">
                                             <c:if test="${category.name ne article.category.name}">
                                                 <option value="${category.id}">${category.name}</option>

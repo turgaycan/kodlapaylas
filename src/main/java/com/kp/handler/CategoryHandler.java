@@ -44,7 +44,7 @@ public class CategoryHandler {
     @RequestMapping(value = "/all-categories", method = RequestMethod.GET)
     public
     @ResponseBody
-    ModelAndView populateCategories() {
+    ModelAndView buildCategoryUiModelsCategories() {
         ModelAndView mav = new ModelAndView("contents/commons/all-categories");
         LOGGER.info("Root Categories page..");
         List<CategoryUIModel> categoryUIModels = new ArrayList<>();
