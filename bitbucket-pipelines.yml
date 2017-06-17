@@ -10,7 +10,7 @@ pipelines:
     - step:
         script: # Modify the commands below to build your repository.
           - mvn clean install
-    script:
+    	script:
           - docker version
 
 options:
