@@ -1,29 +1,25 @@
 # README #
 
-This README would normally document whatever steps are necessary to get your application up and running.
-
-### What is this repository for? ###
-
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+it is personal blog project :)
 
 ### How do I get set up? ###
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
 
-### Contribution guidelines ###
+* clone project at your environment :  'git clone' via terminal /please to be ensure installed git at environment) 
+* postgresql db should be installed at local env or installed in docker
+* couchbase cache server should be installed local env or installed in docker
+* execute kodlapaylas.sql scripts under resources/sql folder (with your own db)
+* using 'mvn install' command for build & packaging (please check that maven is installed at your environment)
 
-* Writing tests
-* Code review
-* Other guidelines
+### Tech Stack ###
 
-### Who do I talk to? ###
+* Java 1.8
+* Spring Boot 1.5+
+* Jsp and Angular
+* PortgreSQL RDBMS
+* Couchbase Cache Server
+* Many apache & third party libs.
 
-* Repo owner or admin
-* Other community or team contact
+### IMPORTANT NOTE ###
+
+* i am not contribute any more the project
