@@ -1,6 +1,6 @@
 # README #
 
-it is personal blog project :)
+it is a personal blog project :)
 
 ### How do I get set up? ###
 
